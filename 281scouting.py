@@ -3,11 +3,8 @@ import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 
 st.set_page_config(layout="wide")
-#docs https://streamlit-aggrid.readthedocs.io/en/docs/
-# aggrid docs https://www.ag-grid.com/javascript-data-grid/getting-started/
-#see https://github.com/PablocFonseca/streamlit-aggrid/blob/main/st_aggrid/__init__.py
-#aggdrid documentation https://www.ag-grid.com/javascript-data-grid/grid-options/
-#https://streamlit-aggrid.readthedocs.io/en/docs/GridOptionsBuilder.html
+
+
 @st.cache_data
 def load_data():
     df = pd.read_csv("281_2023_scouting_all.csv")
@@ -38,7 +35,7 @@ AgGrid(df,
        height=400,
        allow_unsafe_jscode=True,
        width="100%'",
-        custom_css={ "#gridToolBar": { "padding-bottom": "0px !important", } }
+       custom_css={ "#gridToolBar": { "padding-bottom": "0px !important", } }
 )
 
 
