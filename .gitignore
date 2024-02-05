@@ -2,3 +2,4 @@ venv
 .pycharm
 .idea
 *.pyc
+.ipynb_checkpoints
