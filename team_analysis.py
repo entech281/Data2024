@@ -54,6 +54,7 @@ def team_analyze(all_data):
         'Where do they pickup': 'pickup_loc'
     })
     all_data['team_number'] = pd.to_numeric(all_data.team_number_string,errors='ignore')
+    all_data = all_data.drop(columns=['Email Address'])
     #fill out any number columns with NaN to zero
     #this way sums will work
     base_data = all_data.fillna(0)
