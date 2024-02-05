@@ -25,7 +25,7 @@ def team_summary(analzyed_data):
 
 def team_analyze(all_data):
     # rename columns to shorter better names
-    all_data['tstamp'] = pd.to_datetime(all_data.Timestamp)
+    all_data['tstamp'] = pd.to_datetime(all_data.Timestamp,errors='ignore')
 
     all_data = all_data.rename(columns={
         'Team Number ': 'team_number_string',
