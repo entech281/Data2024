@@ -3,3 +3,7 @@ numpy
 streamlit
 altair<5
 streamlit-aggrid
+jupyter
+notebook
+plotly
+streamlit-plotly-events
