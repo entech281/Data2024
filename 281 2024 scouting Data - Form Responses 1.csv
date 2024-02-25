@@ -1,0 +1,16 @@
+Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,Mobility,Total Notes in Speaker Auto,Total Notes in Amp Auto,Notes in Auto [Attempted],Notes in Auto [Scored],Alliance Co-op bonus,Pickup?,How many seconds were they disabled for,How many seconds to cross the whole field without interruption ,Total Notes in Speaker Teleop,Total Notes in Amp Teleop,Notes in Tele-op [Attempted],Notes in Tele-op [Scored],Park?,Climb?,Trap?,Fouls,Team RPs,Did they employ a strategy that might exaggerate their stats?,General Notes (Separate statements with ;)
+2/24/2024 16:23:42,131,Q6,Ben C,Yes,No,0,0,Subwoofer,,No,Ground,1,9,1,2,,Subwoofer,No,Yes,No,0,0,No,misses.1
+2/24/2024 16:24:33,78,Q6,Antony,Yes,Yes,1,0,,Subwoofer,No,"Ground, Source",1,5,1,5,Subwoofer,Subwoofer,No,Yes,No,0,2,No,misses.3
+2/24/2024 16:30:59,5813,Q10,Ben C,Yes,No,0,0,,,No,Ground,1,14,0,0,,,No,Didn't try,No,2,0,No,
+2/24/2024 16:31:29,1153,Q10,Antony,Yes,No,0,0,,,No,Ground,10,5,1,0,Podium,Subwoofer,Yes,Didn't try,No,0,2,No,misses.2
+2/24/2024 16:39:21,166,Q16,Antony,Yes,No,1,0,Subwoofer,,No,Ground,10,150,1,0,Subwoofer,,No,Didn't try,No,1,2,No,Was disabled majority of the matxh
+2/24/2024 16:43:30,238,Q16,Ben C,Yes,No,0,0,,,No,0,1,5,0,0,,,Yes,Didn't try,No,0,0,No,No pickup 
+2/24/2024 16:54:22,316,P12,Antony,Yes,No,3,0,Subwoofer,,No,"Ground, Source",1,3,6,0,Subwoofer,Subwoofer,Yes,Didn't try,No,0,0,No,misses.1; great driver
+2/24/2024 16:55:04,3467,P12,Ben C,Yes,Yes,3,0,,Subwoofer,No,Ground,5,4,5,0,,Subwoofer,No,Didn't try,No,1,2,No,Under the bumper pickup
+2/24/2024 16:59:58,1058,F2,Ben C ,Yes,Yes,2,0,,Subwoofer,No,Ground,10,6,2,2,,Subwoofer,No,Yes,No,0,0,No,
+2/24/2024 17:00:06,88,F2,Antony,Yes,No,1,0,,Subwoofer,No,"Ground, Source",1,5,4,0,Podium,"Subwoofer, Podium",Yes,Didn't try,No,0,0,No,misses.1
+2/24/2024 16:43:30,238,Q2,Ben C,Yes,No,0,0,,,No,0,3,5,0,0,,,Yes,Didn't try,No,0,0,No,No pickup 
+2/24/2024 16:54:22,316,Q7,Antony,Yes,No,1,1,Subwoofer,,No,"Ground, Source",1,3,2,1,Subwoofer,Subwoofer,Yes,Didn't try,Yes,1,0,No,misses.1; great driver
+2/24/2024 16:55:04,3467,P1 ,Ben C,Yes,No,2,1,,Subwoofer,No,Ground,7,4,4,1,,Subwoofer,No,Yes,No,3,2,No,Under the bumper pickup
+2/24/2024 16:59:58,1058,F1,Ben C ,Yes,Yes,3,1,,Subwoofer,No,Ground,5,6,3,2,,Subwoofer,Yes,Yes,Yes,2,0,No,
+2/24/2024 17:00:06,88,F1,Antony,Yes,No,0,2,,Subwoofer,No,"Ground, Source",2,5,1,1,Podium,"Subwoofer, Podium",No,Yes,No,1,0,No,misses.1
