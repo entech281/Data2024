@@ -28,47 +28,41 @@ def team_analyze(all_data):
     all_data['tstamp'] = pd.to_datetime(all_data.Timestamp,errors='ignore')
 
     all_data = all_data.rename(columns={
-        'Team Number ': 'team_number_string',
-        'Did they cross over the line?': 'auto_line',
-        'How many cones scored [Top]': 'auto_cones_top',
-        'How many cones scored [Middle]': 'auto_cones_middle',
-        'How many cones scored [Bottom]': 'auto_cones_bottom',
-        'How many cubes scored [Top]': 'auto_cubes_top',
-        'How many cubes scored [Middle]': 'auto_cubes_middle',
-        'How many cubes scored [Bottom]': 'auto_cubes_bottom',
-        'Did they dock onto the station': 'auto_docked',
-        'How many fouls committed by this team': 'fouls',
-        'How many cones scored [Top ]': 'telop_cones_top',
-        'How many cones scored [Middle].1': 'telop_cones_middle',
-        'How many cones scored [Bottom].1': 'telop_cones_bottom',
-        'How many cubes scored [Top ]': 'telop_cubes_top',
-        'How many cubes scored [Middle].1': 'telop_cubes_middle',
-        'How many cubes scored [Bottom].1': 'telop_cubes_bottom',
-        "Where do their robot's capabilities allow them to score": 'scoring_areas',
-        'Did they dock at the end': 'end_dock',
-        'How fast was this robot': 'robot_speed',
-        'Mechanical Failures ': 'failures',
-        'How reliable was this robot (i.e. 4 completions/ 5 attempts)': 'reliability',
-        'Special things about this bot': 'special_notes',
-        'Blocks significant blocks made (significant obstruction of progress)': 'blocks',
-        'Where do they pickup': 'pickup_loc'
+        'Team Number': 'team.number',
+        'Match Number (Ex. Q42)': 'match.number',
+        'Mobility': 'mobility',
+        'Scouter Name': 'scouter.name',
+        'Total Notes in Speaker Auto': 'notes.speaker.auto',
+        'Total Notes in Amp Auto': 'notes.amp.auto',
+        'Notes in Auto': 'speaker.auto',
+        'Alliance Co-op bonus': 'alliance.coop',
+        'Pickup?': 'robot.pickup',
+        'How many seconds were they disabled for': 'robot.disabled.time',
+        'How many seconds to cross the whole field without interruption ': 'robot.speed',
+        'Total Notes in Speaker Teleop': 'notes.speaker.teleop',
+        'Total Notes in Amp Teleop': 'notes.amp.auto',
+        'Notes in Tele-op': 'speaker.teleop',
+        'Park?': 'park',
+        'Climb?': 'climb',
+        'Trap?': 'trap',
+        'Fouls': 'fouls',
+        'Team RPs': 'rps',
+        'Did they employ a strategy that might exaggerate their stats?': 'strategy.impact',
+        'General Notes (Separate statements with ;)': 'general.notes'
+
     })
-    all_data['team_number'] = pd.to_numeric(all_data.team_number_string,errors='ignore')
-    all_data = all_data.drop(columns=['Email Address'])
+    all_data['team.number'] = pd.to_numeric(all_data.team_number_string,errors='ignore')
+    all_data = all_data.drop(columns=['scouter.name'])
     #fill out any number columns with NaN to zero
     #this way sums will work
     base_data = all_data.fillna(0)
 
     #add up cones and cubes
-    base_data['total_cones'] = base_data['auto_cones_middle'] +  \
-        base_data['auto_cones_top'] + base_data['auto_cones_bottom'] +  \
-        base_data['telop_cones_middle'] + base_data['telop_cones_top'] + base_data['telop_cones_bottom']
+    base_data['total.speaker'] = base_data['total.speaker.auto'] + base_data['total.speaker.teleop']
 
-    base_data['total_cubes'] = base_data['auto_cubes_middle'] + base_data['auto_cubes_top'] + \
-          base_data['auto_cubes_bottom'] + base_data['telop_cones_middle'] +  \
-          base_data['telop_cubes_top'] + base_data['telop_cubes_bottom']
+    base_data['total.amp'] = base_data['total.amp.auto'] + base_data['total.amp.teleop']
 
-    base_data['auto_line_pts'] = np.where ( base_data['auto_line'] == 'yes', 3.0, 0.0 )
+    base_data['mobility.pts'] = np.where ( base_data['mobility'] == 'yes', 3.0, 0.0 )
 
     #this little function
     #lets you map values to numbers
@@ -79,35 +73,16 @@ def team_analyze(all_data):
             return default
 
     #compute points for docking during auto
-    def calc_auto_docking_pts(row):
-        return choose_from_map(row['auto_docked'], {
-            'Fully docked' : 12.0,
-            'Partially (tilted)' : 8.0
-        }, 0.0 )
-    base_data['auto_dock_pts'] = base_data.apply(calc_auto_docking_pts,axis=1)
 
     def calc_fast_pts(row):
         #switch(Data!U2,"Fast",3,"Average",2,"Slow",1,0))
-        return choose_from_map(row['robot_speed'], {
-            'Fast' : 3.0,
-            'Average' : 2.0,
-            'Slow': 1.0
-        }, 0.0 )
-    base_data['fast_pts'] =base_data.apply(calc_fast_pts,axis=1)
-
-    def calc_telop_dock_pts(row):
-        #IF(Data!T2="Fully docked",10,IF(Data!T2="Partially (tilted)",6,0)))-5*Data!L2)
-        return choose_from_map(row['robot_speed'], {
-            'Fully docked' : 10.0,
-            'Partially (tilted)' : 6.0
-        }, 0.0 )
-    base_data['telop_dock_pts'] = base_data.apply(calc_telop_dock_pts,axis=1)
+        base_data['fast.pts'] = base_data['robot.speed'] / 54.270833333
+    base_data['fast.pts'] =base_data.apply(calc_fast_pts,axis=1)
 
 
     #SUM((Data!M2+Data!P2)*5+(Data!N2+Data!Q2)*3+(Data!O2+Data!R2)*2+IF(Data!T2="Fully docked",10,IF(Data!T2="Partially (tilted)",6,0)))-5*Data!L2)
-    base_data['grid_pts']=  base_data['telop_cones_top']*5.0 + \
-            base_data['telop_cones_middle']*3.0 + \
-            base_data['telop_cones_bottom']*2.0 + \
+    base_data['speaker.pts']= base_data['total.speaker.auto']*5.0 + \
+            base_data['total.speaker.teleop']*2.0 + \
             base_data['telop_cubes_top']*5.0 + \
             base_data['telop_cubes_middle']*3.0 + \
             base_data['telop_cubes_bottom']*2.0
