@@ -12,7 +12,7 @@ def load_2024_data():
     )
 
 def team_summary(analzyed_data):
-    team_summary = analzyed_data.groupby('team_number').agg(
+    team_summary = analzyed_data.groupby('team.number').agg(
         max_telop=('teleop.pts', 'max'),
         avg_telop=('teleop.pts', 'mean'),
         max_auto=('auto.pts', 'max'),
@@ -48,7 +48,7 @@ def team_analyze(all_data):
         'How many seconds were they disabled for': 'robot.disabled.time',
         'How many seconds to cross the whole field without interruption ': 'robot.speed',
         'Total Notes in Speaker Teleop': 'notes.speaker.teleop',
-        'Total Notes in Amp Teleop': 'notes.amp.auto',
+        'Total Notes in Amp Teleop': 'notes.amp.teleop',
         'Notes in Tele-op': 'speaker.reliability.teleop',
         'Park?': 'park',
         'Climb?': 'climb',
@@ -96,23 +96,23 @@ def team_analyze(all_data):
         }, 0.0)
     base_data['climb.pts'] = base_data.apply(calc_auto_docking_pts, axis=1)
 
-    base_data['teleop.pts']= base_data['total.speaker.teleop']*2.0 + \
-            base_data['total.amp.teleop']*1.0 + \
+    base_data['teleop.pts']= base_data['notes.speaker.teleop']*2.0 + \
+            base_data['notes.amp.teleop']*1.0 + \
             base_data['climb.pts'] + \
             base_data['trap.pts'] + \
             base_data['park.pts']
 
-    base_data['auto.pts']= base_data['total.speaker.auto']*5.0 + \
-            base_data['total.amp.auto']*2.0 + \
+    base_data['auto.pts']= base_data['notes.speaker.auto']*5.0 + \
+            base_data['notes.amp.auto']*2.0 + \
             base_data['mobility.pts']
 
     base_data['total.pts']= base_data['auto.pts'] + \
             base_data['teleop.pts']
 
-    base_data['speaker.pts']= base_data['total.speaker.auto']*5.0 + \
-            base_data['total.speaker.teleop']*2.0
+    base_data['speaker.pts']= base_data['notes.speaker.auto']*5.0 + \
+            base_data['notes.speaker.teleop']*2.0
 
-    base_data['amp.pts']= base_data['total.amp.auto']*2.0 + \
-            base_data['total.amp.teleop']*1.0
+    base_data['amp.pts']= base_data['notes.amp.auto']*2.0 + \
+            base_data['notes.amp.teleop']*1.0
 
     return base_data
