@@ -13,8 +13,8 @@ def load_2024_data():
 
 def team_summary(analzyed_data):
     team_summary = analzyed_data.groupby('team.number').agg(
-        max_telop=('teleop.pts', 'max'),
-        avg_telop=('teleop.pts', 'mean'),
+        max_teleop=('teleop.pts', 'max'),
+        avg_teleop=('teleop.pts', 'mean'),
         max_auto=('auto.pts', 'max'),
         avg_auto=('auto.pts', 'mean'),
         max_total_pts=('total.pts', 'max'),
@@ -42,14 +42,20 @@ def team_analyze(all_data):
         'Scouter Name': 'scouter.name',
         'Total Notes in Speaker Auto': 'notes.speaker.auto',
         'Total Notes in Amp Auto': 'notes.amp.auto',
-        'Notes in Auto': 'speaker.reliability.auto',
+        'Notes in Auto[Subwoofer]': 'subwoofer.reliability.auto',
+        'Notes in Auto[Podium]': 'podium.reliability.auto',
+        'Notes in Auto[Middle]': 'middle.reliability.auto',
+        'Notes in Auto[Midfield]': 'midfield.reliability.auto',
         'Alliance Co-op bonus': 'alliance.coop',
         'Pickup?': 'robot.pickup',
         'How many seconds were they disabled for': 'robot.disabled.time',
         'How many seconds to cross the whole field without interruption ': 'robot.speed',
         'Total Notes in Speaker Teleop': 'notes.speaker.teleop',
         'Total Notes in Amp Teleop': 'notes.amp.teleop',
-        'Notes in Tele-op': 'speaker.reliability.teleop',
+        'Notes in Tele-op[Subwoofer]': 'subwoofer.reliability.teleop',
+        'Notes in Tele-op[Podium]': 'podium.reliability.teleop',
+        'Notes in Tele-op[Middle]': 'middle.reliability.teleop',
+        'Notes in Tele-op[Midfield]': 'midfield.reliability.teleop',
         'Park?': 'park',
         'Climb?': 'climb',
         'Trap?': 'trap',
@@ -95,6 +101,81 @@ def team_analyze(all_data):
             'Yes; with another robot': 3.0,
         }, 0.0)
     base_data['climb.pts'] = base_data.apply(calc_auto_docking_pts, axis=1)
+
+#AUTO RELIABILITY
+
+    def calc_sub_auto_acry(row):
+        return choose_from_map(row['subwoofer.reliability.auto'], choices={
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['sub.auto.acry'] = base_data.apply(calc_sub_auto_acry, axis=1)
+
+    def calc_mid_auto_acry(row):
+        return choose_from_map(row['middle.reliability.auto'], choices={
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['mid.auto.acry'] = base_data.apply(calc_mid_auto_acry, axis=1)
+
+    def calc_mfld_auto_acry(row):
+        return choose_from_map(row['midfield.reliability.auto'], choices={
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['mfld.auto.acry'] = base_data.apply(calc_mfld_auto_acry, axis=1)
+
+    def calc_pod_auto_acry(row):
+        return choose_from_map(row['podium.reliability.auto'], choices={
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['pod.auto.acry'] = base_data.apply(calc_pod_auto_acry, axis=1)
+
+
+#TELEOP RELIABILITY
+
+    def calc_sub_teleop_acry(row):
+        return choose_from_map(row['subwoofer.reliability.teleop'], choices= {
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+    base_data['sub.teleop.acry'] = base_data.apply(calc_sub_teleop_acry, axis=1)
+
+    def calc_mid_teleop_acry(row):
+        return choose_from_map(row['middle.reliability.teleop'], choices={
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['mid.teleop.acry'] = base_data.apply(calc_mid_teleop_acry, axis=1)
+
+    def calc_mfld_teleop_acry(row):
+        return choose_from_map(row['midfield.reliability.teleop'], choices={
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['mfld.teleop.acry'] = base_data.apply(calc_mfld_teleop_acry, axis=1)
+    def calc_pod_teleop_acry(row):
+        return choose_from_map(row['podium.reliability.teleop'], choices= {
+            'Neither': 0.0,
+            'Attempted': 1.0,
+            'Scored': 2.0,
+        }, default=0.0)
+
+    base_data['pod.teleop.acry'] = base_data.apply(calc_pod_teleop_acry, axis=1)
 
     base_data['teleop.pts']= base_data['notes.speaker.teleop']*2.0 + \
             base_data['notes.amp.teleop']*1.0 + \
