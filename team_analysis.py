@@ -99,8 +99,12 @@ def team_analyze(all_data):
     #compute points for docking during auto
 
     def calc_fast_pts(row):
-        #switch(Data!U2,"Fast",3,"Average",2,"Slow",1,0))
-        base_data['fast.pts'] = pd.to_numeric(base_data['robot.speed'],errors='coerce') / 54.270833333
+        FIELD_LENGTH=54.270833333
+        base_data['fast.pts'] =  pd.to_numeric(base_data['robot.speed'],errors='coerce').fillna(0)
+        base_data['fast.pts'].replace([np.inf],0,inplace=True)
+        base_data['fast.pts'] = base_data['fast.pts']/FIELD_LENGTH
+        base_data['fast.pts'] = base_data['fast.pts'].astype(int)
+
     base_data['fast.pts'] =base_data.apply(calc_fast_pts,axis=1)
 
     def calc_auto_docking_pts(row):

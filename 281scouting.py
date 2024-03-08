@@ -19,7 +19,7 @@ st.title("281 2024 Scouting Data")
 
 analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
 analyzed_gb.configure_pagination(enabled=True,paginationAutoPageSize=True)
-analyzed_gb.configure_default_column(groupable="true",filterable="true")
+analyzed_gb.configure_default_column(groupable="true",filterable="true",width=50)
 analyzed_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
 analyzed_gb.configure_side_bar(filters_panel=True)
 
