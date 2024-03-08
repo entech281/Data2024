@@ -3,7 +3,7 @@ import numpy as np
 
 
 def load_2024_data():
-    raw_data = pd.read_csv("281-2024scoutingData.csv")
+    raw_data = pd.read_csv("281.03-07-2024-2pm.Data.csv")
     analyzed_data = team_analyze(raw_data)
     summary_data = team_summary(analyzed_data)
     return (
@@ -57,7 +57,7 @@ def team_analyze(all_data):
         'Alliance Co-op bonus': 'alliance.coop',
         'Pickup?': 'robot.pickup',
         'How many seconds were they disabled for': 'robot.disabled.time',
-        'How many seconds to cross the whole field without interruption ': 'robot.speed',
+        'How many seconds to cross the whole field without interruption': 'robot.speed',
         'Total Notes in Speaker Teleop': 'notes.speaker.teleop',
         'Total Notes in Amp Teleop': 'notes.amp.teleop',
         'Notes in Tele-op [Subwoofer]': 'subwoofer.reliability.teleop',
@@ -100,7 +100,7 @@ def team_analyze(all_data):
 
     def calc_fast_pts(row):
         #switch(Data!U2,"Fast",3,"Average",2,"Slow",1,0))
-        base_data['fast.pts'] = base_data['robot.speed'] / 54.270833333
+        base_data['fast.pts'] = pd.to_numeric(base_data['robot.speed'],errors='coerce') / 54.270833333
     base_data['fast.pts'] =base_data.apply(calc_fast_pts,axis=1)
 
     def calc_auto_docking_pts(row):
