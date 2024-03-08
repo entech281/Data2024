@@ -64,6 +64,7 @@ st.header("{d} Matching matches".format(d=len(filtered_data)))
 
 AgGrid(filtered_data,
        gridOptions=analyzed_gb.build(),
+       columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
        height=400,
        allow_unsafe_jscode=True,
        width="100%'",
@@ -89,18 +90,66 @@ with col2:
     st.plotly_chart(plot2)
 
 st.header("Team Stats")
+filtered_summary = summary
 
-AgGrid(summary,
+col1,col2,col3,col4,col5,col6,col7,col8= st.columns(8)
+
+
+def filter_data_with_field_slider(field_name,label,df):
+    calc_min=summary[field_name].min()
+    calc_max=summary[field_name].max()
+    s = st.slider(label,calc_min,calc_max,(calc_min,calc_max),key="slider_" + field_name)
+    df = df[ df[field_name]>= s[0]]
+    df = df[ df[field_name] <= s[1]]
+    return df
+
+
+with col1:
+    filtered_summary= filter_data_with_field_slider("max_teleop","Max Teleop",filtered_summary)
+    filtered_summary= filter_data_with_field_slider("avg_teleop","Avg Teleop",filtered_summary)
+    filtered_summary = filter_data_with_field_slider("max_auto", "Max Auto", filtered_summary)
+with col2:
+    filtered_summary = filter_data_with_field_slider("avg_auto", "Avg TAuto", filtered_summary)
+    filtered_summary = filter_data_with_field_slider("max_total_pts", "Total,Max", filtered_summary)
+    filtered_summary = filter_data_with_field_slider("avg_total_pts", "Total,Avg", filtered_summary)
+
+with col3:
+    filtered_summary = filter_data_with_field_slider("avg_notes_speaker", "Speaker,Avg", filtered_summary)
+    filtered_summary = filter_data_with_field_slider("avg_notes_amp", "Amp,Avg", filtered_summary)
+
+with col4:
+    def make_accuracy_slider(field_name):
+        MIN_ACCURACY = 0.0
+        MAX_ACCURACY = 3.0
+        return st.slider(field_name, MIN_ACCURACY, MAX_ACCURACY, (MIN_ACCURACY, MAX_ACCURACY))
+
+    pod_teleop_acry = make_accuracy_slider('pod_teleop_acry')
+    filtered_summary = filtered_summary[ filtered_summary["pod_teleop_acry"]>= pod_teleop_acry[0]]
+    filtered_summary = filtered_summary[ filtered_summary["pod_teleop_acry"] <= pod_teleop_acry[1]]
+
+with col5:
+    pass
+
+with col6:
+    pass
+
+with col7:
+    pass
+
+with col8:
+    pass
+
+st.header("{d} Matching teams".format(d=len(filtered_summary)))
+AgGrid(filtered_summary,
        gridOptions=summary_gb.build(),
-       height=400,
+       columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
+       height=800,
        allow_unsafe_jscode=True,
        width="100%'",
        custom_css={ "#gridToolBar": { "padding-bottom": "0px !important", } }
 )
 
 st.header("Match Preditor")
-
-
 red_col,blue_col= st.columns(2)
 teamlist = list(summary['team.number'])
 with red_col:

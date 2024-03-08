@@ -23,7 +23,14 @@ def team_summary(analzyed_data):
         avg_notes_speaker=('total.notes.speaker', 'mean'),
         max_notes_amp=('total.notes.amp', 'max'),
         avg_notes_amp=('total.notes.amp', 'mean'),
-        #reliability=('reliability', 'mean'),
+        sub_auto_acry=('sub.auto.acry','mean'),
+        mid_auto_acry=('mid.auto.acry','mean'),
+        mfld_auto_acry=('mfld.auto.acry','mean'),
+        pod_auto_acry=('pod.auto.acry','mean'),
+        sub_teleop_acry=('sub.teleop.acry','mean'),
+        mid_teleop_acry=('mid.teleop.acry','mean'),
+        mfld_teleop_acry=('mfld.teleop.acry','mean'),
+        pod_teleop_acry=('pod.teleop.acry','mean'),
         rps=('rp.pts','mean'),
         avg_speed=('fast.pts','mean')
     )
