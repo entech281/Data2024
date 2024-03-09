@@ -3,7 +3,8 @@ import numpy as np
 
 
 def load_2024_data():
-    raw_data = pd.read_csv("281.03-07-2024-2pm.Data.csv")
+    raw_data = pd.read_csv("281.03-08-2024-9pm.Data.csv")
+
     analyzed_data = team_analyze(raw_data)
     summary_data = team_summary(analyzed_data)
     return (
