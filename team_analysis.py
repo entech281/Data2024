@@ -210,3 +210,7 @@ def team_analyze(all_data):
             base_data['notes.amp.teleop']*1.0
 
     return base_data
+
+if __name__ == "__main__":
+    (analyzed, summary) = load_2024_data()
+    analyzed.to_csv('281-3-8-2024.csv')
