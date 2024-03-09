@@ -1,0 +1,86 @@
+Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,Mobility,Total Notes in Speaker Auto,Total Notes in Amp Auto,Notes in Auto [Subwoofer],Notes in Auto [Podium],Notes in Auto [Middle],Notes in Auto [Midfield],Alliance Co-op bonus,Pickup?,How many seconds were they disabled for,How many seconds to cross the whole field without interruption,Total Notes in Speaker Teleop,Total Notes in Amp Teleop,Notes in Tele-op [Subwoofer],Notes in Tele-op [Podium],Notes in Tele-op [Middle],Notes in Tele-op [Midfield],Park?,Climb?,Trap?,Fouls,Team RPs,Did they employ a strategy that might exaggerate their stats?,General Notes (Separate statements with ;)
+3/8/2024 11:02:21,9561,Q1,Marwan Makhtoub,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/8/2024 11:05:33,4451,Q01,Victor,Yes,Yes,1,,Scored,,,,Yes,"Ground, Source",,4,6,0,Scored,Scored,,,Yes,Didn't try,No,0,2,No,
+3/8/2024 11:05:36,1648,Q1,Aditya Harikumar,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,they didnt cross the field,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,0,No,they played a lot of defense; didn’t attempt any scoring
+3/8/2024 11:05:40,8736,Q1,Sophie,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,4,2,1,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,2,No,
+3/8/2024 11:05:43,1319,Q1,Antony,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,1,5,0,0,Attempted,,,,No,Yes,No,0,2,Yes,misses.2; pbc pipe became disconnected and began to hang off the robot; played defense for half the match
+3/8/2024 11:05:50,3091,Q1,Sanjith,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Source,8,Didn't cross,0,0,Attempted,,,,No,Failed,No,0,0,No,Didn't move for much of match
+3/8/2024 11:15:50,2974,Q2,Antony,Yes,Yes,1,0,Scored,,,,No,Ground,1,3,5,2,Scored,,,,Yes,Didn't try,No,0,,No,
+3/8/2024 11:15:58,342,Q2,Marwan Makhtoub,Yes,No,,,,,,,,Ground,4,4,1,,,Neither,,,Yes,Yes,No,1,0,Yes,Eject didn’t work note got stuck
+3/8/2024 11:15:58,9571,Q02,Victor,Yes,Yes,,,,,,,No,Source,,15,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,0,No,did basically nothing
+3/8/2024 11:15:59,2815,Q2,Sophie,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,2,4,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,
+3/8/2024 11:16:03,1539,Q2,Sanjith,Yes,Yes,1,0,Scored,,,,No,Ground,1,Didn't cross,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,2,No,Just played defense
+3/8/2024 11:16:07,5130,Q2,Aditya Harikumar,Yes,Yes,1,0,Neither,Scored,Neither,Neither,No,,1,didnt cross,1,0,,Scored,,,Yes,Failed,No,0,2,No,the shots they made were all preloaded; after they scored they just played defense
+3/8/2024 11:27:51,8137,Q3,Victor,No,,0,0,,,,,,,,,,,,,,,,,,,0,,No-show
+3/8/2024 11:28:32,3329,Q3,Sophie,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,3,5,0,0,Attempted,Neither,Neither,Neither,No,Yes,No,0,0,No,
+3/8/2024 11:28:50,343,Q3,Antony,Yes,Yes,1,,Scored,,Attempted,,No,"Ground, Source",1,5,1,4,Scored,,Attempted,,Yes,Failed,No,0,2,No,"misses.4; really good amp, speaker still unreliable"
+3/8/2024 11:28:55,9477,Q3,Sanjith,Yes,Yes,0,0,Attempted,Neither,Neither,Neither,No,Ground,,Didn't cross,2,0,Attempted,Attempted,Neither,Neither,Yes,Didn't try,No,0,2,No,Missed alot
+3/8/2024 11:29:12,6961,Q3,Aditya Harikumar,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,didnt cross,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,2,No,they moved but they just stood in the middle of the field
+3/8/2024 11:31:55,7676,Q3,Marwan Makhtoub,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/8/2024 11:36:09,9315,Q4,Marwan Makhtoub,Yes,No,,,,,,,,,,,,,,,,,,,,,,,
+3/8/2024 11:38:11,281,Q4,Antony,Yes,Yes,,,Attempted,,,,No,,4,Did not cross,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,,No,"Note got stuck on top of shooter, then under robot;"
+3/8/2024 11:38:40,1293,Q4,Sophie,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,3,—,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,
+3/8/2024 11:38:43,6167,Q4,Victor,Yes,Yes,0,0,Neither,Neither,Neither,Neither,Yes,"Ground, Source",,,,,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,,0,No,
+3/8/2024 11:39:18,1051,Q4,Sanjith,Yes,Yes,0,0,Attempted,Neither,Neither,Neither,No,Ground,,Didn't cross,1,0,Scored,Neither,Neither,Neither,No,Yes,No,0,2,No,
+3/8/2024 11:40:50,4533,Q4,Aditya,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,4,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,2,No,didn’t get a shot off or points score
+3/8/2024 11:44:15,4189,Q5,Marwan Makhtoub,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/8/2024 11:46:03,3490,Q5,Albert Mathisz,Yes,No,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",,They where immobile,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,Robot was immobile for the entirety of the match
+3/8/2024 11:46:38,1287,Q5,Antony,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",1,5,0,2,,,Attempted,,No,Yes,No,0,,No,misses.2; attempted trap; initially had issues with joint mechanism on top shooter
+3/8/2024 11:47:25,9575,Q5,Sanjith,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,,8 sec,5,0,Scored,Scored,Neither,Neither,Yes,Failed,No,0,2,No,Broke their climb
+3/8/2024 11:48:45,3489,5,Victor,Yes,Yes,,,,,,,,"Ground, Source",,,,,Scored,,,,No,Yes,Yes,,0,,
+3/8/2024 11:49:59,3976,Q5,Sophie,No,No,0,0,Neither,Neither,Neither,Neither,No,,,,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,
+3/8/2024 11:51:28,3489,Q5,Aditya,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,1,4,2,0,Neither,Scored,Neither,Neither,No,Yes; with another robot,No,0,2,No,very quick; semi-accurate shooter; efficient intskr
+3/8/2024 11:57:10,9561,Q6,Antony,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/8/2024 11:57:13,8736,Q6,Marwan Makhtoub,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/8/2024 12:00:19,1539,Q6,Victor,Yes,No,,,,,,,No,,,,,,,,,,,,,,0,No,No movement
+3/8/2024 12:00:22,7085,Q6,Sophie,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,6,0,0,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,0,0,No,
+3/8/2024 12:00:57,6366,Q6,Sanjith,Yes,Yes,0,0,Attempted,Neither,Attempted,Neither,No,Ground,,Didn't cross,3,0,Scored,,,,Yes,Didn't try,No,0,2,No,Bad driver bumped around a lot might have broken robot
+3/8/2024 12:01:15,343,Q6,Aditya H,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Source,1,5,2,5,Scored,Scored,Neither,Neither,Yes,Yes,No,0,2,No,super efficient; drove well; scored on almodt every attempt to do so
+3/8/2024 12:10:02,6167,Q7,Sophie,Yes,No,0,0,Attempted,Neither,Neither,Neither,No,Ground,3,,,,Attempted,Neither,Neither,Neither,Yes,Failed,No,0,0,No,
+3/8/2024 12:10:07,4451,Q7,Sanjith,Yes,Yes,1,0,Scored,,,,No,Ground,,4,5,0,Scored,,,,Yes,Didn't try,No,0,2,No,
+3/8/2024 12:10:11,6961,Q7,Victor,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,,,,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,,0,,No pickup; rookie team
+3/8/2024 12:10:17,281,Q7,Marwan Makhtoub,Yes,Yes,1,,Scored,,,,,Ground,1,2,2,,Scored,,,,,Yes,No,,0,Yes,Nice shooter and climb
+3/8/2024 12:10:24,3091,Q7,Antony,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,1,6,0,2,Neither,Neither,Neither,Neither,No,Yes,No,0,2,No,Did not attempt any shots; something broken???
+3/8/2024 12:18:32,1648,Q8,Marwan Makhtoub,Yes,,,,,,,,,Ground,3,,,,,,,,,Yes,,,,No,
+3/8/2024 12:19:27,342,Q8,Sanjith,Yes,Yes,0,0,Attempted,,,,No,Ground,,5,6,,Scored,,,,No,Yes,No,1,2,No,
+3/8/2024 12:20:18,1293,Q8,Aditya H,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Source,1,didnt cross,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,2,2,No,they dropped the note and then judt resorted to defense; super light and tips over very easily; top heavy
+3/8/2024 12:21:36,3329,Q8,Sophie,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,2,,4,0,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,
+3/8/2024 12:21:39,8575,Q8,Victor,Yes,Yes,,,Attempted,,,,No,"Ground, Source",,,4,,,,,,Yes,Didn't try,No,,0,No,
+3/8/2024 12:22:01,2974,Q8,Antony,Yes,Yes,2,,Scored,,Scored,,No,,,,4,5,Scored,,Scored,,No,Didn't try,No,0,3,No,Phenomenal driver; really fast; combo of amp and speaker
+3/8/2024 12:27:03,8137,Q9,Aditya,No,No,,,Neither,Neither,Neither,Neither,No,,1,,,,Neither,Neither,Neither,Neither,No,Didn't try,No,,,No,they weren’t there
+3/8/2024 12:28:56,1287,Q9,Marwan Makhtoub,Yes,Yes,1,,Neither,,,,Yes,Ground,1,3,4,1,Scored,Scored,,,,,,0,,No,
+3/8/2024 12:29:06,4533,Q9,Sanjith,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Source,,5,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,,2,No,Push bot
+3/8/2024 12:31:23,4189,Q9,Sophie,Yes,Yes,0,1,Scored,Neither,Neither,Neither,Yes,Ground,2,4,1,0,Scored,Neither,Neither,Neither,Yes,Didn't try,No,2,0,No,
+3/8/2024 12:32:04,6366,Q9,Antony,Yes,Yes,2,,Scored,,Scored,,No,"Ground, Source",1,4.5,4,0,Scored,Scored,,,No,Failed,No,0,3,No,misses.1; very similar to our robot
+3/8/2024 12:43:29,3489,Q10,Sanjith,Yes,Yes,1,0,Scored,,,,No,Ground,,,6,,Scored,,,,No,Yes,No,,2,No,
+3/8/2024 12:44:19,3976,Q10,Antony,Yes,No,0,0,,,,,No,,1,Did not attempt,1,0,Scored,Neither,Neither,Neither,No,Didn't try,No,0,2,No,Little bit top heavy; intially struggled to intake note properly
+3/8/2024 12:44:23,7085,Q10,Sophie,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,6,0,0,Attempted,Neither,Neither,Neither,,Didn't try,No,0,0,No,
+3/8/2024 12:44:33,1051,Q10,Trevor,Yes,Yes,1,,,Scored,,,No,Ground,,Didnt cross,1,,Neither,,,,Yes,Yes,No,,0,No,
+3/8/2024 12:45:10,7676,Q10,Albert Mathisz,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,,They were immobile; they could not cross,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,2,No,Immobile robot
+3/8/2024 12:47:30,1319,Q10,Victor,Yes,No,,,,,,,Yes,Ground,10,15,,,Neither,Neither,Neither,Neither,,Yes,No,,,,
+3/8/2024 12:52:18,3490,Q11,Sophie,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,1,2,0,1,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,0,,No,
+3/8/2024 12:52:44,2815,Q11,Trevor,Yes,No,1,,Scored,,,,Yes,Ground,,15-20*,1,,Scored,,,,Yes,Yes,No,0,2,No,
+3/8/2024 12:52:46,9477,Q11,Sanjith,Yes,Yes,0,0,Attempted,,,,No,Ground,,Didn't cross,3,0,Scored,,,,Yes,Didn't try,No,0,0,No,
+3/8/2024 12:52:48,343,Q11,Victor,Yes,Yes,,1,,,,,Yes,"Ground, Source",,,6,3,Scored,Scored,,,Yes,Didn't try,No,,2,No,
+3/8/2024 12:52:54,9315,Q11,Aditya,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,3,0,No,they got stuck on the red side for a good bit so there were quite a few fouls
+3/8/2024 12:53:18,281,Q11,Antony,Yes,No,0,0,Attempted,,,,No,"Ground, Source",1,,0,1,,Attempted,,,No,Failed,No,0,0,No,misses.2; seemed to struggle to get into shooting position
+3/8/2024 13:07:26,6167,Q12,Sanjith,Yes,No,0,0,,,,,No,Ground,,,2,0,Scored,Attempted,Neither,Neither,Yes,Didn't try,No,,0,No,
+3/8/2024 13:07:32,1539,Q12,Antony,Yes,No,0,0,,,,,No,,1,NA,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,Played defense; wandered around during entire match
+3/8/2024 13:09:08,5130,Q12,Sophie,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,,3,3,,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,
+3/8/2024 14:09:11,3976,Q13,Ana - Scouting for Max,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Source,1,20,0,0,Neither,Neither,Neither,Neither,Yes,Failed,No,0,0,No,
+3/8/2024 14:09:20,1051,Q13,Sadra,Yes,Yes,1,,,Scored,,,Yes,Ground,,,2,,Scored,,,,,Yes,,,,,
+3/8/2024 14:09:49,9561,Q13,Trevor,Yes,No,0,0,,,,,No,,,30,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,2,No,
+3/8/2024 14:10:05,342,Q13,Dhanya,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",2,5,3,0,Scored,Neither,Neither,Neither,Yes,Yes,No,0,2,Yes,
+3/8/2024 14:10:28,7676,Q13,Eric,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,6,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,2,No,Stayed in midfield for half the game
+3/8/2024 14:17:47,3329,Q14,Eric,Yes,No,1,0,Scored,Neither,Neither,Neither,No,,10,infinity,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,,No,Disabled whole game
+3/8/2024 14:18:24,3490,Q14,Dhanya,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,2,7,0,0,Attempted,Neither,Attempted,Neither,Yes,Didn't try,No,0,,No,
+3/8/2024 14:18:55,8736,Q14,Max Geissler,Yes,No,1,0,Scored,,,,No,Ground,,,4,,Scored,Scored,,,No,Didn't try,No,,2,,
+3/8/2024 14:26:55,7085,Q15,Eric,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,,10,infinity,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,Disabled whole game
+3/8/2024 14:27:41,4451,Q15,Sadra,Yes,Yes,1,0,Scored,,,,,Ground,,,6,,Scored,Scored,,,,Didn't try,No,,,,
+3/8/2024 14:28:29,8575,Q15,Max Geissler,Yes,Yes,1,,Scored,,,,No,Ground,,,3,,Scored,,,,Yes,Didn't try,No,1,2,,Their climb hit a chain and broke
+3/8/2024 14:28:31,1287,Q15,Trevor,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,"Ground, Source",,7*,2,1,Scored,Scored,,,Yes,Yes,No,0,0,No,
+3/8/2024 14:26:55,7085,Q15,Eric,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,,10,infinity,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,Disabled whole game
+3/8/2024 14:27:41,4451,Q15,Sadra,Yes,Yes,1,0,Scored,,,,,Ground,,,6,,Scored,Scored,,,,Didn't try,No,,,,
+3/8/2024 14:28:29,8575,Q15,Max Geissler,Yes,Yes,1,,Scored,,,,No,Ground,,,3,,Scored,,,,Yes,Didn't try,No,1,2,,Their climb hit a chain and broke
+3/8/2024 14:28:31,Trevor,Q15,1287,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,"Ground, Source",,7*,2,1,Scored,Scored,,,Yes,Yes,No,0,0,No,
+3/8/2024 14:28:32,1648,Q14,Dhanya,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,5,0,0,Neither,Neither,Neither,Neither,Yes,Yes,No,0,0,Yes,
