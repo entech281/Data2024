@@ -44,7 +44,7 @@ with col2:
     if climbed:
         filtered_data = filtered_data [ filtered_data["climb"] == "Yes"]
 
-    MIN_FOULS = 0
+    MIN_FOULS = 0.0
     MAX_FOULS = analyzed["fouls"].max()
     fouls = st.slider("Fouls",MIN_FOULS,MAX_FOULS,(MIN_FOULS,MAX_FOULS))
     (min_selected_fouls, max_selected_fouls) = fouls

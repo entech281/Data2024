@@ -35,6 +35,7 @@ def team_analyze(all_data):
     # rename columns to shorter better names
     all_data['tstamp'] = pd.to_datetime(all_data.Timestamp,errors='ignore')
 
+
     all_data = all_data.rename(columns={
         'Team Number': 'team.number',
         'Match Number (Ex. Q42)': 'match.number',
@@ -42,20 +43,20 @@ def team_analyze(all_data):
         'Scouter Name': 'scouter.name',
         'Total Notes in Speaker Auto': 'notes.speaker.auto',
         'Total Notes in Amp Auto': 'notes.amp.auto',
-        'Notes in Auto[Subwoofer]': 'subwoofer.reliability.auto',
-        'Notes in Auto[Podium]': 'podium.reliability.auto',
-        'Notes in Auto[Middle]': 'middle.reliability.auto',
-        'Notes in Auto[Midfield]': 'midfield.reliability.auto',
+        'Notes in Auto [Subwoofer]': 'subwoofer.reliability.auto',
+        'Notes in Auto [Podium]': 'podium.reliability.auto',
+        'Notes in Auto [Middle]': 'middle.reliability.auto',
+        'Notes in Auto [Midfield]': 'midfield.reliability.auto',
         'Alliance Co-op bonus': 'alliance.coop',
         'Pickup?': 'robot.pickup',
         'How many seconds were they disabled for': 'robot.disabled.time',
         'How many seconds to cross the whole field without interruption ': 'robot.speed',
         'Total Notes in Speaker Teleop': 'notes.speaker.teleop',
         'Total Notes in Amp Teleop': 'notes.amp.teleop',
-        'Notes in Tele-op[Subwoofer]': 'subwoofer.reliability.teleop',
-        'Notes in Tele-op[Podium]': 'podium.reliability.teleop',
-        'Notes in Tele-op[Middle]': 'middle.reliability.teleop',
-        'Notes in Tele-op[Midfield]': 'midfield.reliability.teleop',
+        'Notes in Tele-op [Subwoofer]': 'subwoofer.reliability.teleop',
+        'Notes in Tele-op [Podium]': 'podium.reliability.teleop',
+        'Notes in Tele-op [Middle]': 'middle.reliability.teleop',
+        'Notes in Tele-op [Midfield]': 'midfield.reliability.teleop',
         'Park?': 'park',
         'Climb?': 'climb',
         'Trap?': 'trap',
@@ -69,7 +70,7 @@ def team_analyze(all_data):
     all_data = all_data.drop(columns=['scouter.name'])
 
     base_data = all_data.fillna(0)
-
+    print(base_data.columns)
     base_data['rp.pts'] = base_data['rps']
 
     base_data['total.notes.speaker'] = base_data['notes.speaker.auto'] + base_data['notes.speaker.teleop']

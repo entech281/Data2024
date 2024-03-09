@@ -1,0 +1,38 @@
+Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,Mobility,Total Notes in Speaker Auto,Total Notes in Amp Auto,Notes in Auto [Subwoofer],Notes in Auto [Podium],Notes in Auto [Middle],Notes in Auto [Midfield],Alliance Co-op bonus,Pickup?,How many seconds were they disabled for,How many seconds to cross the whole field without interruption ,Total Notes in Speaker Teleop,Total Notes in Amp Teleop,Notes in Tele-op [Subwoofer],Notes in Tele-op [Podium],Notes in Tele-op [Middle],Notes in Tele-op [Midfield],Park?,Climb?,Trap?,Fouls,Team RPs,Did they employ a strategy that might exaggerate their stats?,General Notes (Separate statements with ;)
+2/24/2024 14:26:05,5459,3,Antony,Yes,,,,,,,,No,,1,10,,,,,,,Yes,,,,0,No,
+2/24/2024 14:28:44,4761,Q3,Ben C,Yes,,,,,,,,No,,1,150,,,,,,,No,,,,2,No,
+2/24/2024 15:23:42,131,Q6,Ben C,Yes,No,0,0,,,,,No,,1,9,1,2,,,,,No,Yes,No,0,0,No,
+2/24/2024 15:24:33,78,Q6,Antony,Yes,Yes,1,,,,,,No,,,5,1,5,,,,,No,Yes,No,0,2,No,misses.3
+2/24/2024 15:30:59,5813,Q10,Ben C,Yes,No,0,0,,,,,No,,1,14,0,0,,,,,No,Didn't try,No,0,0,No,
+2/24/2024 15:31:29,1153,Q10,Antony,Yes,No,,,,,,,No,,10,5,1,,,,,,Yes,Didn't try,No,,2,No,misses.2
+2/24/2024 15:39:21,166,Q16,Antony,Yes,No,1,,,,,,No,,10,150,1,,,,,,No,Didn't try,No,,2,No,Was disabled majority of the matxh
+2/24/2024 15:43:30,238,Q16,Ben C,Yes,No,0,0,,,,,No,,1,5,0,0,,,,,Yes,Didn't try,No,0,0,No,No pickup 
+2/24/2024 15:54:22,316,P12,Antony,Yes,,3,,,,,,No,"Ground, Source",,3,6,,,,,,Yes,Didn't try,No,,0,,misses.1; great driver
+2/24/2024 15:55:04,3467,P12,Ben C,Yes,Yes,3,0,,,,,No,Ground,5,4,5,0,,,,,No,Didn't try,No,0,2,No,Under the bumper pickup
+2/24/2024 15:59:58,1058,F2,Ben C ,Yes,Yes,2,,,,,,No,Ground,10,6,2,2,,,,,No,Yes,No,0,0,No,
+2/24/2024 16:00:06,88,F2,Antony,Yes,No,1,,,,,,No,"Ground, Source",,5,4,,,,,,Yes,Didn't try,No,,0,No,misses.1
+2/26/2024 20:34:55,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+3/2/2024 14:51:47,6004,14,Trevor,Yes,No,,,,,,,No,Ground,,,,,,,,,,Failed,,,,No,
+3/2/2024 14:52:47,8090,Q14,Antony,Yes,No,0,0,,,,,No,,1,8,0,0,,,,,Yes,Didn't try,No,1,2,No,No shooter mechanism
+3/2/2024 14:52:49,435,Q14,Aditya Harikumar,Yes,No,0,0,,,,,No,,,,0,0,,,,,No,Didn't try,No,0,2,No,it didn’t move the whole round
+3/2/2024 14:53:39,900,I 14,Marwan Makhtoub,Yes,Yes,2,2,,,,,,Ground,10,,,,,,,,,Didn't try,No,,,No,SPEEDYYYY and also died 20 sec into teleop 
+3/2/2024 14:57:47,8757,15,Marwan Makhtoub,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/2/2024 14:58:22,587,Q15,Aditya Harikumar,No,,,,,,,,,,,,,,,,,,,,,,,,
+3/2/2024 15:02:35,6908,Q15,Antony,Yes,Yes,1,0,,,,,No,"Ground, Source",1,7,1,0,,,,,Yes,Didn't try,No,0,0,No,misses.2
+3/2/2024 15:10:54,5607,16,Tre,Yes,No,,,,,,,No,Ground,,,,,,,,,No,,,,,No,
+3/2/2024 15:11:12,900,Q16,Antony,Yes,No,0,0,,,,,No,Source,1,6,2,0,,,,,Yes,Didn't try,No,0,0,No,missed.1; slow intake
+3/2/2024 15:12:18,8746,Q16,Marwan Makhtoub,Yes,Yes,,,,,,,,Source,2,4,3,,,,,,Yes,Didn't try,No,0,0,Yes,They dropped the not from the source into the shooter
+3/2/2024 15:12:18,5607,Q16,Sophie,Yes,Yes,0,0,,,,,No,Ground,1,4,4,0,,,,,Yes,Didn't try,No,0,2,No,
+3/2/2024 15:19:06,9259,17,Trevor,,No,,,,,,,No,,,,,,,,,,Yes,Didn't try,No,,,,
+3/2/2024 15:25:15,5190,Q17,Sophie,Yes,,0,0,,,,,No,Ground,3,4,2,0,,,,,Yes,Didn't try,No,0,0,No,
+3/2/2024 15:25:29,4829,Q15,Isaac Boroughs,Yes,Yes,0,0,,,,,No,Ground,,,0,0,,,,,No,Yes,No,1,0,Yes,Picked up notes and dropped them near the speaker.
+3/2/2024 15:26:13,6004,Q17,Marwan Makhtoub,Yes,Yes,,,,,,,,Ground,3,2,4,,,,,,,Failed,No,2,2,Yes,
+3/2/2024 15:30:48,2059,Q18,Sophie,Yes,Yes,0,0,,,,,No,Ground,4,6,4,0,,,,,Yes,Didn't try,No,0,2,No,
+3/2/2024 15:31:05,6512,Q18,Marwan Makhtoub,Yes,Yes,,,,,,,,Source,6,,1,,,,,,Yes,Yes,No,,,No,Stuck in climb 
+3/2/2024 15:38:46,6908,19,Trevor,Yes,Yes,,,,,,,No,Source,,,0,2,,,,,Yes,Failed,No,,0,,
+3/2/2024 15:38:47,6502,Q19,Sophie,Yes,Yes,0,0,,,,,No,Ground,3,3,5,0,,,,,Yes,Yes,No,0,0,No,
+3/2/2024 15:38:53,3489,Q19,Marwan Makhtoub,Yes,Yes,,,,,,,,Ground,9,4,1,,,,,,Yes,Failed,No,,2,Yes,Power shot
+3/2/2024 15:40:07,2642,Q19,Aditya Harikumar,Yes,Yes,0,0,,,,,No,"Ground, Source",1,4,5,,,,,,Yes,Yes,No,,2,Yes,really fast; great accuracy w/ speaker
+3/2/2024 15:47:20,4816,Q20,Sophie,Yes,Yes,0,0,,,,,No,"Ground, Source",3,7,0,0,,,,,Yes,Didn't try,No,0,0,No,
+3/2/2024 15:47:36,7763,Q20,Marwan Makhtoub,Yes,Yes,3,,,,,,Yes,Ground,5,4,3,,,,,,Yes,Failed,No,1,2,Yes,Scored quickly and microphone 
+3/2/2024 15:48:42,587,Q20,Aditya Harikumar,Yes,Yes,0,0,,,,,,"Ground, Source",1,,,,,,,,Yes,Yes,No,0,2,No,
