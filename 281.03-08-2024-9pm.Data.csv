@@ -79,7 +79,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 14:26:55,7085,Q15,Eric,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,,10,infinity,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,Disabled whole game
 3/8/2024 14:27:41,4451,Q15,Sadra,Yes,Yes,1,0,Scored,,,,,Ground,,,6,,Scored,Scored,,,,Didn't try,No,,,,
 3/8/2024 14:28:29,8575,Q15,Max Geissler,Yes,Yes,1,,Scored,,,,No,Ground,,,3,,Scored,,,,Yes,Didn't try,No,1,2,,Their climb hit a chain and broke
-3/8/2024 14:28:31,Trevor,Q15,1287,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,"Ground, Source",,7*,2,1,Scored,Scored,,,Yes,Yes,No,0,0,No,
+3/8/2024 14:28:31,1287,Q15,Trevor,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,"Ground, Source",,7*,2,1,Scored,Scored,,,Yes,Yes,No,0,0,No,
 3/8/2024 14:28:32,1648,Q14,Dhanya,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,5,0,0,Neither,Neither,Neither,Neither,Yes,Yes,No,0,0,Yes,
 3/8/2024 14:33:24,9477,Q16,Isaac Boroughs,No,,,,,,,,,,,,,,,,,,,,,,,,
 3/8/2024 14:38:31,1319,Q16,Eric,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,"Ground, Source",,6,0,0,Attempted,Neither,Neither,Neither,No,Yes,No,0,2,No,
@@ -186,7 +186,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 18:54:41,3091,Q43,Sanjith,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,Ground,,5,,1,Scored,Neither,Neither,Neither,No,Yes,No,0,0,No,
 3/8/2024 18:55:38,7085,Q43,Antony,Yes,Yes,0,,Neither,Neither,Neither,Neither,No,Source,1,6,0,0,Attempted,,,,Yes,Didn't try,No,0,0,Yes,
 3/8/2024 19:00:36,5130,Q44,Antony,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",1,5,2,0,Scored,,,,No,Yes,No,0,,No,Note got stuck under robot multiple times
-3/8/2024 19:01:06,S,3489,Sanjith,No,No,1,0,Scored,Neither,Neither,Neither,No,Ground,,5,5,0,Scored,Neither,Neither,,No,Yes,No,0,3,No,
+3/8/2024 19:01:06,3489,Q44,Sanjith,No,No,1,0,Scored,Neither,Neither,Neither,No,Ground,,5,5,0,Scored,Neither,Neither,,No,Yes,No,0,3,No,
 3/8/2024 19:02:31,342,Q44,John Molfenter,Yes,Yes,0,0,Attempted,,,,No,Ground,1,6,3,2,Scored,,Scored,,No,Yes,No,0,3,No,Fairly consistent from beyond the auto line
 3/8/2024 19:08:16,6167,Q45,John Molfenter,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,1,8,2,0,Scored,,,,Yes,Failed,No,0,0,No,
 3/8/2024 19:08:19,,,,,Yes,1,0,Scored,Neither,Neither,Neither,No,,,5,0,0,Neither,Neither,Neither,Neither,No,,No,0,0,No,Played defense
