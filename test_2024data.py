@@ -6,5 +6,5 @@ def test_that_tests_run():
 
 def test_loading_raw_data():
     (analyzed, summary) = team_analysis.load_2024_data()
-    assert 37 == len(analyzed)
-    assert 32 == len(summary)
+    assert 192 == len(analyzed)
+    assert 38 == len(summary)
