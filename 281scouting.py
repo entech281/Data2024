@@ -20,30 +20,52 @@ st.title("281 2024 Scouting Data")
 (analyzed, summary) = load_data()
 teamlist = list(summary['team.number'])
 
+analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
+analyzed_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
+analyzed_gb.configure_default_column(groupable="true", filterable="true", width=50)
+analyzed_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
+analyzed_gb.configure_side_bar(filters_panel=True)
 
-def build_team_focus_tab(analyzed):
-    st.header("Team Over Time")
+summary_gb = GridOptionsBuilder.from_dataframe(summary)
+summary_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
+summary_gb.configure_default_column(groupable="true", filterable="true")
+summary_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
+summary_gb.configure_side_bar(filters_panel=True)
+
+
+def build_team_focus_tab(analyzed,summary):
+
     focus_team = st.selectbox("Look at  Team", options=teamlist)
     if focus_team:
+        st.header("Team Details for %s" % focus_team)
         comments = team_analysis.get_comments_for_team(focus_team,analyzed)
-        st.dataframe(comments)
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
+        summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
 
-        st.header("scoring")
+        col1,col2,col3 = st.columns(3)
+        with col1:
+            avg_pts_rank = int(summary_row['rank_by_avg_pts'])
+            frc_rank = int(summary_row['frc_rank'])
+            st.metric(label="Rank By Avg Pts",value=avg_pts_rank)
+            st.metric(label="Rank By Rank Pts", value=frc_rank)
+            if avg_pts_rank > frc_rank:
+                st.warning("OverRanked!",icon="⚠")
+
+        with col2:
+            st.metric(label="Avg Match Pts", value="{:.2f}".format(summary_row['avg_total_pts']))
+            st.metric(label="Climb Pts", value="{:.2f}".format(summary_row['climb_pts']))
+
+        with col3:
+            st.metric(label="Avg Speaker Pts", value="{:.2f}".format(summary_row['avg_notes_speaker']))
+            st.metric(label="Avg Amp Pts", value="{:.2f}".format(summary_row['avg_notes_amp']))
+
+        st.header("scoring timeline")
         plot3 = px.bar(perf_over_time, x='match.number', y=['speaker.pts','amp.pts'])
         plot3.update_layout(height=300)
         st.plotly_chart(plot3)
 
-        #st.header("speaker over time")
-        #plot4 = px.bar(perf_over_time, x='match.number', y='speaker.pts')
-        #plot4.update_layout(height=250)
-        #st.plotly_chart(plot4)
-
-        ##st.header("amp over time")
-        #plot5 = px.bar(perf_over_time, x='match.number', y='amp.pts')
-        #plot5.update_layout(height=250)
-        #st.plotly_chart(plot5)
-        #st.write(perf_over_time)
+        st.header("Scouting Notes")
+        st.dataframe(comments)
 
 
 
@@ -75,19 +97,7 @@ def build_match_predictor():
             st.write(blue_score)
 
 
-def build_offense_tab():
-    analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
-    analyzed_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
-    analyzed_gb.configure_default_column(groupable="true", filterable="true", width=50)
-    analyzed_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
-    analyzed_gb.configure_side_bar(filters_panel=True)
-
-    summary_gb = GridOptionsBuilder.from_dataframe(summary)
-    summary_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
-    summary_gb.configure_default_column(groupable="true", filterable="true")
-    summary_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
-    summary_gb.configure_side_bar(filters_panel=True)
-
+def build_team_tab():
     st.header("Team Summary")
 
     top_teams = team_analysis.compute_top_team_summary(summary)
@@ -122,6 +132,8 @@ def build_offense_tab():
         plot2 = px.scatter(summary, x='avg_notes_speaker', y='avg_notes_amp', hover_name='team.number',
                            size='avg_total_pts')
         st.plotly_chart(plot2)
+
+def build_match_tab():
 
     st.header("Analyzed Match Data")
     st.text("Choose Filters")
@@ -222,12 +234,14 @@ def build_offense_tab():
            )
 
 
-team_focus, offense, defense, match_predictor = st.tabs(['Team Focus','Offense', 'Defense', 'Match Predictor'])
-with offense:
-    build_offense_tab()
+teams,match_data,defense, match_predictor,team_focus = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus'])
+with teams:
+    build_team_tab()
+with match_data:
+    build_match_tab()
 with defense:
     build_defense_tab()
 with team_focus:
-    build_team_focus_tab(analyzed)
+    build_team_focus_tab(analyzed,summary)
 with match_predictor:
     build_match_predictor()

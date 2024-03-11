@@ -28,6 +28,7 @@ def load_2024_data():
     )
 
 def team_summary(analzyed_data):
+
     team_summary = analzyed_data.groupby('team.number').agg(
         max_teleop=('teleop.pts', 'max'),
         avg_teleop=('teleop.pts', 'mean'),
@@ -48,8 +49,26 @@ def team_summary(analzyed_data):
         mfld_teleop_acry=('mfld.teleop.acry','mean'),
         pod_teleop_acry=('pod.teleop.acry','mean'),
         rps=('rp.pts','sum'),
-        avg_speed=('fast.pts','mean')
+        avg_speed=('fast.pts','mean'),
+        parks_pts=('park.pts','mean'),
+        climb_pts=('climb.pts','mean'),
+        mobility_pts=('mobility.pts','mean'),
+        avg_coop_pts=('coop.pts','mean'),
+        avg_endgame=('endgame.pts','mean')
     )
+    team_summary['rank_by_avg_pts'] = team_summary[['avg_total_pts','avg_teleop']].apply(tuple,axis=1).rank(method='dense', ascending=False)
+    team_summary['frc_rank'] = team_summary[
+        ['rps','avg_coop_pts','avg_total_pts','avg_auto','avg_endgame']
+    ].apply(tuple,axis=1).rank(method='dense',ascending=False)
+
+    #ranking method
+    # 1 raking points
+    # 2 avg coopertision
+    # 3 avg alliance match score without fouls
+    # 4 avg alliance auto
+    # 5 avg alliance endgame
+    # 6 random
+
 
     team_summary = team_summary.sort_values(by='avg_total_pts', ascending=False).reset_index()
     team_summary['team.number'] = team_summary['team.number'].astype(int)
@@ -89,13 +108,9 @@ def team_analyze(all_data):
         'Team RPs': 'rps',
         'Did they employ a strategy that might exaggerate their stats?': 'strategy.impact',
         'General Notes (Separate statements with ;)': 'general.notes'
-
     })
     all_data['team.number'] = pd.to_numeric(all_data["team.number"],errors='ignore')
-
     all_data = all_data.drop(columns=['scouter.name'])
-
-    #base_data = all_data.fillna(0)
     all_data['team.number'].replace([np.inf, np.nan], 0, inplace=True)
     all_data['team.number'] = all_data['team.number'].astype(int)
     base_data = all_data
@@ -122,6 +137,11 @@ def team_analyze(all_data):
     FIELD_LENGTH=54.270833333
     base_data['fast.pts'] =  pd.to_numeric(base_data['robot.speed'],errors='coerce').fillna(0)/FIELD_LENGTH
 
+    def calc_coop_points(row):
+        return choose_from_map(row['alliance.coop'], {
+            'Yes': 1.0
+        }, 0.0)
+    base_data['coop.pts'] = base_data.apply(calc_coop_points, axis=1)
 
     def calc_auto_docking_pts(row):
         return choose_from_map(row['climb'], {
@@ -193,7 +213,8 @@ def team_analyze(all_data):
     base_data['amp.pts']= base_data['notes.amp.auto']*2.0 + \
             base_data['notes.amp.teleop']*1.0
 
-    print("Here, fastpts=",base_data['fast.pts'])
+    base_data['endgame.pts'] = base_data['climb.pts'] + base_data['trap.pts'] + base_data['park.pts']
+
     return base_data
 
 if __name__ == "__main__":
