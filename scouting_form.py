@@ -1,34 +1,28 @@
-import dataclasses as dataclasses
+
 import streamlit as st
 import gspread
 from dataclasses import dataclass
-
-
+import pandas as pd
+from pydantic import BaseModel
 CREDENTIAL_PATH="./google_sheet_creds.json"
 SHEET_ID='1JHUOVxvL_UDA3tqxTiwWO095eOxppAWJi7PtDnxnGt8'
 
-@dataclass
-class ScoutingRecord:
-    team_number: int
-    match_number: str
-    scouter_name: str
-    speaker_subwoofer_completed_teleop: int
-    speaker_subwoofer_missed_teleop: int
-    rps: int
-    notes: str
 
-    @staticmethod
-    def blank_record():
-        return ScoutingRecord(0, 0, None, 0, 0, 0, None)
+class ScoutingRecord(BaseModel):
+    team_number: int = 0
+    match_number: str = ''
+    scouter_name: str = 'Unknown'
+    speaker_subwoofer_completed_teleop: int = 0
+    speaker_subwoofer_missed_teleop: int = 0
+    rps: int = 0
+    notes: str = ''
 
     @staticmethod
     def header_columns():
         #this generates the fields in dot format
-        return [ f.name.replace('_','.') for f in dataclasses.fields(ScoutingRecord) ]
+        return [ f.replace('_','.') for f in ScoutingRecord.__fields__.keys() ]
 
-
-record = ScoutingRecord.blank_record()
-
+record = ScoutingRecord()
 
 def connect_sheet():
     gs = gspread.service_account(CREDENTIAL_PATH)
@@ -36,6 +30,21 @@ def connect_sheet():
     s = gs.open_by_key(SHEET_ID).get_worksheet(CHARLESTON_TAB)
     return s
 
+def get_all_data():
+    gs = connect_sheet()
+    d = gs.get()
+
+    columns_with_underscores = [ c.replace('.','_') for c in d[0]]
+    rows = d[1:]
+    list_of_record=[]
+    for r in d[1:]:
+        dr = dict(zip(columns_with_underscores,r))
+        sr = ScoutingRecord(**dr)
+        list_of_record.append(sr)
+
+    #this incantation from SO https://stackoverflow.com/questions/61814887/how-to-convert-a-list-of-pydantic-basemodels-to-pandas-dataframe
+    df = pd.DataFrame([r.model_dump() for r in list_of_record])
+    return df
 
 def write_header_if_needed(sheet):
     a1 = sheet.cell(1,1)
@@ -55,9 +64,15 @@ write_header_if_needed(connect_sheet())
 st.title("Scouting 2024 Charleston")
 match_form = st.form(key="match_row",clear_on_submit=True)
 
+st.header("DATA")
+d = get_all_data()
+st.write(get_all_data().dtypes )
+st.write(get_all_data() )
+
 with match_form:
     col1,col2,col3 = st.columns(3)
     with col1:
+
         record.team_number = st.selectbox(label="Team", options=['281', '2974', '4451', '342', '343'])
     with col2:
         record.match_number = st.selectbox(label="Match", options=['Q1', 'Q2', 'Q3', 'Q4', 'Q5'])

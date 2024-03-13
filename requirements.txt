@@ -8,3 +8,4 @@ notebook
 plotly
 streamlit-plotly-events
 pytest
+pydantic
