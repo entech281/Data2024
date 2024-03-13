@@ -2,6 +2,21 @@ import pandas as pd
 import numpy as np
 
 
+def compute_top_team_summary(summary):
+    top_teams = summary.sort_values(by='avg_total_pts', inplace=False, ascending=False)
+    top_teams = top_teams.head(24)
+    top_teams = top_teams[[ 'team.number', 'avg_teleop', 'avg_auto','rps']]
+    top_teams = top_teams.rename(columns={
+        'avg_teleop': 'teleop',
+        'avg_auto': 'auto'
+    })
+    return top_teams
+
+def get_comments_for_team(team_number, analyzed):
+    this_team_data = analyzed[ analyzed["team.number"] == team_number]
+    general_comments = this_team_data[['general.notes']].dropna()
+    return general_comments
+
 def load_2024_data():
     raw_data = pd.read_csv("281.03-09-2024-11am.Data.csv")
 
@@ -13,6 +28,7 @@ def load_2024_data():
     )
 
 def team_summary(analzyed_data):
+
     team_summary = analzyed_data.groupby('team.number').agg(
         max_teleop=('teleop.pts', 'max'),
         avg_teleop=('teleop.pts', 'mean'),
@@ -32,12 +48,32 @@ def team_summary(analzyed_data):
         mid_teleop_acry=('mid.teleop.acry','mean'),
         mfld_teleop_acry=('mfld.teleop.acry','mean'),
         pod_teleop_acry=('pod.teleop.acry','mean'),
-        rps=('rp.pts','mean'),
-        avg_speed=('fast.pts','mean')
+        rps=('rp.pts','sum'),
+        avg_speed=('fast.pts','mean'),
+        parks_pts=('park.pts','mean'),
+        climb_pts=('climb.pts','mean'),
+        mobility_pts=('mobility.pts','mean'),
+        avg_coop_pts=('coop.pts','mean'),
+        avg_endgame=('endgame.pts','mean')
     )
+    team_summary['rank_by_avg_pts'] = team_summary[['avg_total_pts','avg_teleop']].apply(tuple,axis=1).rank(method='dense', ascending=False)
+    team_summary['frc_rank'] = team_summary[
+        ['rps','avg_coop_pts','avg_total_pts','avg_auto','avg_endgame']
+    ].apply(tuple,axis=1).rank(method='dense',ascending=False)
+
+    #ranking method
+    # 1 raking points
+    # 2 avg coopertision
+    # 3 avg alliance match score without fouls
+    # 4 avg alliance auto
+    # 5 avg alliance endgame
+    # 6 random
+
 
     team_summary = team_summary.sort_values(by='avg_total_pts', ascending=False).reset_index()
-    return team_summary
+    team_summary['team.number'] = team_summary['team.number'].astype(int)
+
+    return team_summary.fillna(0)
 
 def team_analyze(all_data):
     # rename columns to shorter better names
@@ -72,13 +108,12 @@ def team_analyze(all_data):
         'Team RPs': 'rps',
         'Did they employ a strategy that might exaggerate their stats?': 'strategy.impact',
         'General Notes (Separate statements with ;)': 'general.notes'
-
     })
     all_data['team.number'] = pd.to_numeric(all_data["team.number"],errors='ignore')
     all_data = all_data.drop(columns=['scouter.name'])
-
-    base_data = all_data.fillna(0)
-    print(base_data.columns)
+    all_data['team.number'].replace([np.inf, np.nan], 0, inplace=True)
+    all_data['team.number'] = all_data['team.number'].astype(int)
+    base_data = all_data
     base_data['rp.pts'] = base_data['rps']
 
     base_data['total.notes.speaker'] = base_data['notes.speaker.auto'] + base_data['notes.speaker.teleop']
@@ -99,14 +134,14 @@ def team_analyze(all_data):
 
     #compute points for docking during auto
 
-    def calc_fast_pts(row):
-        FIELD_LENGTH=54.270833333
-        base_data['fast.pts'] =  pd.to_numeric(base_data['robot.speed'],errors='coerce').fillna(0)
-        base_data['fast.pts'].replace([np.inf],0,inplace=True)
-        base_data['fast.pts'] = base_data['fast.pts']/FIELD_LENGTH
-        base_data['fast.pts'] = base_data['fast.pts'].astype(int)
+    FIELD_LENGTH=54.270833333
+    base_data['fast.pts'] =  pd.to_numeric(base_data['robot.speed'],errors='coerce').fillna(0)/FIELD_LENGTH
 
-    base_data['fast.pts'] =base_data.apply(calc_fast_pts,axis=1)
+    def calc_coop_points(row):
+        return choose_from_map(row['alliance.coop'], {
+            'Yes': 1.0
+        }, 0.0)
+    base_data['coop.pts'] = base_data.apply(calc_coop_points, axis=1)
 
     def calc_auto_docking_pts(row):
         return choose_from_map(row['climb'], {
@@ -115,79 +150,48 @@ def team_analyze(all_data):
         }, 0.0)
     base_data['climb.pts'] = base_data.apply(calc_auto_docking_pts, axis=1)
 
-#AUTO RELIABILITY
 
-    def calc_sub_auto_acry(row):
-        return choose_from_map(row['subwoofer.reliability.auto'], choices={
+    def calc_accuracy_row(row,field_name):
+        return choose_from_map(row[field_name], choices={
             'Neither': 0.0,
             'Attempted': 1.0,
             'Scored': 2.0,
         }, default=0.0)
 
+    # AUTO RELIABILITY
+    def calc_sub_auto_acry(row):
+        return calc_accuracy_row(row,'subwoofer.reliability.auto')
     base_data['sub.auto.acry'] = base_data.apply(calc_sub_auto_acry, axis=1)
 
     def calc_mid_auto_acry(row):
-        return choose_from_map(row['middle.reliability.auto'], choices={
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
-
+        return calc_accuracy_row(row,'middle.reliability.auto')
     base_data['mid.auto.acry'] = base_data.apply(calc_mid_auto_acry, axis=1)
 
     def calc_mfld_auto_acry(row):
-        return choose_from_map(row['midfield.reliability.auto'], choices={
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
-
+        return calc_accuracy_row(row,'midfield.reliability.auto')
     base_data['mfld.auto.acry'] = base_data.apply(calc_mfld_auto_acry, axis=1)
 
     def calc_pod_auto_acry(row):
-        return choose_from_map(row['podium.reliability.auto'], choices={
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
-
+        return calc_accuracy_row(row,'podium.reliability.auto')
     base_data['pod.auto.acry'] = base_data.apply(calc_pod_auto_acry, axis=1)
 
 
-#TELEOP RELIABILITY
+    #TELEOP RELIABILITY
 
     def calc_sub_teleop_acry(row):
-        return choose_from_map(row['subwoofer.reliability.teleop'], choices= {
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
+        return calc_accuracy_row(row,'subwoofer.reliability.teleop')
     base_data['sub.teleop.acry'] = base_data.apply(calc_sub_teleop_acry, axis=1)
 
     def calc_mid_teleop_acry(row):
-        return choose_from_map(row['middle.reliability.teleop'], choices={
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
-
+        return calc_accuracy_row(row,'middle.reliability.teleop')
     base_data['mid.teleop.acry'] = base_data.apply(calc_mid_teleop_acry, axis=1)
 
     def calc_mfld_teleop_acry(row):
-        return choose_from_map(row['midfield.reliability.teleop'], choices={
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
+        return calc_accuracy_row(row,'midfield.reliability.teleop')
 
     base_data['mfld.teleop.acry'] = base_data.apply(calc_mfld_teleop_acry, axis=1)
     def calc_pod_teleop_acry(row):
-        return choose_from_map(row['podium.reliability.teleop'], choices= {
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
-
+        return calc_accuracy_row(row,'podium.reliability.teleop')
     base_data['pod.teleop.acry'] = base_data.apply(calc_pod_teleop_acry, axis=1)
 
     base_data['teleop.pts']= base_data['notes.speaker.teleop']*2.0 + \
@@ -209,8 +213,12 @@ def team_analyze(all_data):
     base_data['amp.pts']= base_data['notes.amp.auto']*2.0 + \
             base_data['notes.amp.teleop']*1.0
 
+    base_data['endgame.pts'] = base_data['climb.pts'] + base_data['trap.pts'] + base_data['park.pts']
+
     return base_data
 
 if __name__ == "__main__":
     (analyzed, summary) = load_2024_data()
-    analyzed.to_csv('281-3-8-2024.csv')
+    #analyzed.to_csv('281-3-8-2024.csv')
+    summary = compute_top_team_summary(summary)
+    print(summary)
