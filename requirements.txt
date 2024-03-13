@@ -1,7 +1,7 @@
 pandas
 numpy
 streamlit
-altair<5
+gspread
 streamlit-aggrid
 jupyter
 notebook

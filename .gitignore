@@ -3,3 +3,4 @@ venv
 .idea
 *.pyc
 .ipynb_checkpoints
+*creds.json
