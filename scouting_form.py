@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 CREDENTIAL_PATH="./google_sheet_creds.json"
 SHEET_ID='1JHUOVxvL_UDA3tqxTiwWO095eOxppAWJi7PtDnxnGt8'
+
 @dataclass
 class ScoutingRecord:
     team_number: int
@@ -22,54 +23,19 @@ class ScoutingRecord:
 
     @staticmethod
     def header_columns():
+        #this generates the fields in dot format
         return [ f.name.replace('_','.') for f in dataclasses.fields(ScoutingRecord) ]
 
 
-SHEET_FIELDS=[
-    'team.number',
-    'match.number',
-    'scouter.name',
-    #'team.present',
-    #'notes.speaker.auto',
-    #'notes.amp.auto',
-    #'speaker.subwoofer.completed.auto',
-    #'speaker.subwoofer.attempted.auto',
-    #'speaker.podium.completed.auto',
-    #'speaker.podium.attempted.auto',
-    #'speaker.medium.completed.auto',
-    #'speaker.medium.attempted.auto',
-    #'speaker.midfield.completed.auto',
-    #'speaker.midfield.attempted.auto',
-    #'alliance.coop',
-    #'robot.disabled.time',
-    #'robot.speed',
-    #'notes.speaker.teleop',
-    #'notes.amp.teleop',
-    'speaker.subwoofer.completed.teleop',
-    'speaker.subwoofer.attempted.teleop',
-    #'speaker.podium.completed.teleop',
-    #'speaker.podium.attempted.teleop',
-    #'speaker.medium.completed.teleop',
-    #'speaker.medium.attempted.teleop',
-    #'speaker.midfield.completed.teleop',
-    #'speaker.midfield.attempted.teleop',
-    #'park',
-    #'climb',
-    #'high.note',
-    'rps',
-    #'mobility',
-    #'fouls',
-    #'defense.rating',
-    #'defense.forced.penalties',
-    'notes',
-]
 record = ScoutingRecord.blank_record()
+
 
 def connect_sheet():
     gs = gspread.service_account(CREDENTIAL_PATH)
     CHARLESTON_TAB = 0
     s = gs.open_by_key(SHEET_ID).get_worksheet(CHARLESTON_TAB)
     return s
+
 
 def write_header_if_needed(sheet):
     a1 = sheet.cell(1,1)
@@ -78,9 +44,11 @@ def write_header_if_needed(sheet):
         s = connect_sheet()
         s.append_row( ScoutingRecord.header_columns())
 
+
 def write_scouting_row(rec:ScoutingRecord):
     s = connect_sheet()
     s.append_row(dataclasses.astuple(rec))
+
 
 write_header_if_needed(connect_sheet())
 
