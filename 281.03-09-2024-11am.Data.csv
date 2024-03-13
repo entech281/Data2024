@@ -27,8 +27,8 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 11:44:15,4189,Q5,Marwan Makhtoub,No,,,,,,,,,,,,,,,,,,,,,,,,
 3/8/2024 11:46:03,3490,Q5,Albert Mathisz,Yes,No,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",,They where immobile,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,Robot was immobile for the entirety of the match
 3/8/2024 11:46:38,1287,Q5,Antony,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",1,5,0,2,,,Attempted,,No,Yes,No,0,,No,misses.2; attempted trap; initially had issues with joint mechanism on top shooter
-3/8/2024 11:47:25,9575,Q5,Sanjith,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,,8 sec,5,0,Scored,Scored,Neither,Neither,Yes,Failed,No,0,2,No,Broke their climb
-3/8/2024 11:48:45,3489,5,Victor,Yes,Yes,,,,,,,,"Ground, Source",,,,,Scored,,,,No,Yes,Yes,,0,,
+3/8/2024 11:47:25,8575,Q5,Sanjith,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,,8 sec,5,0,Scored,Scored,Neither,Neither,Yes,Failed,No,0,2,No,Broke their climb
+3/8/2024 11:48:45,3489,Q5,Victor,Yes,Yes,,,,,,,,"Ground, Source",,,,,Scored,,,,No,Yes,Yes,,0,,
 3/8/2024 11:49:59,3976,Q5,Sophie,No,No,0,0,Neither,Neither,Neither,Neither,No,,,,0,0,Neither,Neither,Neither,Neither,No,Didn't try,No,0,0,No,
 3/8/2024 11:51:28,3489,Q5,Aditya,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,1,4,2,0,Neither,Scored,Neither,Neither,No,Yes; with another robot,No,0,2,No,very quick; semi-accurate shooter; efficient intskr
 3/8/2024 11:57:10,9561,Q6,Antony,No,,,,,,,,,,,,,,,,,,,,,,,,
@@ -80,7 +80,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 14:27:41,4451,Q15,Sadra,Yes,Yes,1,0,Scored,,,,,Ground,,,6,,Scored,Scored,,,,Didn't try,No,,,,
 3/8/2024 14:28:29,8575,Q15,Max Geissler,Yes,Yes,1,,Scored,,,,No,Ground,,,3,,Scored,,,,Yes,Didn't try,No,1,2,,Their climb hit a chain and broke
 3/8/2024 14:28:31,1287,Q15,Trevor,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,"Ground, Source",,7*,2,1,Scored,Scored,,,Yes,Yes,No,0,0,No,
-3/8/2024 14:28:32,1648,Q14,Dhanya,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,5,0,0,Neither,Neither,Neither,Neither,Yes,Yes,No,0,0,Yes,
+3/8/2024 14:28:32,1648,Q15,Dhanya,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,2,5,0,0,Neither,Neither,Neither,Neither,Yes,Yes,No,0,0,Yes,
 3/8/2024 14:33:24,9477,Q16,Isaac Boroughs,No,,,,,,,,,,,,,,,,,,,,,,,,
 3/8/2024 14:38:31,1319,Q16,Eric,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,"Ground, Source",,6,0,0,Attempted,Neither,Neither,Neither,No,Yes,No,0,2,No,
 3/8/2024 14:38:59,4189,Q16,Marwan Makhtoub,Yes,No,1,,,,,,,"Ground, Source",1,1.5,0,0,,,,,Yes,Failed,No,,,Yes,Ground and source climb had issues and missed shooter unreliable but if it was working like it should it would be an excellent assset to an alliance
@@ -95,7 +95,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 15:01:31,5130,Q18,Max Geissler,Yes,Yes,,,,,,,,Ground,,,6,,Scored,Attempted,,,Yes,Failed,,,3,,
 3/8/2024 15:01:31,4451,Q18,Dhanya,Yes,No,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",2,5,3,0,Scored,Neither,Neither,Scored,Yes,Didn't try,No,0,0,Yes,
 3/8/2024 15:01:47,6167,Q18,Eric,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,1,4,1,0,Scored,Neither,Neither,Neither,No,Failed,No,0,0,No,Took a whole minute to pick up a piece
-3/8/2024 15:01:51,1648,Q17,Isaac Boroughs,Yes,Yes,0,0,Neither,Neither,Neither,Neither,Yes,,,N/A,0,0,Neither,Neither,Neither,Neither,Yes,Yes,No,0,3,No,Appears broken; Didnt move much
+3/8/2024 15:01:51,1648,Q18,Isaac Boroughs,Yes,Yes,0,0,Neither,Neither,Neither,Neither,Yes,,,N/A,0,0,Neither,Neither,Neither,Neither,Yes,Yes,No,0,3,No,Appears broken; Didnt move much
 3/8/2024 15:06:08,1293,Q19,Trevor,No,,,,,,,,,,,,,,,,,,,,,,,,
 3/8/2024 15:08:46,3490,Q19,Max Geissler,Yes,No,1,,Scored,,,,,Ground,,,,,,,,,No,Didn't try,No,2,,,
 3/8/2024 15:12:54,3489,Q19,Dhanya,Yes,No,,,,,,,,Ground,2,5,2,0,Scored,Neither,Neither,Neither,Yes,Failed,No,0,0,No,
@@ -105,7 +105,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 15:20:42,7085,Q20,Max Geissler,Yes,Yes,1,,Scored,,,,,Source,,,1,,Scored,,,,Yes,Didn't try,No,,3,,
 3/8/2024 15:20:46,4533,Q20,Eric,Yes,Yes,0,0,Neither,Neither,Neither,Neither,Yes,Source,1,5,2,0,Scored,Neither,Neither,Neither,No,Yes,No,1,0,No,
 3/8/2024 15:28:50,9315,Q22,Max Geissler,Yes,No,0,0,Neither,Neither,Neither,Neither,,Ground,1,,1,,Scored,Neither,Neither,Neither,Yes,Didn't try,No,,2,,
-3/8/2024 15:28:53,3901,Q21,Tre,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,Ground,,8,1,1,Neither,,,,Yes,Yes,No,0,0,No,
+3/8/2024 15:28:53,3091,Q21,Tre,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,Ground,,8,1,1,Neither,,,,Yes,Yes,No,0,0,No,
 3/8/2024 15:29:04,6366,Q21,Eric,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Source,1,3,3,1,Scored,Scored,,,Yes,Didn't try,No,0,0,No,
 3/8/2024 15:29:30,1287,Q21,Dhanya,Yes,No,,,,,,,,Ground,2,7,1,0,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,
 3/8/2024 15:36:30,3489,Q22,Max Geissler,Yes,No,0,0,,,,,,Ground,,,2,,Scored,,,,Yes,Failed,No,,,,
@@ -166,7 +166,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 17:35:21,6167,Q35,Ana,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Source,3,15,0,1,Neither,Neither,Neither,Neither,Yes,Failed,No,0,,No,Modified kitbot
 3/8/2024 17:39:31,342,Q35,Sanjith,Yes,Yes,0,0,Attempted,Neither,Neither,Neither,No,Ground,,6,3,0,Scored,Neither,Neither,Neither,No,Yes,No,0,0,No,
 3/8/2024 17:39:48,4189,Q35,Antony,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,1,5,1,2,Scored,,,,Yes,Didn't try,No,0,0,No,Could do amp and speaker
-3/8/2024 17:44:32,3876,Q36,Sanjith,No,,,,,,,,,,,,,,,,,,,,,,,,Wasn't there
+3/8/2024 17:44:32,3976,Q36,Sanjith,No,,,,,,,,,,,,,,,,,,,,,,,,Wasn't there
 3/8/2024 17:46:47,4451,Q36,Antony,Yes,Yes,2,0,Neither,Neither,Neither,Neither,No,Ground,,,5,,,,Scored,,Yes,Didn't try,No,0,2,Yes,misses.4; likes to place pieces in own half in dpeaker
 3/8/2024 17:46:54,7085,Q36,Ana,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,,1,8,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,1,2,No,"Modified kitbot, played defense"
 3/8/2024 17:53:59,4533,Q37,Ana,Yes,Yes,0,0,Neither,Neither,Neither,Neither,Yes,"Ground, Source",1,5,2,1,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,
@@ -178,7 +178,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 18:14:18,1319,Q39,Sanjith,No,,,,,,,,,,,,,,,,,,,,,,,,Not here
 3/8/2024 18:16:54,8736,Q39,Antony,Yes,Yes,1,,Scored,Neither,Neither,Neither,No,"Ground, Source",1,5,5,1,Scored,Neither,Neither,Neither,No,Didn't try,No,0,2,No,
 3/8/2024 18:30:40,9561,Q40,Sanjirh,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,,,8,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,,1,No,Pushbot
-3/8/2024 18:31:01,3229,Q40,Antony,Yes,Yes,0,0,Attempted,,,,No,Source,1,6,0,0,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,0,1,No,Little bit top heavy
+3/8/2024 18:31:01,3329,Q40,Antony,Yes,Yes,0,0,Attempted,,,,No,Source,1,6,0,0,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,0,1,No,Little bit top heavy
 3/8/2024 18:36:58,4533,Q41,Sanjith,Yes,Yes,0,0,Attempted,Neither,Neither,Neither,No,Ground,,6,3,0,Scored,Neither,Neither,Neither,No,Yes,No,0,1,No,
 3/8/2024 18:37:00,343,Q41,Antony,Yes,Yes,2,0,Scored,Neither,Neither,Neither,No,"Ground, Source",1,5,5,0,Scored,Neither,Scored,Neither,No,Didn't try,No,0,1,No,Seem to prefer speaker over amp
 3/8/2024 18:45:21,6366,Q42,Sanjith,Yes,No,1,0,Scored,Neither,Neither,Neither,No,Ground,,6,2,0,Scored,Neither,Neither,Neither,No,Yes,No,0,,No,Played defensively
@@ -189,7 +189,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/8/2024 19:01:06,3489,Q44,Sanjith,No,No,1,0,Scored,Neither,Neither,Neither,No,Ground,,5,5,0,Scored,Neither,Neither,,No,Yes,No,0,3,No,
 3/8/2024 19:02:31,342,Q44,John Molfenter,Yes,Yes,0,0,Attempted,,,,No,Ground,1,6,3,2,Scored,,Scored,,No,Yes,No,0,3,No,Fairly consistent from beyond the auto line
 3/8/2024 19:08:16,6167,Q45,John Molfenter,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Ground,1,8,2,0,Scored,,,,Yes,Failed,No,0,0,No,
-3/8/2024 19:08:19,,,,,Yes,1,0,Scored,Neither,Neither,Neither,No,,,5,0,0,Neither,Neither,Neither,Neither,No,,No,0,0,No,Played defense
+3/8/2024 19:08:19,3329,Q45,Sanjith,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,,,5,0,0,Neither,Neither,Neither,Neither,No,,No,0,0,No,Played defense
 3/8/2024 19:08:33,8736,Q45,Antony,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,"Ground, Source",1,5,3,2,,,Scored,,Yes,Didn't try,No,0,0,No,Efficient
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -234,8 +234,8 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/9/2024 9:37:43,6366,Q46,Aditya H,Yes,No,0,0,Neither,Neither,Neither,Neither,No,Ground,1,4,0,0,Attempted,Neither,Neither,Neither,Yes,Failed,No,2,2,No,inaccurate shooting
 3/9/2024 9:37:49,7676,Q46,Isaac Boroughs,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,,4,0,0,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,6,1,No,Caused at least 4 tech fouls
 3/9/2024 9:45:57,8575,Q47,Sophie,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,3,3,0,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,collected notes to help team
-3/9/2024 9:45:58,8317,Q47,Albert Mathisz,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Source,,8 seconds ,0,,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,0,2,No,Mainly a defense bot
-3/9/2024 9:46:35,9477,Q3,Aditya H,Yes,No,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",1,6,4,0,Scored,Attempted,Neither,Neither,Yes,Didn't try,No,0,2,Yes,thhey shot a LOT at the speaker
+3/9/2024 9:45:58,8137,Q47,Albert Mathisz,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,Source,,8 seconds ,0,,Attempted,Neither,Neither,Neither,Yes,Didn't try,No,0,2,No,Mainly a defense bot
+3/9/2024 9:46:35,9477,Q47,Aditya H,Yes,No,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",1,6,4,0,Scored,Attempted,Neither,Neither,Yes,Didn't try,No,0,2,Yes,thhey shot a LOT at the speaker
 3/9/2024 9:46:37,1648,Q47,Marwan Makhtoub,Yes,Yes,,,,,,,,,1,3,5,,Scored,,,,Yes,,No,0,2,Yes,Used serve to their advantage for climb also shot very accurately 
 3/9/2024 9:54:52,343,Q48,Victor,Yes,Yes,2,,Scored,Neither,Neither,Neither,Yes,"Ground, Source",,6,3,4,Scored,Scored,Neither,Neither,No,Yes,No,0,3,No,
 3/9/2024 9:54:55,1319,Q48,Albert Mathisz,Yes,No,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",,9,1,0,Scored,Neither,Neither,Neither,Yes,Yes,No,0,0,No,
@@ -259,7 +259,7 @@ Timestamp,Team Number,Match Number (Ex. Q42),Scouter Name,Did the team show up,M
 3/9/2024 10:22:26,1051,Q51,Albert Mathisz,Yes,Yes,0,0,Neither,Neither,Neither,Neither,No,"Ground, Source",,,4,0,Scored,Neither,Neither,Neither,Yes,Failed,No,0,0,No,
 3/9/2024 10:30:16,4451,Q52,Antony,Yes,Yes,2,0,Neither,Neither,Neither,Neither,No,"Ground, Source",1,0,5,0,Scored,,Scored,,Yes,Didn't try,No,0,2,No,Really effective and efficient 
 3/9/2024 10:30:31,3329,Q52,aditya h,Yes,No,0,0,Neither,Neither,Neither,Neither,No,,1,n/a didnt cross,0,0,Neither,Neither,Neither,Neither,Yes,Failed,No,1,2,No,spent a lot of time just standing in front of the opposing speaker not doing anything
-3/9/2024 10:30:31,2185,Q52,Albert Mathisz,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,"Ground, Source",,,2,0,Scored,Neither,Neither,Neither,Yes,Failed,Yes,0,0,No,
+3/9/2024 10:30:31,2815,Q52,Albert Mathisz,Yes,Yes,1,0,Scored,Neither,Neither,Neither,No,"Ground, Source",,,2,0,Scored,Neither,Neither,Neither,Yes,Failed,Yes,0,0,No,
 3/9/2024 10:30:37,1293,Q52,Isaac Boroughs,Yes,No,0,0,Attempted,Neither,Neither,Neither,No,Source,,5,0,0,Neither,Neither,Neither,Neither,Yes,Didn't try,No,0,0,No,
 3/9/2024 10:31:11,6366,Q52,Sophie,Yes,Yes,2,0,Scored,Scored,Neither,Neither,No,Ground,1,3,2,0,Scored,Attempted,Neither,Neither,Yes,Didn't try,No,0,0,Yes,
 3/9/2024 10:37:31,1319,Q53,Sophie,Yes,No,1,0,Scored,Neither,Neither,Neither,No,Ground,1,4,1,0,Scored,Neither,Neither,Neither,Yes,Didn't try,No,0,0,Yes,

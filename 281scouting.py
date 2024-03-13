@@ -176,14 +176,14 @@ if focus_team:
     col3,col4,co15 =  st.columns(3)
     with col3:
         st.header("total pts over time")
-        plot3 = px.scatter(perf_over_time, x='tstamp', y='total.pts')
+        plot3 = px.scatter(perf_over_time, x='match.number', y='total.pts')
         st.plotly_chart(plot3)
     with col4:
         st.header("speaker over time")
-        plot4 = px.scatter(perf_over_time, x='tstamp', y='speaker.pts')
+        plot4 = px.scatter(perf_over_time, x='match.number', y='speaker.pts')
         st.plotly_chart(plot4)
     with co15:
         st.header("amp over time")
-        plot5 = px.scatter(perf_over_time, x='tstamp', y='amp.pts')
+        plot5 = px.scatter(perf_over_time, x='match.number', y='amp.pts')
         st.plotly_chart(plot5)
     st.write(perf_over_time)
