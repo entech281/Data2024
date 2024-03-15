@@ -174,7 +174,19 @@ def build_match_tab():
     st.header("{d} Matching matches".format(d=len(filtered_data)))
 
     #see optoins here: https://docs.streamlit.io/library/api-reference/data/st.dataframe
-    st.dataframe(filtered_data,use_container_width=True,hide_index=True)
+    filtered_data_with_summary = team_analysis.compute_bar_scoring_summaries(filtered_data)
+    st.dataframe(filtered_data_with_summary,use_container_width=True,hide_index=True,column_config={
+        'auto_scoring_summary':st.column_config.BarChartColumn(
+            "Auto: SPK POD MED MID",
+            y_min=0,
+            y_max=5
+        ),
+        'telop_scoring_summary': st.column_config.BarChartColumn(
+            "Tele: SPK POD MED MID",
+            y_min=0,
+            y_max=5
+        ),
+    })
     #AgGrid(filtered_data,
     #       gridOptions=analyzed_gb.build(),
     #       columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,

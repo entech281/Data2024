@@ -13,12 +13,61 @@ def compute_top_team_summary(summary):
     })
     return top_teams
 
+def compute_bar_scoring_summaries(analyzed_matches):
+    pared_down = analyzed_matches
+    pared_down['auto_scoring_summary'] = pared_down[[
+        "speaker.subwoofer.completed.auto",
+        "speaker.podium.completed.auto",
+        "speaker.medium.completed.auto",
+        "speaker.midfield.completed.auto"
+    ]].values.tolist()
+
+    pared_down['telop_scoring_summary'] = pared_down[[
+        "speaker.subwoofer.completed.teleop",
+        "speaker.podium.completed.teleop",
+        "speaker.medium.completed.teleop",
+        "speaker.midfield.completed.teleop"
+    ]].values.tolist()
+
+    pared_down=  pared_down[[
+        "tstamp",
+        "team.number",
+        'match.number',
+        'notes.speaker.auto',
+        'notes.amp.auto',
+        'notes.speaker.teleop',
+        'notes.amp.teleop',
+        'telop_scoring_summary',
+        'auto_scoring_summary',
+        'robot.disabled.time',
+        'robot.speed',
+        'robot.pickup',
+        'climb',
+        'team.present',
+        'mobility',
+        'alliance.coop',
+        'park',
+        'trap',
+        'rp.pts',
+        'fouls',
+        'defense.rating',
+        'defense.forced.penalties'
+    ]]
+    pared_down.rename(inplace=True,columns={
+        "notes.speaker.auto": 'Auto: SPK',
+        "notes.amp.auto": 'Auto: AMP',
+        "notes.speaker.teleop": 'Tele: SPK',
+        "notes.amp.teleop": 'Tele: AMP',
+    })
+    return pared_down
+
+
+
 def get_comments_for_team(team_number, analyzed, comment_type):
     this_team_data = analyzed[ analyzed["team.number"] == team_number]
     return  this_team_data[[comment_type]].dropna()
 
 def analyze(raw_data):
-    print("Starting DF: ",raw_data)
     analyzed_data = team_analyze(raw_data)
     summary_data = team_summary(analyzed_data)
     return (

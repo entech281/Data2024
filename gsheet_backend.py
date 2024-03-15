@@ -5,13 +5,6 @@ from models import ScoutingRecord
 
 SHEET_ID='1JHUOVxvL_UDA3tqxTiwWO095eOxppAWJi7PtDnxnGt8'
 
-config = {}
-
-def set_config(new_config):
-    global config
-    config = new_config
-
-
 def _connect_sheet(secrets):
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
