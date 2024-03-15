@@ -1,10 +1,12 @@
 pandas
 numpy
 streamlit
-altair<5
+gspread
 streamlit-aggrid
 jupyter
 notebook
 plotly
 streamlit-plotly-events
 pytest
+pydantic
+toml
