@@ -1,11 +1,12 @@
-from  models import ScoutingRecord,get_match_data
+from  models import ScoutingRecord
 import pandas as pd
 import numpy as np
+import toml
 
 def compute_top_team_summary(summary):
     top_teams = summary.sort_values(by='avg_total_pts', inplace=False, ascending=False)
     top_teams = top_teams.head(24)
-    top_teams = top_teams[[ 'team_number', 'avg_teleop', 'avg_auto','rps']]
+    top_teams = top_teams[[ 'team.number', 'avg_teleop', 'avg_auto','rps']]
     top_teams = top_teams.rename(columns={
         'avg_teleop': 'teleop',
         'avg_auto': 'auto'
@@ -13,11 +14,11 @@ def compute_top_team_summary(summary):
     return top_teams
 
 def get_comments_for_team(team_number, analyzed):
-    this_team_data = analyzed[ analyzed["team_number"] == team_number]
+    this_team_data = analyzed[ analyzed["team.number"] == team_number]
     general_comments = this_team_data[['general.notes']].dropna()
     return general_comments
 
-def load_2024_data():
+def analyze(raw_data):
     raw_data = get_match_data()
 
     analyzed_data = team_analyze(raw_data)
@@ -28,8 +29,7 @@ def load_2024_data():
     )
 
 def team_summary(analzyed_data):
-
-    team_summary = analzyed_data.groupby('team_number').agg(
+    team_summary = analzyed_data.groupby('team.number').agg(
         max_teleop=('teleop.pts', 'max'),
         avg_teleop=('teleop.pts', 'mean'),
         max_auto=('auto.pts', 'max'),
@@ -71,7 +71,7 @@ def team_summary(analzyed_data):
 
 
     team_summary = team_summary.sort_values(by='avg_total_pts', ascending=False).reset_index()
-    team_summary['team_number'] = team_summary['team_number'].astype(int)
+    team_summary['team.number'] = team_summary['team.number'].astype(int)
 
     return team_summary.fillna(0)
 
@@ -80,10 +80,10 @@ def team_analyze(all_data):
     all_data['tstamp'] = pd.to_datetime(all_data.tstamp,errors='ignore')
 
 
-    all_data['team_number'] = pd.to_numeric(all_data["team_number"],errors='ignore')
+    all_data['team.number'] = pd.to_numeric(all_data["team.number"],errors='ignore')
     all_data = all_data.drop(columns=['scouter_name'])
-    #all_data['team_number'].replace([np.inf, np.nan], 0, inplace=True)
-    #all_data['team_number'] = all_data['team_number'].astype(int)
+    #all_data['team.number'].replace([np.inf, np.nan], 0, inplace=True)
+    #all_data['team.number'] = all_data['team.number'].astype(int)
     base_data = all_data
 
     base_data.rename(inplace=True, columns={
@@ -194,9 +194,3 @@ def team_analyze(all_data):
     base_data['endgame.pts'] = base_data['climb.pts'] + base_data['trap.pts'] + base_data['park.pts']
 
     return base_data
-
-if __name__ == "__main__":
-    (analyzed, summary) = load_2024_data()
-    #analyzed.to_csv('281-3-8-2024.csv')
-    summary = compute_top_team_summary(summary)
-    print(summary)
