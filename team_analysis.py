@@ -22,6 +22,9 @@ def compute_bar_scoring_summaries(analyzed_matches):
         "speaker.midfield.completed.auto"
     ]].values.tolist()
 
+    pared_down['total_amp_notes'] = pared_down['notes.amp.auto'] + pared_down['notes.amp.teleop']
+    pared_down['total_spk_notes'] = pared_down['notes.speaker.auto'] + pared_down['notes.speaker.teleop']
+
     pared_down['telop_scoring_summary'] = pared_down[[
         "speaker.subwoofer.completed.teleop",
         "speaker.podium.completed.teleop",
@@ -33,10 +36,8 @@ def compute_bar_scoring_summaries(analyzed_matches):
         "tstamp",
         "team.number",
         'match.number',
-        'notes.speaker.auto',
-        'notes.amp.auto',
-        'notes.speaker.teleop',
-        'notes.amp.teleop',
+        'total_amp_notes',
+        'total_spk_notes',
         'telop_scoring_summary',
         'auto_scoring_summary',
         'robot.disabled.time',
@@ -53,12 +54,6 @@ def compute_bar_scoring_summaries(analyzed_matches):
         'defense.rating',
         'defense.forced.penalties'
     ]]
-    pared_down.rename(inplace=True,columns={
-        "notes.speaker.auto": 'Auto: SPK',
-        "notes.amp.auto": 'Auto: AMP',
-        "notes.speaker.teleop": 'Tele: SPK',
-        "notes.amp.teleop": 'Tele: AMP',
-    })
     return pared_down
 
 

@@ -176,6 +176,22 @@ def build_match_tab():
     #see optoins here: https://docs.streamlit.io/library/api-reference/data/st.dataframe
     filtered_data_with_summary = team_analysis.compute_bar_scoring_summaries(filtered_data)
     st.dataframe(filtered_data_with_summary,use_container_width=True,hide_index=True,column_config={
+        #a stacked bar here woudl be ideal!
+        #these oculd also be over time which would be cool too
+        "total_amp_notes": st.column_config.ProgressColumn(
+            "Amp Notes Total",
+            help="Auto+Tele",
+            format="%f",
+            min_value=0,
+            max_value=30,
+        ),
+        "total_spk_notes": st.column_config.ProgressColumn(
+            "Teleop Notes Total",
+            help="Auto+Tele",
+            format="%f",
+            min_value=0,
+            max_value=30,
+        ),
         'auto_scoring_summary':st.column_config.BarChartColumn(
             "Auto: SPK POD MED MID",
             y_min=0,
@@ -186,6 +202,7 @@ def build_match_tab():
             y_min=0,
             y_max=5
         ),
+
     })
     #AgGrid(filtered_data,
     #       gridOptions=analyzed_gb.build(),
