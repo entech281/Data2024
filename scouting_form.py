@@ -135,10 +135,3 @@ def build_scouting_form():
         if submitted:
             write_scouting_row(SECRETS,record)
             st.text("Response Saved!")
-
-    st.header("Data")
-
-    df = get_match_data(SECRETS)
-    #df['tstamp'] = df['tstamp'].astype(str)
-    st.write(df.dtypes)
-    st.dataframe(df)
