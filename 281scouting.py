@@ -1,19 +1,22 @@
 import streamlit as st
 import pandas as pd
 import team_analysis
+import gsheet_backend
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import altair as alt
-
+from scouting_form import build_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 
 st.set_page_config(layout="wide")
+SECRETS = st.secrets["gsheets"]
 
-
-@st.cache_data
+TEN_SECONDS=10
+@st.cache_data(ttl=TEN_SECONDS)
 def load_data():
-    return team_analysis.load_2024_data()
+    raw_data= gsheet_backend.get_match_data(SECRETS)
+    return team_analysis.analyze(raw_data)
 
 
 st.title("281 2024 Scouting Data")
@@ -38,7 +41,8 @@ def build_team_focus_tab(analyzed,summary):
     focus_team = st.selectbox("Look at  Team", options=teamlist)
     if focus_team:
         st.header("Team Details for %s" % focus_team)
-        comments = team_analysis.get_comments_for_team(focus_team,analyzed)
+        general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
+        strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
         summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
 
@@ -64,8 +68,11 @@ def build_team_focus_tab(analyzed,summary):
         plot3.update_layout(height=300)
         st.plotly_chart(plot3)
 
-        st.header("Scouting Notes")
-        st.dataframe(comments)
+        st.header("Strategy Notes")
+        st.dataframe(strategy_comments)
+
+        st.header("General Notes")
+        st.dataframe(general_comments)
 
 
 
@@ -149,7 +156,7 @@ def build_match_tab():
         if climbed:
             filtered_data = filtered_data[filtered_data["climb"] == "Yes"]
 
-        MIN_FOULS = 0.0
+        MIN_FOULS = 0
         MAX_FOULS = analyzed["fouls"].max()
         fouls = st.slider("Fouls", MIN_FOULS, MAX_FOULS, (MIN_FOULS, MAX_FOULS))
         (min_selected_fouls, max_selected_fouls) = fouls
@@ -166,14 +173,16 @@ def build_match_tab():
 
     st.header("{d} Matching matches".format(d=len(filtered_data)))
 
-    AgGrid(filtered_data,
-           gridOptions=analyzed_gb.build(),
-           columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
-           height=400,
-           allow_unsafe_jscode=True,
-           width="100%'",
-           custom_css={"#gridToolBar": {"padding-bottom": "0px !important", }}
-           )
+    #see optoins here: https://docs.streamlit.io/library/api-reference/data/st.dataframe
+    st.dataframe(filtered_data,use_container_width=True,hide_index=True)
+    #AgGrid(filtered_data,
+    #       gridOptions=analyzed_gb.build(),
+    #       columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
+    #       height=400,
+    #       allow_unsafe_jscode=True,
+    #       width="100%'",
+    #       custom_css={"#gridToolBar": {"padding-bottom": "0px !important", }}
+    #       )
 
     st.header("Team Stats")
     filtered_summary = summary
@@ -234,7 +243,7 @@ def build_match_tab():
            )
 
 
-teams,match_data,defense, match_predictor,team_focus = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus'])
+teams,match_data,defense, match_predictor,team_focus,match_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting'])
 with teams:
     build_team_tab()
 with match_data:
@@ -245,3 +254,5 @@ with team_focus:
     build_team_focus_tab(analyzed,summary)
 with match_predictor:
     build_match_predictor()
+with match_scouting:
+    build_scouting_form()

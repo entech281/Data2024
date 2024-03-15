@@ -33,7 +33,7 @@ def get_match_data(secrets):
     rows = d[1:]
     list_of_record=[]
     for r in d[1:]:
-        dr = dict(zip(ScoutingRecord.dot_column_headers(),r))
+        dr = dict(zip(ScoutingRecord.snake_column_headers(),r))
         sr = ScoutingRecord(**dr)
         list_of_record.append(sr)
 

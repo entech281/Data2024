@@ -48,7 +48,7 @@ class ScoutingRecord(BaseModel):
     speaker_medium_attempted_teleop: int = 0
     speaker_midfield_completed_teleop: int = 0
     speaker_midfield_attempted_teleop: int = 0
-    pickup: str = PickupEnum.SOURCE
+    robot_pickup: str = PickupEnum.SOURCE
     climb: str = ClimbEnum.NOTRY
     team_present: bool = False
     mobility: bool = False
@@ -75,8 +75,12 @@ class ScoutingRecord(BaseModel):
 
 
     @staticmethod
+    def snake_column_headers():
+        return ScoutingRecord.__fields__.keys()
+
+    @staticmethod
     def dot_column_headers():
-        return [ f.replace('_','.') for f in ScoutingRecord.__fields__.keys() ]
+        return [ f.replace('_','.') for f in ScoutingRecord.snake_column_headers() ]
 
 
 

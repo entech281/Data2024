@@ -1,7 +1,7 @@
-from  models import ScoutingRecord
+from  models import ClimbEnum,PickupEnum
 import pandas as pd
 import numpy as np
-import toml
+
 
 def compute_top_team_summary(summary):
     top_teams = summary.sort_values(by='avg_total_pts', inplace=False, ascending=False)
@@ -13,14 +13,12 @@ def compute_top_team_summary(summary):
     })
     return top_teams
 
-def get_comments_for_team(team_number, analyzed):
+def get_comments_for_team(team_number, analyzed, comment_type):
     this_team_data = analyzed[ analyzed["team.number"] == team_number]
-    general_comments = this_team_data[['general.notes']].dropna()
-    return general_comments
+    return  this_team_data[[comment_type]].dropna()
 
 def analyze(raw_data):
-    raw_data = get_match_data()
-
+    print("Starting DF: ",raw_data)
     analyzed_data = team_analyze(raw_data)
     summary_data = team_summary(analyzed_data)
     return (
@@ -79,9 +77,12 @@ def team_analyze(all_data):
     # rename columns to shorter better names
     all_data['tstamp'] = pd.to_datetime(all_data.tstamp,errors='ignore')
 
+    all_data.rename(inplace=True, columns={
+        'rps':'rp.pts'
+    })
 
     all_data['team.number'] = pd.to_numeric(all_data["team.number"],errors='ignore')
-    all_data = all_data.drop(columns=['scouter_name'])
+    all_data = all_data.drop(columns=['scouter.name'])
     #all_data['team.number'].replace([np.inf, np.nan], 0, inplace=True)
     #all_data['team.number'] = all_data['team.number'].astype(int)
     base_data = all_data
@@ -103,72 +104,66 @@ def team_analyze(all_data):
 
     base_data['park.pts'] = np.where ( base_data['park'], 2.0, 0.0)
 
+    base_data['coop.pts'] = np.where(base_data['alliance.coop'],1.0,0.0 )
+
+    FIELD_LENGTH=54.270833333
+    base_data['fast.pts'] = base_data['robot.speed']/FIELD_LENGTH
+
+
     def choose_from_map(choice,choices,default):
         if choice in choices.keys():
             return choices.get(choice)
         else:
             return default
 
-    #compute points for docking during auto
-
-    FIELD_LENGTH=54.270833333
-    #base_data['fast.pts'] =  pd.to_numeric(base_data['robot.speed'],errors='coerce').fillna(0)/FIELD_LENGTH
-    base_data['fast.pts'] = 0
-    def calc_coop_points(row):
-        return choose_from_map(row['alliance_coop'], {
-            True : 1.0
-        }, 0.0)
-    base_data['coop.pts'] = base_data.apply(calc_coop_points, axis=1)
-
     def calc_auto_docking_pts(row):
         return choose_from_map(row['climb'], {
-            True: 3.0,
-            #'Yes; with another robot': 3.0,
+           ClimbEnum.SUCCESS : 3.0,
         }, 0.0)
     base_data['climb.pts'] = base_data.apply(calc_auto_docking_pts, axis=1)
 
 
-    def calc_accuracy_row(row,field_name):
-        return choose_from_map(row[field_name], choices={
-            'Neither': 0.0,
-            'Attempted': 1.0,
-            'Scored': 2.0,
-        }, default=0.0)
+    def calc_accuracy_row(row,completed_field_name, attempted_field_name):
+        total_shots = row[completed_field_name] + row[attempted_field_name]
+        if total_shots> 0:
+            return row[completed_field_name]/total_shots
+        else:
+            return 0.0
 
     # AUTO RELIABILITY
     def calc_sub_auto_acry(row):
-        return calc_accuracy_row(row,'subwoofer.reliability.auto')
-    base_data['sub.auto.acry'] = base_data.apply(calc_sub_auto_acry, axis=1)
+        return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.subwoofer.attempted.auto')
+    base_data['sub.auto.acry'] =base_data.apply(calc_sub_auto_acry, axis=1)
 
     def calc_mid_auto_acry(row):
-        return calc_accuracy_row(row,'middle.reliability.auto')
+        return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.medium.attempted.auto')
     base_data['mid.auto.acry'] = base_data.apply(calc_mid_auto_acry, axis=1)
 
     def calc_mfld_auto_acry(row):
-        return calc_accuracy_row(row,'midfield.reliability.auto')
+        return calc_accuracy_row(row,'speaker.midfield.completed.auto','speaker.midfield.attempted.auto')
     base_data['mfld.auto.acry'] = base_data.apply(calc_mfld_auto_acry, axis=1)
 
     def calc_pod_auto_acry(row):
-        return calc_accuracy_row(row,'podium.reliability.auto')
+        return calc_accuracy_row(row,'speaker.podium.completed.auto','speaker.podium.attempted.auto')
     base_data['pod.auto.acry'] = base_data.apply(calc_pod_auto_acry, axis=1)
 
 
     #TELEOP RELIABILITY
 
     def calc_sub_teleop_acry(row):
-        return calc_accuracy_row(row,'subwoofer.reliability.teleop')
+        return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.subwoofer.attempted.teleop')
     base_data['sub.teleop.acry'] = base_data.apply(calc_sub_teleop_acry, axis=1)
 
     def calc_mid_teleop_acry(row):
-        return calc_accuracy_row(row,'middle.reliability.teleop')
+        return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.medium.attempted.teleop')
     base_data['mid.teleop.acry'] = base_data.apply(calc_mid_teleop_acry, axis=1)
 
     def calc_mfld_teleop_acry(row):
-        return calc_accuracy_row(row,'midfield.reliability.teleop')
-
+        return calc_accuracy_row(row,'speaker.midfield.completed.auto','speaker.midfield.attempted.teleop')
     base_data['mfld.teleop.acry'] = base_data.apply(calc_mfld_teleop_acry, axis=1)
+
     def calc_pod_teleop_acry(row):
-        return calc_accuracy_row(row,'podium.reliability.teleop')
+        return calc_accuracy_row(row, 'speaker.podium.completed.auto', 'speaker.podium.attempted.teleop')
     base_data['pod.teleop.acry'] = base_data.apply(calc_pod_teleop_acry, axis=1)
 
 
