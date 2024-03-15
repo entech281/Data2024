@@ -1,1 +1,0 @@
-jupyter notebook 281Scouting.ipynb
