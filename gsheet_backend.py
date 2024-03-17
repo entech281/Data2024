@@ -2,8 +2,17 @@ from google.oauth2.service_account import Credentials
 import gspread
 import pandas as pd
 from models import ScoutingRecord
+from datetime import datetime
 
 SHEET_ID='1JHUOVxvL_UDA3tqxTiwWO095eOxppAWJi7PtDnxnGt8'
+def write_header_if_needed(secrets,sheet):
+
+    cell_value = sheet.acell('A1').value
+    print("cell value=*%s*, type=%s" % (cell_value, type(cell_value)) )
+    if cell_value is None or len(cell_value) == 0 or cell_value=="None":
+        print("Writing Header!",ScoutingRecord.dot_column_headers())
+        s = _connect_sheet(secrets)
+        s.append_row( ScoutingRecord.dot_column_headers())
 
 def _connect_sheet(secrets):
     scopes = [
@@ -21,6 +30,7 @@ def _connect_sheet(secrets):
 
 def get_match_data(secrets):
     gs = _connect_sheet(secrets)
+    write_header_if_needed(secrets,gs)
     d = gs.get()
 
     rows = d[1:]
@@ -31,24 +41,26 @@ def get_match_data(secrets):
         list_of_record.append(sr)
 
     #this incantation from SO https://stackoverflow.com/questions/61814887/how-to-convert-a-list-of-pydantic-basemodels-to-pandas-dataframe
-    df = pd.DataFrame([r.model_dump() for r in list_of_record])
-    df.columns = ScoutingRecord.dot_column_headers()
-    df['tstamp'] = pd.to_datetime(df['tstamp'])
+    df = pd.DataFrame(columns= ScoutingRecord.dot_column_headers(),data=[r.model_dump() for r in list_of_record])
+
+    def convert_old_dates(row):
+        if 'T' in row['tstamp']:
+            return row['tstamp']
+        else:
+            return datetime.strptime(row['tstamp'],  "%m/%d/%Y %H:%M:%S").isoformat()
+
+    #df['pre_parsed_date'] = df.apply(convert_old_dates,axis=1)
+    df['tstamp'] = pd.to_datetime(df['tstamp'],format="mixed")
+    print(df)
     return df
 
 
-def write_header_if_needed(secrets,sheet):
-    a1 = sheet.cell(1,1)
 
-    if a1.value is None:
-        print("Writing Header!",ScoutingRecord.dot_column_headers())
-        s = _connect_sheet(secrets)
-        s.append_row( ScoutingRecord.dot_column_headers())
 
 def write_scouting_row(secrets, rec:ScoutingRecord):
     rec.calc_fields()
     s = _connect_sheet(secrets)
-    write_header_if_needed(secrets,s)
+
     t = rec.as_tuple()
     print("Writing Record:",t)
     s.append_row(t)

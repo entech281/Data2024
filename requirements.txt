@@ -1,7 +1,7 @@
 pandas
 numpy
 streamlit
-gspread
+gspread==6.0.0
 streamlit-aggrid
 jupyter
 notebook
@@ -10,3 +10,4 @@ streamlit-plotly-events
 pytest
 pydantic
 toml
+streamlit_extras

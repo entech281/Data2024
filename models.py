@@ -4,28 +4,52 @@ from enum import Enum, IntEnum
 
 class ClimbEnum:
     SUCCESS = 'Success'
+    SUCCESSPARTNER = 'Success with Partner'
     FAILED = 'Failed'
     NOTRY = 'NoTry'
 
     @classmethod
     def options(cls):
-        return [ClimbEnum.SUCCESS,ClimbEnum.FAILED,ClimbEnum.NOTRY]
+        return [ClimbEnum.SUCCESS,ClimbEnum.SUCCESSPARTNER,ClimbEnum.FAILED,ClimbEnum.NOTRY]
 
 class PickupEnum:
     GROUND = 'Ground'
     SOURCE = 'Source'
     BOTH = 'Both'
+    NONE = 'None'
+    @classmethod
+    def options(cls):
+        return [PickupEnum.GROUND,PickupEnum.SOURCE,PickupEnum.BOTH,PickupEnum.NONE]
+
+class EventEnum:
+    ANDERSON = 'Anderson'
+    CHARLESTON= 'Charleston'
+    GWINNETT = 'Gwinnett'
+    PCHCHAMPS = 'PCH Champs'
 
     @classmethod
     def options(cls):
-        return [PickupEnum.GROUND,PickupEnum.SOURCE,PickupEnum.BOTH]
+        return [EventEnum.ANDERSON,EventEnum.CHARLESTON,EventEnum.PCHCHAMPS,EventEnum.GWINNETT]
 
+
+class Matches:
+    @staticmethod
+    def make_matches():
+        matches = []
+        for i in range(1,101):
+            matches.append('Q'+str(i))
+        for i in range(1,14):
+            matches.append('P'+str(i))
+        for i in range(1,4):
+            matches.append('F'+str(i))
+        return matches
 
 class ScoutingRecord(BaseModel):
     tstamp: str = datetime.now().isoformat()
     team_number: int = 0
     match_number: str = ''
     scouter_name: str = ''
+    event_name: str = ''
     notes_speaker_auto: int = 0
     notes_amp_auto: int = 0
     speaker_subwoofer_completed_auto: int = 0 #neither/scored/attempted in the current sheet for these

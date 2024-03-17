@@ -11,7 +11,7 @@ def get_creds():
 def test_loading_sheet():
 
     df = get_match_data(get_creds())
-    assert 5 == len(df)
+    assert 242 == len(df)
 
 def test_analysis():
     df = get_match_data(get_creds())
