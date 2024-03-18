@@ -49,7 +49,7 @@ def build_scouting_form():
             record.scouter_name = st.text_input("Scout Name",value=st.session_state['actual_scouter_name'])
             st.session_state['actual_scouter_name'] = record.scouter_name
 
-            record.team_present = st.checkbox(label="Present",key="present")
+            record.team_present = st.checkbox(label="Team Present",key="present")
 
         st.header("Auto")
 
