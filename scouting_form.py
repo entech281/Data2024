@@ -6,6 +6,19 @@ from gsheet_backend import write_scouting_row,get_match_data
 from st_num_spinner import frc_scoring_tracker
 import pandas as pd
 
+FORM_SUBMIT_KEY="form_key"
+
+if FORM_SUBMIT_KEY not in st.session_state:
+    st.session_state[FORM_SUBMIT_KEY] = 0
+
+def get_refreshed_form_key(root_name):
+    return root_name + str(st.session_state[FORM_SUBMIT_KEY])
+
+def toggle_form_key():
+    if st.session_state[FORM_SUBMIT_KEY] == 1:
+        st.session_state[FORM_SUBMIT_KEY] = 0
+    else:
+        st.session_state[FORM_SUBMIT_KEY] = 1
 
 def build_scouting_form():
     record = ScoutingRecord()
@@ -42,7 +55,7 @@ def build_scouting_form():
          record.speaker_podium_completed_auto,
          record.speaker_medium_attempted_auto,
          record.speaker_medium_completed_auto
-         ) = frc_scoring_tracker(key="auto_scoring")
+         ) = frc_scoring_tracker(key=get_refreshed_form_key("auto_scoring"))
 
         st.header("Fouls, Penalties, Problems")
         col1 ,col2,empty = st.columns(3)
@@ -72,7 +85,7 @@ def build_scouting_form():
          record.speaker_podium_completed_teleop,
          record.speaker_medium_attempted_teleop,
          record.speaker_medium_completed_teleop
-         ) = frc_scoring_tracker(key="telop_scoring")
+         ) = frc_scoring_tracker(key=get_refreshed_form_key("telop_scoring"))
 
 
         record.robot_speed = st.slider("Seconds to Cross Whole Field", min_value=3, max_value=10, value=5, step=1)
@@ -102,11 +115,11 @@ def build_scouting_form():
         record.strategy = st.text_area("Did they employ a strategy that might exaggerate their stats")
         record.notes = st.text_area("Other Comments")
 
-        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
+        #note: very important: in streamlit callbacks execute before the rest of the scirpt
+        #we need that here to avoid the boundary condition after first form load
+        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,on_click=toggle_form_key)
         if submitted:
-            #write_scouting_row(SECRETS,record)
-
-            print ( record )
+            write_scouting_row(SECRETS,record)
             st.text("Response Saved!");
 
 
