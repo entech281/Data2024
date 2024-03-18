@@ -4,7 +4,7 @@ from typing import Optional
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Tell streamlit that there is a component called st_num_spinner,
+# Tell streamlit that there is a component called st_scoring_widget,
 # and that the code to display that component is in the "frontend" folder
 frontend_dir = (Path(__file__).parent / "frontend").absolute()
 

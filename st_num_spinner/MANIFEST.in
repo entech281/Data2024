@@ -1,3 +1,0 @@
-recursive-include src/st_num_spinner/frontend *
-include README.md
-include LICENSE

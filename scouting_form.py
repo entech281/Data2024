@@ -3,7 +3,7 @@ from pch_teams import ALL_TEAMS
 
 from  models import ScoutingRecord,ClimbEnum,PickupEnum,EventEnum, Matches
 from gsheet_backend import write_scouting_row,get_match_data
-from st_num_spinner import frc_scoring_tracker
+from st_scoring_widget import frc_scoring_tracker
 import pandas as pd
 
 FORM_SUBMIT_KEY="form_key"
