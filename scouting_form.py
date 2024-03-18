@@ -30,7 +30,7 @@ def build_scouting_form():
     record = ScoutingRecord()
     SECRETS = st.secrets["gsheets"]
     st.title("Scouting 2024 Charleston")
-    st.write("Frontend Dir=" + str(st_scoring_widget.FRONTEND_DIR))
+
     match_form = st.form(key="match_row",clear_on_submit=True,border=True)
 
     if "actual_scouter_name" not in st.session_state:
