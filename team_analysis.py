@@ -25,7 +25,7 @@ def compute_bar_scoring_summaries(analyzed_matches):
     pared_down['total_amp_notes'] = pared_down['notes.amp.auto'] + pared_down['notes.amp.teleop']
     pared_down['total_spk_notes'] = pared_down['notes.speaker.auto'] + pared_down['notes.speaker.teleop']
 
-    pared_down['telop_scoring_summary'] = pared_down[[
+    pared_down['teleop_scoring_summary'] = pared_down[[
         "speaker.subwoofer.completed.teleop",
         "speaker.podium.completed.teleop",
         "speaker.medium.completed.teleop",
@@ -38,7 +38,7 @@ def compute_bar_scoring_summaries(analyzed_matches):
         'match.number',
         'total_amp_notes',
         'total_spk_notes',
-        'telop_scoring_summary',
+        'teleop_scoring_summary',
         'auto_scoring_summary',
         'robot.disabled.time',
         'robot.speed',

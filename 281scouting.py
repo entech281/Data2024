@@ -12,8 +12,8 @@ from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
-TEN_SECONDS=10
-@st.cache_data(ttl=TEN_SECONDS)
+CACHE_SECONDS=30
+@st.cache_data(ttl=CACHE_SECONDS)
 def load_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
     return team_analysis.analyze(raw_data)
@@ -22,6 +22,7 @@ def load_data():
 st.title("281 2024 Scouting Data")
 (analyzed, summary) = load_data()
 teamlist = list(summary['team.number'])
+HAS_DATA = True
 
 analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
 analyzed_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
@@ -37,7 +38,9 @@ summary_gb.configure_side_bar(filters_panel=True)
 
 
 def build_team_focus_tab(analyzed,summary):
-
+    if not HAS_DATA:
+        st.header("No Data")
+        return
     focus_team = st.selectbox("Look at  Team", options=teamlist)
     if focus_team:
         st.header("Team Details for %s" % focus_team)
@@ -60,8 +63,8 @@ def build_team_focus_tab(analyzed,summary):
             st.metric(label="Climb Pts", value="{:.2f}".format(summary_row['climb_pts']))
 
         with col3:
-            st.metric(label="Avg Speaker Pts", value="{:.2f}".format(summary_row['avg_notes_speaker']))
-            st.metric(label="Avg Amp Pts", value="{:.2f}".format(summary_row['avg_notes_amp']))
+            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(summary_row['avg_notes_speaker']))
+            st.metric(label="Avg Amp Notes", value="{:.2f}".format(summary_row['avg_notes_amp']))
 
         st.header("scoring timeline")
         plot3 = px.bar(perf_over_time, x='match.number', y=['speaker.pts','amp.pts'])
@@ -77,11 +80,41 @@ def build_team_focus_tab(analyzed,summary):
 
 
 
-def build_defense_tab():
-    pass
+def build_defense_tab(analyzed,summary):
+    if not HAS_DATA:
+        st.header("No Data")
+        return
+    focus_team = st.selectbox("Look at  Team", options=teamlist,key="defense_team")
 
+    if focus_team:
+        st.header("Team Details for %s" % focus_team)
+        general_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'notes')
+        perf_over_time = analyzed[analyzed['team.number'] == focus_team]
+        summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
+
+        col1,col2 = st.columns(2)
+        with col1:
+            st.metric(label="Avg Speed",value="{:.2f}".format(summary_row['avg_speed']))
+        with col2:
+            pass
+        st.header("defense rating timeline")
+        plot3 = px.bar(perf_over_time, x='match.number', y='defense.rating')
+        plot3.update_layout(height=300)
+        st.plotly_chart(plot3)
+
+        st.header("fouls vs fouls caused")
+        plot3 = px.bar(perf_over_time, x='fouls', y='defense.forced.penalties')
+        plot3.update_layout(height=300)
+        st.plotly_chart(plot3)
+
+        st.header("General Notes")
+        st.dataframe(general_comments)
 
 def build_match_predictor():
+    if not HAS_DATA:
+        st.header("No Data")
+        return
+
     st.header("Match Preditor")
     red_col, blue_col = st.columns(2)
 
@@ -105,6 +138,10 @@ def build_match_predictor():
 
 
 def build_team_tab():
+    if not HAS_DATA:
+        st.header("No Data")
+        return
+
     st.header("Team Summary")
 
     top_teams = team_analysis.compute_top_team_summary(summary)
@@ -141,7 +178,9 @@ def build_team_tab():
         st.plotly_chart(plot2)
 
 def build_match_tab():
-
+    if not HAS_DATA:
+        st.header("No Data")
+        return
     st.header("Analyzed Match Data")
     st.text("Choose Filters")
     col1, col2, col3 = st.columns(3)
@@ -157,7 +196,7 @@ def build_match_tab():
             filtered_data = filtered_data[filtered_data["climb"] == "Yes"]
 
         MIN_FOULS = 0
-        MAX_FOULS = analyzed["fouls"].max()
+        MAX_FOULS = max(analyzed["fouls"].max(),1)
         fouls = st.slider("Fouls", MIN_FOULS, MAX_FOULS, (MIN_FOULS, MAX_FOULS))
         (min_selected_fouls, max_selected_fouls) = fouls
         filtered_data = filtered_data[filtered_data["fouls"] >= min_selected_fouls]
@@ -197,7 +236,7 @@ def build_match_tab():
             y_min=0,
             y_max=5
         ),
-        'telop_scoring_summary': st.column_config.BarChartColumn(
+        'teleop_scoring_summary': st.column_config.BarChartColumn(
             "Tele: SPK POD MED MID",
             y_min=0,
             y_max=5
@@ -278,7 +317,7 @@ with teams:
 with match_data:
     build_match_tab()
 with defense:
-    build_defense_tab()
+    build_defense_tab(analyzed,summary)
 with team_focus:
     build_team_focus_tab(analyzed,summary)
 with match_predictor:
