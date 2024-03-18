@@ -8,6 +8,7 @@ import streamlit.components.v1 as components
 # and that the code to display that component is in the "frontend" folder
 frontend_dir = (Path(__file__).parent / "frontend").absolute()
 print ("frontend_dir=",frontend_dir)
+FRONTEND_DIR=frontend_dir
 
 _component_func = components.declare_component(
     "frc_scoring_tracker",
