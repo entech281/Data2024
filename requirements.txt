@@ -1,7 +1,8 @@
-pandas
+pandas==1.5.3
 numpy
-streamlit
 gspread==6.0.0
+streamlit==1.31.1
+gspread
 streamlit-aggrid
 jupyter
 notebook

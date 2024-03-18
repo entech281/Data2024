@@ -20,6 +20,7 @@ def load_data():
 
 
 st.title("281 2024 Scouting Data")
+
 (analyzed, summary) = load_data()
 teamlist = list(summary['team.number'])
 HAS_DATA = True
@@ -314,13 +315,17 @@ def build_match_tab():
 teams,match_data,defense, match_predictor,team_focus,match_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting'])
 with teams:
     build_team_tab()
+
 with match_data:
     build_match_tab()
+
 with defense:
     build_defense_tab(analyzed,summary)
 with team_focus:
     build_team_focus_tab(analyzed,summary)
+
 with match_predictor:
     build_match_predictor()
+
 with match_scouting:
     build_scouting_form()

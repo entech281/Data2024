@@ -45,50 +45,46 @@ function onRender(event) {
 
     amp_score.onclick = function(e){
         currentValues[0]++;
-        currentValues[1]++;
         update();
-        amp_value.innerText = currentValues[0] + "/" + currentValues[1];
+        amp_value.innerText = currentValues[1] + "|" + currentValues[0];
     }
     amp_miss.onclick = function(e){
         currentValues[1]++;
         update();
-        amp_value.innerText = currentValues[0] + "/" + currentValues[1];
+        amp_value.innerText = currentValues[1] + "|" + currentValues[0];
     }
 
     subwoofer_score.onclick = function(e){
         currentValues[2]++;
-        currentValues[3]++;
         update();
-        subwoofer_value.innerText = currentValues[2] + "/" + currentValues[3];
+        subwoofer_value.innerText = currentValues[3] + "|" + currentValues[2];
     }
     subwoofer_miss.onclick = function(e){
         currentValues[3]++;
         update();
-        subwoofer_value.innerText = currentValues[2] + "/" + currentValues[3];
+        subwoofer_value.innerText = currentValues[3] + "|" + currentValues[2];
     }
 
     podium_score.onclick = function(e){
         currentValues[4]++;
-        currentValues[5]++;
         update();
-        podium_value.innerText = currentValues[4] + "/" + currentValues[5];
+        podium_value.innerText = currentValues[5] + "|" + currentValues[4];
     }
     podium_miss.onclick = function(e){
         currentValues[5]++;
         update();
-        podium_value.innerText = currentValues[4] + "/" + currentValues[5];
+        podium_value.innerText = currentValues[5] + "|" + currentValues[4];
     }
 
     far_score.onclick = function(e){
         currentValues[6]++;
-        currentValues[7]++;
         update();
-        far_value.innerText = currentValues[6] + "/" + currentValues[7];
+        far_value.innerText = currentValues[7] + "|" + currentValues[6];
     }
     far_miss.onclick = function(e){
         currentValues[7]++;
         update();
-        far_value.innerText = currentValues[6] + "/" + currentValues[7];
+        far_value.innerText = currentValues[7] + "|" + currentValues[6];
     }
     update();
 
