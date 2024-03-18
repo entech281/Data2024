@@ -11,16 +11,28 @@
 }
 button {
     width: 40px;
-    height: 50px;
+    height: 40px;
     border-radius: 0.5rem;
+    border: 0px;
     margin-top: 5px;
     margin-bottom: 8px;
 }
+button.clear{
+    width:80px;
+    font-weight: 600;
+    height:30px;
+}
 .score{
-    background: rgba(0,255,0,0.4);
+   background: rgba(0,255,0,0.4);
+    background-image: url(bx-check-circle.svg);
+    background-size: cover;
+    background-position: center;
 }
 .miss{
-    background: rgba(255,0,0,0.4);
+    background: rgba(255,0,0,0.9);
+    background-image: url(bx-x-circle.svg);
+    background-size: cover;
+    background-position: center;
 }
 .Row {
     display: table;

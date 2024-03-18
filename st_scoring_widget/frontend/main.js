@@ -3,16 +3,25 @@
 // If you get an error about "Streamlit" not being defined, that
 // means you're missing that file.
 
+
 var currentValues = [
     0,0,
     0,0,
     0,0,
     0,0
-]
+];
 
+function resetValues(){
+    currentValues = [
+        0,0,
+        0,0,
+        0,0,
+        0,0
+    ]
+}
 
 function update() {
-  Streamlit.setComponentValue(currentValues)
+
 }
 
 /**
@@ -43,48 +52,54 @@ function onRender(event) {
     const far_miss = document.getElementById("far_miss");
     const far_value = document.getElementById("far_value");
 
+    function update(){
+        Streamlit.setComponentValue(currentValues);
+        amp_value.innerText = currentValues[1] + " | " + currentValues[0];
+        subwoofer_value.innerText = currentValues[3] + " | " + currentValues[2];
+        podium_value.innerText = currentValues[5] + " | " + currentValues[4];
+        far_value.innerText = currentValues[7] + " | " + currentValues[6];
+    }
+    document.getElementById("clear").onclick = function(e){
+        resetValues();
+        update();
+    }
     amp_score.onclick = function(e){
         currentValues[0]++;
         update();
-        amp_value.innerText = currentValues[1] + " | " + currentValues[0];
+
     }
     amp_miss.onclick = function(e){
         currentValues[1]++;
         update();
-        amp_value.innerText = currentValues[1] + " | " + currentValues[0];
+
     }
 
     subwoofer_score.onclick = function(e){
         currentValues[2]++;
         update();
-        subwoofer_value.innerText = currentValues[3] + " | " + currentValues[2];
+
     }
     subwoofer_miss.onclick = function(e){
         currentValues[3]++;
         update();
-        subwoofer_value.innerText = currentValues[3] + " | " + currentValues[2];
     }
 
     podium_score.onclick = function(e){
         currentValues[4]++;
         update();
-        podium_value.innerText = currentValues[5] + " | " + currentValues[4];
     }
     podium_miss.onclick = function(e){
         currentValues[5]++;
         update();
-        podium_value.innerText = currentValues[5] + " | " + currentValues[4];
     }
 
     far_score.onclick = function(e){
         currentValues[6]++;
         update();
-        far_value.innerText = currentValues[7] + " | " + currentValues[6];
     }
     far_miss.onclick = function(e){
         currentValues[7]++;
         update();
-        far_value.innerText = currentValues[7] + " | " + currentValues[6];
     }
     update();
 
