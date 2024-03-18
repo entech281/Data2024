@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from datetime import datetime
 from enum import Enum, IntEnum
 
+
 class ClimbEnum:
     SUCCESS = 'Success'
     SUCCESSPARTNER = 'Success with Partner'
