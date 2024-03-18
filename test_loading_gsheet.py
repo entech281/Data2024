@@ -16,5 +16,5 @@ def test_loading_sheet():
 def test_analysis():
     df = get_match_data(get_creds())
     (a,s) = team_analysis.analyze(df)
-    print(a)
-    print (s)
+    #print(a)
+    #print (s)

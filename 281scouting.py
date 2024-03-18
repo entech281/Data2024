@@ -12,8 +12,8 @@ from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
-TEN_SECONDS=10
-@st.cache_data(ttl=TEN_SECONDS)
+CACHE_SECONDS=30
+@st.cache_data(ttl=CACHE_SECONDS)
 def load_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
     return team_analysis.analyze(raw_data)
@@ -39,6 +39,7 @@ summary_gb.configure_side_bar(filters_panel=True)
 
 def build_team_focus_tab(analyzed,summary):
     if not HAS_DATA:
+        st.header("No Data")
         return
     focus_team = st.selectbox("Look at  Team", options=teamlist)
     if focus_team:
@@ -81,6 +82,7 @@ def build_team_focus_tab(analyzed,summary):
 
 def build_defense_tab(analyzed,summary):
     if not HAS_DATA:
+        st.header("No Data")
         return
     focus_team = st.selectbox("Look at  Team", options=teamlist,key="defense_team")
 
@@ -90,10 +92,11 @@ def build_defense_tab(analyzed,summary):
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
         summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
 
-        col1 = st.columns(1)
+        col1,col2 = st.columns(2)
         with col1:
             st.metric(label="Avg Speed",value="{:.2f}".format(summary_row['avg_speed']))
-
+        with col2:
+            pass
         st.header("defense rating timeline")
         plot3 = px.bar(perf_over_time, x='match.number', y='defense.rating')
         plot3.update_layout(height=300)
@@ -108,6 +111,10 @@ def build_defense_tab(analyzed,summary):
         st.dataframe(general_comments)
 
 def build_match_predictor():
+    if not HAS_DATA:
+        st.header("No Data")
+        return
+
     st.header("Match Preditor")
     red_col, blue_col = st.columns(2)
 
@@ -132,6 +139,7 @@ def build_match_predictor():
 
 def build_team_tab():
     if not HAS_DATA:
+        st.header("No Data")
         return
 
     st.header("Team Summary")
@@ -171,6 +179,7 @@ def build_team_tab():
 
 def build_match_tab():
     if not HAS_DATA:
+        st.header("No Data")
         return
     st.header("Analyzed Match Data")
     st.text("Choose Filters")
