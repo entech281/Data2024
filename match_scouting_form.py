@@ -20,6 +20,9 @@ def get_refreshed_form_key(root_name):
     return root_name + str(st.session_state[FORM_SUBMIT_KEY])
 
 def toggle_form_key():
+    if FORM_SUBMIT_KEY not in st.session_state:
+        st.session_state[FORM_SUBMIT_KEY] = 0
+
     if st.session_state[FORM_SUBMIT_KEY] == 1:
         st.session_state[FORM_SUBMIT_KEY] = 0
     else:

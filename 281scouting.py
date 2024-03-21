@@ -65,19 +65,20 @@ def build_team_focus_tab(analyzed,summary):
 
     focus_team = st.selectbox("Look at  Team", options=teamlist)
     focus_event = st.selectbox("Look at Event", options=EventEnum.options())
-
+    title_str = "Team Details for "
     if focus_team:
-        st.header("Team Details for %s" % focus_team)
+        title_str += str(focus_team)
         general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
         strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
         summary_row = summary [ summary['team.number'] == focus_team]
 
     if focus_event:
-        st.header("Team Details for %s" % focus_event)
+        title_str += ("/" + focus_event)
         perf_over_time = perf_over_time[perf_over_time['event.name'] == focus_event]
         event_summary_df = team_analysis.team_summary(perf_over_time)
 
+    st.header(title_str)
     if len(event_summary_df) == 0:
         st.header("No Data")
     else:
