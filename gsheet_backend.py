@@ -72,7 +72,7 @@ def _write_pit_scouting_header_if_needed(secrets, sheet):
         sheet.append_row(headers)
 
 def get_pits_data(secrets):
-    gs = _connect_sheet(secrets)
+    gs = _connect_sheet(secrets,tab=PIT_TAB)
     _write_pit_scouting_header_if_needed(secrets, gs)
 
     d = gs.get()
@@ -89,10 +89,10 @@ def get_pits_data(secrets):
         df = pd.DataFrame(raw_data)
         df.columns = PitScoutingRecord.dot_column_headers()
 
-        df['tstamp'] = pd.to_datetime(df['pre_parsed_date'])
+        df['tstamp'] = pd.to_datetime(df['tstamp'])
     else:
         df = pd.DataFrame(columns=PitScoutingRecord.dot_column_headers())
-
+    print("returning pit data",df)
     return df
 
 
@@ -106,7 +106,7 @@ def write_match_scouting_row(secrets, rec:ScoutingRecord):
     s.append_row(t)
 
 def write_pit_scouting_row(secrets, rec:PitScoutingRecord):
-
+    rec.calc_fields()
     s = _connect_sheet(secrets,tab=PIT_TAB)
     _write_pit_scouting_header_if_needed(secrets,s)
     t = rec.as_tuple()

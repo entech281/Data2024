@@ -79,7 +79,7 @@ def build_pit_scouting_form():
         with col1:
             record.pref_start = st.multiselect("Preferred Starting Locations", key="pref_starts", max_selections=3, options=StartLocEnum.options())
 
-            record.robot_pickup = st.multiselect("Preferred Pickup Locations", key="robot_pickup", max_selections=3,options=PickupEnum.options())
+            record.robot_pickup = st.radio("Preferred Pickup Locations", key="robot_pickup", index=0,options=PickupEnum.options())
 
         with col2:
             record.score_abilities = st.multiselect("Scoring Abilities", key="robot_scoring_abilities", max_selections=5, options=ShotLocEnum.options())

@@ -37,7 +37,7 @@ class DriveEnum:
     MECANUM = 'Mecanum'
     TANK = 'Tank'
     OTHER = 'Other'
-#prefstart
+
     @classmethod
     def options(cls):
         return [DriveEnum.SWERVE,DriveEnum.MECANUM,DriveEnum.TANK,DriveEnum.OTHER]
@@ -168,6 +168,11 @@ class PitScoutingRecord(BaseModel):
     def as_tuple(self):
         return list(self.model_dump().values())
 
+    def calc_fields(self):
+        self.pref_start = str(self.pref_start)
+        self.robot_pickup = str(self.robot_pickup)
+        self.pref_shoot = str(self.pref_shoot)
+        self.score_abilities = str( self.score_abilities)
 
     @staticmethod
     def snake_column_headers():

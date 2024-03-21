@@ -27,14 +27,19 @@ else:
 
 CACHE_SECONDS=30
 @st.cache_data(ttl=CACHE_SECONDS)
-def load_data():
+def load_match_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
     return team_analysis.analyze(raw_data)
 
+@st.cache_data(ttl=CACHE_SECONDS)
+def load_pit_data():
+    raw_data = gsheet_backend.get_pits_data(SECRETS)
+    return raw_data
 
 st.title("281 2024 Scouting Data")
 
-(analyzed, summary) = load_data()
+(analyzed, summary) = load_match_data()
+pit_data = load_pit_data()
 teamlist = list(summary['team.number'])
 
 
@@ -205,6 +210,25 @@ def build_team_tab():
                            size='avg_total_pts')
         st.plotly_chart(plot2)
 
+def build_pit_tab(pit_data):
+    st.header("Pit Data")
+    st.dataframe(data=pit_data,column_config={
+        #a stacked bar here woudl be ideal!
+        #these oculd also be over time which would be cool too
+        "tstamp": st.column_config.DatetimeColumn(),
+        "robot_pickup": st.column_config.ListColumn(
+            "RobotPickup"
+        ),
+        "pref_shoot": st.column_config.ListColumn(
+            "Shooting Prefs"
+        ),
+        "autos": st.column_config.ListColumn(
+            "Autos"
+        ),
+
+    }
+    )
+
 def build_match_tab():
     if not HAS_DATA:
         st.header("No Data")
@@ -339,7 +363,8 @@ def build_match_tab():
            )
 
 
-teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting','Pit Scouting'])
+teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting,pit_data_tab = st.tabs([
+   'Teams' ,'Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting','Pit Scouting','Pit Data'])
 with teams:
     build_team_tab()
 
@@ -359,3 +384,6 @@ with match_scouting:
 
 with pit_scouting:
     build_pit_scouting_form()
+
+with pit_data_tab:
+    build_pit_tab(pit_data)
