@@ -7,7 +7,8 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import altair as alt
 import os
-from match_scouting_form import build_scouting_form
+from match_scouting_form import build_match_scouting_form
+from pit_scouting_form import build_pit_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 from models import EventEnum
 
@@ -336,7 +337,7 @@ def build_match_tab():
            )
 
 
-teams,match_data,defense, match_predictor,team_focus,match_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting'])
+teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting','Pit Scouting'])
 with teams:
     build_team_tab()
 
@@ -352,4 +353,7 @@ with match_predictor:
     build_match_predictor()
 
 with match_scouting:
-    build_scouting_form()
+    build_match_scouting_form()
+
+with pit_scouting:
+    build_pit_scouting_form()

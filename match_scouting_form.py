@@ -26,7 +26,7 @@ def toggle_form_key():
         st.session_state[FORM_SUBMIT_KEY] = 1
 
 
-def build_scouting_form():
+def build_match_scouting_form():
     record = ScoutingRecord()
     SECRETS = st.secrets["gsheets"]
     st.title("Scouting 2024 Charleston")

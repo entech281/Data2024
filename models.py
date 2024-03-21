@@ -64,10 +64,11 @@ class ShotLocEnum:
     PODIUM = 'Podium'
     MIDDLE = 'Middle'
     MIDFIELD = 'Midfield'
+    AMP = 'Amp'
 
     @classmethod
     def options(cls):
-        return [ShotLocEnum.SUBWOOFER,ShotLocEnum.PODIUM,ShotLocEnum.MIDDLE,ShotLocEnum.MIDFIELD]
+        return [ShotLocEnum.SUBWOOFER,ShotLocEnum.PODIUM,ShotLocEnum.MIDDLE,ShotLocEnum.MIDFIELD,ShotLocEnum.AMP]
 
 class Matches:
     @staticmethod
@@ -151,6 +152,7 @@ class PitScoutingRecord(BaseModel):
     robot_weight: float = 0.0
     robot_width: float = 0.0
     robot_length: float = 0.0
+    robot_height: float= 0.0
     under_stage: bool = False
     robot_drive: str = DriveEnum.TANK
     climb: str = CanClimbEnum.NO
