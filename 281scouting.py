@@ -6,11 +6,20 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import altair as alt
+import os
 from scouting_form import build_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
+
+
+if os.environ.get("LOCAL") is not None:
+    print("Using local mode")
+    import localfile_backend as gsheet_backend
+else:
+    print("Reading gsheet. To use local mode, set environment using set LOCAL=true")
+    import gsheet_backend
 
 CACHE_SECONDS=30
 @st.cache_data(ttl=CACHE_SECONDS)
