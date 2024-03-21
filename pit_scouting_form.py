@@ -4,7 +4,7 @@ import st_scoring_widget
 from pch_teams import ALL_TEAMS
 
 from  models import PitScoutingRecord,DriveEnum,PickupEnum,CanClimbEnum, StartLocEnum,PickupEnum,ShotLocEnum
-from gsheet_backend import write_match_scouting_row,get_match_data
+from gsheet_backend import write_pit_scouting_row,get_pits_data
 from st_scoring_widget import frc_scoring_tracker
 import pandas as pd
 
@@ -40,7 +40,7 @@ def build_pit_scouting_form():
     SECRETS = st.secrets["gsheets"]
     st.title("Pit Scouting 2024 Charleston")
 
-    pit_form = st.form(key="match_row",clear_on_submit=True,border=True)
+    pit_form = st.form(key="pit_row",clear_on_submit=True,border=True)
 
     if "actual_scouter_name" not in st.session_state:
         st.session_state['actual_scouter_name'] = ""
@@ -49,9 +49,9 @@ def build_pit_scouting_form():
     with pit_form:
         col1,col2,empty1,empty2 = st.columns(4)
         with col1:
-            record.team_number = st.selectbox(label="Team", key="team_number", options=ALL_TEAMS)
+            record.team_number = st.selectbox(label="Team", key="team_number2", options=ALL_TEAMS)
 
-
+        """
         with col2:
             record.event_name = st.selectbox(label="Event", key="event_name" ,options=EventEnum.options())
 
@@ -133,9 +133,11 @@ def build_pit_scouting_form():
 
         #note: very important: in streamlit callbacks execute before the rest of the scirpt
         #we need that here to avoid the boundary condition after first form load
+        """
         submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,on_click=toggle_form_key)
+
         if submitted:
-            #write_pit_scouting_row(SECRETS,record)
+            write_pit_scouting_row(SECRETS,record)
             st.text("Response Saved!");
 
 

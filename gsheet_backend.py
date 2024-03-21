@@ -26,18 +26,14 @@ def _connect_sheet(secrets,tab=MATCH_TAB):
     return s
 
 
-
-
-
 def get_match_data(secrets):
-    gs = _connect_sheet(secrets)
+    gs = _connect_sheet(secrets,tab=MATCH_TAB)
 
     def _write_match_scouting_header_if_needed(secrets, sheet):
 
         cell_value = sheet.acell('A1').value
         if cell_value is None or len(cell_value) == 0 or cell_value == "None":
-            s = _connect_sheet(secrets)
-            s.append_row(ScoutingRecord.dot_column_headers())
+            sheet.append_row(ScoutingRecord.dot_column_headers())
 
     _write_match_scouting_header_if_needed(secrets,gs)
 
@@ -68,17 +64,15 @@ def get_match_data(secrets):
 
     return df
 
+def _write_pit_scouting_header_if_needed(secrets, sheet):
+    cell_value = sheet.acell('A1').value
+    if cell_value is None or len(cell_value) == 0 or cell_value == "None":
+        headers=PitScoutingRecord.dot_column_headers()
+        print("writing headers",headers)
+        sheet.append_row(headers)
 
 def get_pits_data(secrets):
     gs = _connect_sheet(secrets)
-
-    def _write_pit_scouting_header_if_needed(secrets, sheet):
-
-        cell_value = sheet.acell('A1').value
-        if cell_value is None or len(cell_value) == 0 or cell_value == "None":
-            s = _connect_sheet(secrets)
-            s.append_row(PitScoutingRecord.dot_column_headers())
-
     _write_pit_scouting_header_if_needed(secrets, gs)
 
     d = gs.get()
@@ -114,6 +108,7 @@ def write_match_scouting_row(secrets, rec:ScoutingRecord):
 def write_pit_scouting_row(secrets, rec:PitScoutingRecord):
 
     s = _connect_sheet(secrets,tab=PIT_TAB)
+    _write_pit_scouting_header_if_needed(secrets,s)
     t = rec.as_tuple()
     print("Writing Record:",t)
     s.append_row(t)

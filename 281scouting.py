@@ -8,14 +8,15 @@ import plotly.figure_factory as ff
 import altair as alt
 import os
 from match_scouting_form import build_scouting_form
+from pit_scouting_form import build_pit_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 from models import EventEnum
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
-
-if True:
+LOCAL_MODE=False
+if LOCAL_MODE:
     print("Using local mode")
     import localfile_backend as gsheet_backend
 else:
@@ -336,7 +337,7 @@ def build_match_tab():
            )
 
 
-teams,match_data,defense, match_predictor,team_focus,match_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting'])
+teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting','Pit Scouting'])
 with teams:
     build_team_tab()
 
@@ -353,3 +354,6 @@ with match_predictor:
 
 with match_scouting:
     build_scouting_form()
+
+with pit_scouting:
+    build_pit_scouting_form()
