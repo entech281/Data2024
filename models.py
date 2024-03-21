@@ -32,6 +32,42 @@ class EventEnum:
     def options(cls):
         return [EventEnum.ANDERSON,EventEnum.CHARLESTON,EventEnum.PCHCHAMPS,EventEnum.GWINNETT]
 
+class DriveEnum:
+    SWERVE = 'Swerve'
+    MECANUM = 'Mecanum'
+    TANK = 'Tank'
+    OTHER = 'Other'
+#prefstart
+    @classmethod
+    def options(cls):
+        return [DriveEnum.SWERVE,DriveEnum.MECANUM,DriveEnum.TANK,DriveEnum.OTHER]
+
+class CanClimbEnum:
+    YES = 'Yes'
+    YESPARTNER = 'Yes with a Partner'
+    NO = 'No'
+    @classmethod
+    def options(cls):
+        return [CanClimbEnum.YES,CanClimbEnum.YESPARTNER,CanClimbEnum.NO]
+
+class StartLocEnum:
+    AMP = 'Amp side'
+    MIDDLE = 'Middle'
+    LANE = 'Lane side'
+
+    @classmethod
+    def options(cls):
+        return [StartLocEnum.AMP, StartLocEnum.MIDDLE, StartLocEnum.LANE]
+
+class ShotLocEnum:
+    SUBWOOFER = 'Subwoofer'
+    PODIUM = 'Podium'
+    MIDDLE = 'Middle'
+    MIDFIELD = 'Midfield'
+
+    @classmethod
+    def options(cls):
+        return [ShotLocEnum.SUBWOOFER,ShotLocEnum.PODIUM,ShotLocEnum.MIDDLE,ShotLocEnum.MIDFIELD]
 
 class Matches:
     @staticmethod
@@ -107,5 +143,35 @@ class ScoutingRecord(BaseModel):
     def dot_column_headers():
         return [ f.replace('_','.') for f in ScoutingRecord.snake_column_headers() ]
 
+class PitScoutingRecord(BaseModel):
+    tstamp: str = datetime.now().isoformat()
+    team_number: int = 0
+    scouter_name: str = ''
+    event_name: str = ''
+    robot_weight: float = 0.0
+    robot_width: float = 0.0
+    robot_length: float = 0.0
+    under_stage: bool = False
+    robot_drive: str = DriveEnum.TANK
+    climb: str = CanClimbEnum.NO
+    trap: bool = False
+    pref_start: str = StartLocEnum.MIDDLE
+    robot_pickup: str = PickupEnum.NONE
+    score_abilities: str = ShotLocEnum.SUBWOOFER
+    pref_shoot: str = ShotLocEnum.SUBWOOFER
+    autos: str = ''
+    strategy: str = ''  #did they employ a strategy that might exaggerate their stats
+    notes: str = ''
 
+    def as_tuple(self):
+        return list(self.model_dump().values())
+
+
+    @staticmethod
+    def snake_column_headers():
+        return PitScoutingRecord.__fields__.keys()
+
+    @staticmethod
+    def dot_column_headers():
+        return [ f.replace('_','.') for f in PitScoutingRecord.snake_column_headers() ]
 

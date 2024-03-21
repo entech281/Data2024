@@ -36,6 +36,7 @@ def compute_bar_scoring_summaries(analyzed_matches):
         "tstamp",
         "team.number",
         'match.number',
+        'event.name',
         'total_amp_notes',
         'total_spk_notes',
         'teleop_scoring_summary',

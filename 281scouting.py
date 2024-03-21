@@ -7,14 +7,15 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import altair as alt
 import os
-from scouting_form import build_scouting_form
+from match_scouting_form import build_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
+from models import EventEnum
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
 
-if os.environ.get("LOCAL") is not None:
+if True:
     print("Using local mode")
     import localfile_backend as gsheet_backend
 else:
@@ -32,6 +33,8 @@ st.title("281 2024 Scouting Data")
 
 (analyzed, summary) = load_data()
 teamlist = list(summary['team.number'])
+
+
 HAS_DATA = True
 
 analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
@@ -51,30 +54,42 @@ def build_team_focus_tab(analyzed,summary):
     if not HAS_DATA:
         st.header("No Data")
         return
+
     focus_team = st.selectbox("Look at  Team", options=teamlist)
+    focus_event = st.selectbox("Look at Event", options=EventEnum.options())
+
     if focus_team:
         st.header("Team Details for %s" % focus_team)
         general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
         strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
-        summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
+        summary_row = summary [ summary['team.number'] == focus_team]
 
+    if focus_event:
+        st.header("Team Details for %s" % focus_event)
+        perf_over_time = perf_over_time[perf_over_time['event.name'] == focus_event]
+        event_summary_df = team_analysis.team_summary(perf_over_time)
+
+    if len(event_summary_df) == 0:
+        st.header("No Data")
+    else:
+        event_summary_dict = event_summary_df.to_dict(orient='records')[0]
         col1,col2,col3 = st.columns(3)
         with col1:
-            avg_pts_rank = int(summary_row['rank_by_avg_pts'])
-            frc_rank = int(summary_row['frc_rank'])
+            avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
+            frc_rank = int(event_summary_dict['frc_rank'])
             st.metric(label="Rank By Avg Pts",value=avg_pts_rank)
             st.metric(label="Rank By Rank Pts", value=frc_rank)
             if avg_pts_rank > frc_rank:
                 st.warning("OverRanked!",icon="⚠")
 
         with col2:
-            st.metric(label="Avg Match Pts", value="{:.2f}".format(summary_row['avg_total_pts']))
-            st.metric(label="Climb Pts", value="{:.2f}".format(summary_row['climb_pts']))
+            st.metric(label="Avg Match Pts", value="{:.2f}".format(event_summary_dict['avg_total_pts']))
+            st.metric(label="Climb Pts", value="{:.2f}".format(event_summary_dict['climb_pts']))
 
         with col3:
-            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(summary_row['avg_notes_speaker']))
-            st.metric(label="Avg Amp Notes", value="{:.2f}".format(summary_row['avg_notes_amp']))
+            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
+            st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
 
         st.header("scoring timeline")
         plot3 = px.bar(perf_over_time, x='match.number', y=['speaker.pts','amp.pts'])
