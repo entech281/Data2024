@@ -6,23 +6,43 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import altair as alt
-from scouting_form import build_scouting_form
+import os
+
+from match_scouting_form import build_match_scouting_form
+
+from pit_scouting_form import build_pit_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
+from models import EventEnum
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
+LOCAL_MODE=False
+if LOCAL_MODE:
+    print("Using local mode")
+    import localfile_backend as gsheet_backend
+else:
+    print("Reading gsheet. To use local mode, set environment using set LOCAL=true")
+    import gsheet_backend
+
 CACHE_SECONDS=30
 @st.cache_data(ttl=CACHE_SECONDS)
-def load_data():
+def load_match_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
     return team_analysis.analyze(raw_data)
 
+@st.cache_data(ttl=CACHE_SECONDS)
+def load_pit_data():
+    raw_data = gsheet_backend.get_pits_data(SECRETS)
+    return raw_data
 
 st.title("281 2024 Scouting Data")
 
-(analyzed, summary) = load_data()
+(analyzed, summary) = load_match_data()
+pit_data = load_pit_data()
 teamlist = list(summary['team.number'])
+
+
 HAS_DATA = True
 
 analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
@@ -42,30 +62,42 @@ def build_team_focus_tab(analyzed,summary):
     if not HAS_DATA:
         st.header("No Data")
         return
+
     focus_team = st.selectbox("Look at  Team", options=teamlist)
+    focus_event = st.selectbox("Look at Event", options=EventEnum.options())
+
     if focus_team:
         st.header("Team Details for %s" % focus_team)
         general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
         strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
-        summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
+        summary_row = summary [ summary['team.number'] == focus_team]
 
+    if focus_event:
+        st.header("Team Details for %s" % focus_event)
+        perf_over_time = perf_over_time[perf_over_time['event.name'] == focus_event]
+        event_summary_df = team_analysis.team_summary(perf_over_time)
+
+    if len(event_summary_df) == 0:
+        st.header("No Data")
+    else:
+        event_summary_dict = event_summary_df.to_dict(orient='records')[0]
         col1,col2,col3 = st.columns(3)
         with col1:
-            avg_pts_rank = int(summary_row['rank_by_avg_pts'])
-            frc_rank = int(summary_row['frc_rank'])
+            avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
+            frc_rank = int(event_summary_dict['frc_rank'])
             st.metric(label="Rank By Avg Pts",value=avg_pts_rank)
             st.metric(label="Rank By Rank Pts", value=frc_rank)
             if avg_pts_rank > frc_rank:
                 st.warning("OverRanked!",icon="⚠")
 
         with col2:
-            st.metric(label="Avg Match Pts", value="{:.2f}".format(summary_row['avg_total_pts']))
-            st.metric(label="Climb Pts", value="{:.2f}".format(summary_row['climb_pts']))
+            st.metric(label="Avg Match Pts", value="{:.2f}".format(event_summary_dict['avg_total_pts']))
+            st.metric(label="Climb Pts", value="{:.2f}".format(event_summary_dict['climb_pts']))
 
         with col3:
-            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(summary_row['avg_notes_speaker']))
-            st.metric(label="Avg Amp Notes", value="{:.2f}".format(summary_row['avg_notes_amp']))
+            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
+            st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
 
         st.header("scoring timeline")
         plot3 = px.bar(perf_over_time, x='match.number', y=['speaker.pts','amp.pts'])
@@ -177,6 +209,25 @@ def build_team_tab():
         plot2 = px.scatter(summary, x='avg_notes_speaker', y='avg_notes_amp', hover_name='team.number',
                            size='avg_total_pts')
         st.plotly_chart(plot2)
+
+def build_pit_tab(pit_data):
+    st.header("Pit Data")
+    st.dataframe(data=pit_data,column_config={
+        #a stacked bar here woudl be ideal!
+        #these oculd also be over time which would be cool too
+        "tstamp": st.column_config.DatetimeColumn(),
+        "robot_pickup": st.column_config.ListColumn(
+            "RobotPickup"
+        ),
+        "pref_shoot": st.column_config.ListColumn(
+            "Shooting Prefs"
+        ),
+        "autos": st.column_config.ListColumn(
+            "Autos"
+        ),
+
+    }
+    )
 
 def build_match_tab():
     if not HAS_DATA:
@@ -312,7 +363,8 @@ def build_match_tab():
            )
 
 
-teams,match_data,defense, match_predictor,team_focus,match_scouting = st.tabs(['Teams','Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting'])
+teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting,pit_data_tab = st.tabs([
+   'Teams' ,'Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting','Pit Scouting','Pit Data'])
 with teams:
     build_team_tab()
 
@@ -328,4 +380,10 @@ with match_predictor:
     build_match_predictor()
 
 with match_scouting:
-    build_scouting_form()
+    build_match_scouting_form()
+
+with pit_scouting:
+    build_pit_scouting_form()
+
+with pit_data_tab:
+    build_pit_tab(pit_data)

@@ -1,0 +1,241 @@
+tstamp	team.number	match.number	scouter.name	event.name	notes.speaker.auto	notes.amp.auto	speaker.subwoofer.completed.auto	speaker.subwoofer.attempted.auto	speaker.podium.completed.auto	speaker.podium.attempted.auto	speaker.medium.completed.auto	speaker.medium.attempted.auto	speaker.midfield.completed.auto	speaker.midfield.attempted.auto	robot.disabled.time	robot.speed	notes.speaker.teleop	notes.amp.teleop	speaker.subwoofer.completed.teleop	speaker.subwoofer.attempted.teleop	speaker.podium.completed.teleop	speaker.podium.attempted.teleop	speaker.medium.completed.teleop	speaker.medium.attempted.teleop	speaker.midfield.completed.teleop	speaker.midfield.attempted.teleop	robot.pickup	climb	team.present	mobility	alliance.coop	park	high.note	trap	rps	fouls	defense.rating	defense.forced.penalties	strategy	notes
+3/8/2024 11:02:21	9561	Q1	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No
+3/8/2024 11:05:33	4451	Q1	Victor	Anderson	1	0	1	0	0	0	0	0	0	0	0	4	6	0	1	0	1	0	0	0	0	0	Both	NoTry	FALSE	TRUE	TRUE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 11:05:36	1648	Q1	Aditya Harikumar	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	they played a lot of defense; didn’t attempt any scoring
+3/8/2024 11:05:40	8736	Q1	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	2	1	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 11:05:43	1319	Q1	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	2	5	0	0	0	1	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	Yes	misses.2; pbc pipe became disconnected and began to hang off the robot; played defense for half the match
+3/8/2024 11:05:50	3091	Q1	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	1	0	0	0	0	0	0	Source	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Didn't move for much of match
+3/8/2024 11:15:50	2974	Q2	Antony	Anderson	1	0	1	0	0	0	0	0	0	0	8	3	5	2	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:15:58	342	Q2	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	1	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	1	0	0	Yes	Eject didn’t work note got stuck
+3/8/2024 11:15:58	9571	Q2	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	4	15	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	did basically nothing
+3/8/2024 11:15:59	2815	Q2	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:16:03	1539	Q2	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	2	15	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Just played defense
+3/8/2024 11:16:07	5130	Q2	Aditya Harikumar	Anderson	1	0	0	0	1	0	0	0	0	0	0	15	1	0	0	0	1	0	0	0	0	0	None	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	the shots they made were all preloaded; after they scored they just played defense
+3/8/2024 11:27:51	8137	Q3	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	No-show
+3/8/2024 11:28:32	3329	Q3	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	0	0	0	1	0	0	0	0	0	0	Ground	Success	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:28:50	343	Q3	Antony	Anderson	1	0	1	0	0	0	0	1	0	0	3	5	1	4	1	0	0	0	0	1	0	0	Both	Failed	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	misses.4; really good amp, speaker still unreliable
+3/8/2024 11:28:55	9477	Q3	Sanjith	Anderson	0	0	0	1	0	0	0	0	0	0	0	15	2	0	0	1	0	1	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Missed alot
+3/8/2024 11:29:12	6961	Q3	Aditya Harikumar	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	they moved but they just stood in the middle of the field
+3/8/2024 11:31:55	7676	Q3	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:36:09	9315	Q4	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:38:11	281	Q4	Antony	Anderson	0	0	0	1	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Note got stuck on top of shooter, then under robot;
+3/8/2024 11:38:40	1293	Q4	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	4	15	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:38:43	6167	Q4	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	3	15	0	0	0	1	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	TRUE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:39:18	1051	Q4	Sanjith	Anderson	0	0	0	1	0	0	0	0	0	0	0	15	1	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 11:40:50	4533	Q4	Aditya	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	didn’t get a shot off or points score
+3/8/2024 11:44:15	4189	Q5	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:46:03	3490	Q5	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Both	NoTry	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Robot was immobile for the entirety of the match
+3/8/2024 11:46:38	1287	Q5	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	0	2	0	0	0	0	0	1	0	0	Both	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	misses.2; attempted trap; initially had issues with joint mechanism on top shooter
+3/8/2024 11:47:25	8575	Q5	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	5	0	1	0	1	0	0	0	0	0	Ground	Failed	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Broke their climb
+3/8/2024 11:48:45	3489	Q5	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	FALSE	FALSE	TRUE	0	0	0	0	No	
+3/8/2024 11:49:59	3976	Q5	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:51:28	3489	Q5	Aditya	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	2	0	0	0	1	0	0	0	0	0	Ground	Success with Partner	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	very quick; semi-accurate shooter; efficient intskr
+3/8/2024 11:57:10	9561	Q6	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 11:57:13	8736	Q6	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:00:19	1539	Q6	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	No movement
+3/8/2024 12:00:22	7085	Q6	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	1	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:00:57	6366	Q6	Sanjith	Anderson	0	0	0	1	0	0	0	1	0	0	2	15	3	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	Bad driver bumped around a lot might have broken robot
+3/8/2024 12:01:15	343	Q6	Aditya H	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	2	5	1	0	1	0	0	0	0	0	Source	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	super efficient; drove well; scored on almodt every attempt to do so
+3/8/2024 12:10:02	6167	Q7	Sophie	Anderson	0	0	0	1	0	0	0	0	0	0	0	15	0	0	0	1	0	0	0	0	0	0	Ground	Failed	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:10:07	4451	Q7	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	3	4	5	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 12:10:11	6961	Q7	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	No pickup; rookie team
+3/8/2024 12:10:17	281	Q7	Marwan Makhtoub	Anderson	1	0	1	0	0	0	0	0	0	0	0	2	2	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	Nice shooter and climb
+3/8/2024 12:10:24	3091	Q7	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	2	0	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Did not attempt any shots; something broken???
+3/8/2024 12:18:32	1648	Q8	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:19:27	342	Q8	Sanjith	Anderson	0	0	0	1	0	0	0	0	0	0	3	5	6	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	1	0	0	No	
+3/8/2024 12:20:18	1293	Q8	Aditya H	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	2	0	0	No	they dropped the note and then judt resorted to defense; super light and tips over very easily; top heavy
+3/8/2024 12:21:36	3329	Q8	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	4	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 12:21:39	8575	Q8	Victor	Anderson	0	0	0	1	0	0	0	0	0	0	2	15	4	0	0	0	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:22:01	2974	Q8	Antony	Anderson	2	0	1	0	0	0	0	0	0	0	0	15	4	5	1	0	0	0	1	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	No	Phenomenal driver; really fast; combo of amp and speaker
+3/8/2024 12:27:03	8137	Q9	Aditya	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	they weren’t there
+3/8/2024 12:28:56	1287	Q9	Marwan Makhtoub	Anderson	1	0	0	0	0	0	0	0	0	0	0	3	4	1	1	0	1	0	0	0	0	0	Ground	NoTry	FALSE	TRUE	TRUE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:29:06	4533	Q9	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Push bot
+3/8/2024 12:31:23	4189	Q9	Sophie	Anderson	0	1	1	0	0	0	0	0	0	0	0	4	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	TRUE	FALSE	FALSE	FALSE	0	2	0	0	No	
+3/8/2024 12:32:04	6366	Q9	Antony	Anderson	2	0	1	0	0	0	0	0	0	0	2	5	4	0	1	0	1	0	0	0	0	0	Both	Failed	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	3	0	0	0	No	misses.1; very similar to our robot
+3/8/2024 12:43:29	3489	Q10	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	6	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 12:44:19	3976	Q10	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	1	0	1	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Little bit top heavy; intially struggled to intake note properly
+3/8/2024 12:44:23	7085	Q10	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	1	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:44:33	1051	Q10	Trevor	Anderson	1	0	0	0	1	0	0	0	0	0	2	15	1	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:45:10	7676	Q10	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	Immobile robot
+3/8/2024 12:47:30	1319	Q10	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	TRUE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:52:18	3490	Q11	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	2	0	1	0	1	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:52:44	2815	Q11	Trevor	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	1	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 12:52:46	9477	Q11	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	3	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 12:52:48	343	Q11	Victor	Anderson	0	1	0	0	0	0	0	0	0	0	0	15	6	3	1	0	1	0	0	0	0	0	Both	NoTry	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 12:52:54	9315	Q11	Aditya	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	3	0	0	No	they got stuck on the red side for a good bit so there were quite a few fouls
+3/8/2024 12:53:18	281	Q11	Antony	Anderson	0	0	0	1	0	0	0	0	0	0	0	15	0	1	0	0	0	1	0	0	0	0	Both	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	misses.2; seemed to struggle to get into shooting position
+3/8/2024 13:07:26	6167	Q12	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	2	0	1	0	0	1	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 13:07:32	1539	Q12	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	Played defense; wandered around during entire match
+3/8/2024 13:09:08	5130	Q12	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	3	3	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 14:09:11	3976	Q13	Ana - Scouting for Max	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Source	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:09:20	1051	Q13	Sadra	Anderson	1	0	0	0	1	0	0	0	0	0	0	15	2	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	TRUE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:09:49	9561	Q13	Trevor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 14:10:05	342	Q13	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	3	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	Yes	
+3/8/2024 14:10:28	7676	Q13	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	2	6	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	Stayed in midfield for half the game
+3/8/2024 14:17:47	3329	Q14	Eric	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Disabled whole game
+3/8/2024 14:18:24	3490	Q14	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	0	0	0	1	0	0	0	1	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:18:55	8736	Q14	Max Geissler	Anderson	1	0	1	0	0	0	0	0	0	0	2	15	4	0	1	0	1	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 14:26:55	7085	Q15	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Disabled whole game
+3/8/2024 14:27:41	4451	Q15	Sadra	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	6	0	1	0	1	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:28:29	8575	Q15	Max Geissler	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	3	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	1	0	0	No	Their climb hit a chain and broke
+3/8/2024 14:28:31	1287	Q15	Trevor	Anderson	1	0	1	0	0	0	0	0	0	0	0	7	2	1	1	0	1	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:28:32	1648	Q15	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 14:33:24	9477	Q16	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	2	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:38:31	1319	Q16	Eric	Anderson	1	0	1	0	0	0	0	0	0	0	0	6	0	0	0	1	0	0	0	0	0	0	Both	Success	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 14:38:59	4189	Q16	Marwan Makhtoub	Anderson	1	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0	0	0	0	0	Both	Failed	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	Ground and source climb had issues and missed shooter unreliable but if it was working like it should it would be an excellent assset to an alliance
+3/8/2024 14:39:21	4533	Q16	Dhanya	Anderson	1	0	1	0	0	0	0	0	0	0	0	9	3	0	1	0	0	0	0	1	0	0	Both	Success	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	1	0	0	0	No	
+3/8/2024 14:39:22	2974	Q16	Trevor	Anderson	1	0	1	0	0	0	0	0	0	0	2	6	3	2	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	3	0	0	0	No	Doesn’t have climb but crazy scorer
+3/8/2024 14:39:24	2815	Q16	Max Geissler	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 14:51:25	8137	Q17	Max Geissler	Anderson	0	0	0	0	0	0	0	0	0	0	5	15	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 14:51:32	9571	Q17	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	2	0	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	1	0	0	No	
+3/8/2024 14:51:59	3329	Q17	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	1	0	1	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	tried scoring for the wrong team
+3/8/2024 14:52:59	343	Q17	Trevor	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	2	2	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	0	1	0	0	No	
+3/8/2024 14:58:08	7676	Q18	Trevor	Anderson	1	0	0	0	0	0	0	0	0	0	0	15	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Shot but not moved once
+3/8/2024 15:01:31	5130	Q18	Max Geissler	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	6	0	1	0	0	1	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	No	
+3/8/2024 15:01:31	4451	Q18	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	3	0	1	0	0	0	0	0	1	0	Both	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 15:01:47	6167	Q18	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	2	4	1	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Took a whole minute to pick up a piece
+3/8/2024 15:01:51	1648	Q18	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	Success	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	3	0	0	0	No	Appears broken; Didnt move much
+3/8/2024 15:06:08	1293	Q19	Trevor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:08:46	3490	Q19	Max Geissler	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0	2	0	0	No	
+3/8/2024 15:12:54	3489	Q19	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	2	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:13:15	6961	Q19	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	2	3	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Push bot
+3/8/2024 15:18:30	1539	Q20	Trevor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:20:39	3976	Q20	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:20:42	7085	Q20	Max Geissler	Anderson	1	0	1	0	0	0	0	0	0	0	4	15	1	0	1	0	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	No	
+3/8/2024 15:20:46	4533	Q20	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	2	0	1	0	0	0	0	0	0	0	Source	Success	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	0	1	0	0	No	
+3/8/2024 15:28:50	9315	Q22	Max Geissler	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 15:28:53	3091	Q21	Tre	Anderson	1	0	1	0	0	0	0	0	0	0	0	8	1	1	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:29:04	6366	Q21	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	0	3	3	1	1	0	1	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:29:30	1287	Q21	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 15:36:30	3489	Q22	Max Geissler	Anderson	0	0	0	0	0	0	0	0	0	0	2	15	2	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:36:36	9477	Q22	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	0	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	Yes	shot notes to the other teams on red alliances from the source
+3/8/2024 15:36:40	8575	Q22	Trevor	Anderson	1	0	1	0	0	0	0	0	0	0	2	8	3	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 15:36:47	342	Q22	Eric	Anderson	1	0	1	0	0	0	0	0	0	0	0	4	3	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 15:43:49	1648	Q23	Trevor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:46:07	9571	Q23	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	0	0	1	0	0	0	0	0	0	0	Ground	NoTry	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:47:23	7085	Q23	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	2	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	kit bot-defense
+3/8/2024 15:52:42	1539	Q24	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	2	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 15:54:18	1287	Q24	Max Geissler	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	4	0	1	0	0	0	0	0	0	0	Ground	NoTry	FALSE	FALSE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	No	
+3/8/2024 15:54:19	1051	Q24	Trevor	Anderson	0	0	0	0	0	0	0	1	0	0	0	15	1	0	0	0	0	0	1	0	0	0	None	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Stalled till there was 30 seconds left
+3/8/2024 15:54:25	9561	Q24	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	9	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:03:05	6167	Q25	Trevot	Anderson	0	0	0	0	0	0	0	0	0	0	2	15	1	0	0	0	0	0	0	1	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:03:08	2815	Q25	Dhanya	Anderson	1	0	1	0	0	0	0	0	0	0	0	5	2	0	1	0	0	0	0	0	0	0	Both	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 16:03:11	5130	Q25	Eric	Anderson	0	0	0	0	0	0	0	0	0	0	2	3	2	0	1	0	0	0	0	0	0	0	Ground	Success with Partner	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:13:02	9315	Q26	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Jerky movements, no intake function
+3/8/2024 16:13:39	3091	Q26	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:13:45	9315	Q26	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	3	15	1	0	1	0	0	0	0	0	0	0	Source	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Played defense for most of match
+3/8/2024 16:14:30	3490	Q26	Antony	Anderson	0	0	0	1	0	0	0	0	0	0	2	15	1	2	1	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 16:14:38	7676	Q26	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	0	0	0	1	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	1	0	0	No	
+3/8/2024 16:14:45	8137	Q26	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	3	10	0	0	0	1	0	1	0	0	0	0	Both	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	3	1	0	0	No	Kitbot- switched to defense halfway through
+3/8/2024 16:14:45	6961	Q26	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	3	0	0	0	No	Pushbot
+3/8/2024 16:22:42	1319	Q27	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	1	0	0	1	0	0	0	0	0	0	Both	NoTry	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:22:45	281	Q27	Ana	Anderson	0	0	0	1	0	0	0	0	0	0	3	8	0	3	0	1	0	1	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	Yes	Our robot ♡
+3/8/2024 16:22:53	1287	Q27	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	1	1	1	0	0	0	0	0	0	0	Both	Success	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	No	misses.2; went to parking/climbing early
+3/8/2024 16:22:59	3489	Q27	Victor	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	0	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	TRUE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:23:25	2974	Q27	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	0	6	5	1	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	3	0	0	0	No	Fast, consistent
+3/8/2024 16:23:27	343	Q27	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	2	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:29:14	1293	Q28	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	4	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:30:05	7085	Q28	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	1	0	1	0	0	0	0	0	0	0	Source	NoTry	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Started playing defense towards the end of the match
+3/8/2024 16:30:50	9477	Q28	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	4	0	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	They can pass and score but no climb
+3/8/2024 16:31:21	9561	Q28	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Robot is just a drive base - it did nothing
+3/8/2024 16:31:24	5130	Q28	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	0	0	0	1	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 16:32:14	6366	Q28		Anderson	0	0	0	0	0	0	0	0	0	0	2	5	2	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:41:33	7676	Q29	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	0	0	0	0	0	0	0	1	0	0	Source	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	misses.1; took a LONG time to shoot
+3/8/2024 16:41:47	9315	Q29	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	9	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 16:41:48	3490	Q29	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	2	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Robot problems before match started
+3/8/2024 16:41:53	4189	Q29	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	2	0	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	Yes	
+3/8/2024 16:42:21	8736	Q29	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	3	7	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 16:51:30	1051	Q30	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	1	0	0	0	0	0	1	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	misses.1; took long time to shoot; really easy to defend
+3/8/2024 16:51:33	343	Q30	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	0	6	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	TRUE	2	0	0	0	Yes	
+3/8/2024 16:51:36	8575	Q30	Sanjith	Anderson	2	0	1	0	0	0	0	0	0	0	0	6	5	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 16:54:40	1319	Q30	Sophie	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	3	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	Good close shooter
+3/8/2024 16:59:28	6961	Q31	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	3	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Defense - drive base only
+3/8/2024 16:59:42	1648	Q31	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	2	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 17:00:49	1539	Q31	Antony	Anderson	1	0	0	0	0	0	0	0	0	0	0	6	2	0	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 17:01:08	281	Q31	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	1	0	0	0	0	0	0	Ground	Success with Partner	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	Yes	
+3/8/2024 17:08:24	4533	Q32	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	10	0	5	0	0	0	0	0	0	0	0	Source	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	Amp only robot
+3/8/2024 17:08:40	342	Q32	Antony	Anderson	1	0	1	0	0	0	0	0	0	0	0	4	6	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	No	Speaker seemed to have been preferred over amp
+3/8/2024 17:08:45	3329	Q32	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Note got stuck didn't do much
+3/8/2024 17:17:20	1287	Q33	Antony	Anderson	0	0	0	1	0	0	0	0	0	0	0	6	0	1	0	0	0	0	0	0	0	0	Ground	Failed	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	0	0	0	0	No	Seemed to prefer amp
+3/8/2024 17:17:25	9315	Q33	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 17:17:44	1319	Q33	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	Failed	TRUE	FALSE	TRUE	FALSE	FALSE	FALSE	0	2	0	0	No	Broken robot, played defense
+3/8/2024 17:26:23	3489	Q34	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	2	5	6	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	7 notes in speaker
+3/8/2024 17:27:53	8137	Q34	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	1	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Looked lost; inexperienced drive team?
+3/8/2024 17:31:11	9561	Q34	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Pushbot
+3/8/2024 17:35:21	6167	Q35	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	1	0	0	0	0	0	0	0	0	Source	Failed	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Modified kitbot
+3/8/2024 17:39:31	342	Q35	Sanjith	Anderson	0	0	0	1	0	0	0	0	0	0	3	6	3	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 17:39:48	4189	Q35	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	1	2	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Could do amp and speaker
+3/8/2024 17:44:32	3976	Q36	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Wasn't there
+3/8/2024 17:46:47	4451	Q36	Antony	Anderson	2	0	0	0	0	0	0	0	0	0	0	15	5	0	0	0	0	0	1	0	0	0	Ground	NoTry	FALSE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	Yes	misses.4; likes to place pieces in own half in dpeaker
+3/8/2024 17:46:54	7085	Q36	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	1	0	0	No	Modified kitbot, played defense
+3/8/2024 17:53:59	4533	Q37	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	2	1	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 17:54:07	3490	G37	Dhanya	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	1	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 17:54:40	1648	Q37	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	2	15	0	0	0	0	0	0	0	0	0	0	None	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	Tasked with slowing Walton and ramrods down; did a fairly good job
+3/8/2024 18:00:41	1287	Q38	Ana	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	6	0	1	0	0	0	0	0	0	0	Ground	NoTry	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	8 speaker notes
+3/8/2024 18:04:49	9571	Q38	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	9	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Just passed notes
+3/8/2024 18:04:52	1293	Q38	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Kitbot; played defense entire match; really slow
+3/8/2024 18:14:18	1319	Q39	Sanjith	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Not here
+3/8/2024 18:16:54	8736	Q39	Antony	Anderson	1	0	1	0	0	0	0	0	0	0	0	5	5	1	1	0	0	0	0	0	0	0	Both	NoTry	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/8/2024 18:30:40	9561	Q40	Sanjirh	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	1	0	0	0	No	Pushbot
+3/8/2024 18:31:01	3329	Q40	Antony	Anderson	0	0	0	1	0	0	0	0	0	0	0	6	0	0	0	1	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	1	0	0	0	No	Little bit top heavy
+3/8/2024 18:36:58	4533	Q41	Sanjith	Anderson	0	0	0	1	0	0	0	0	0	0	0	6	3	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	1	0	0	0	No	
+3/8/2024 18:37:00	343	Q41	Antony	Anderson	2	0	1	0	0	0	0	0	0	0	0	5	5	0	1	0	0	0	1	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	1	0	0	0	No	Seem to prefer speaker over amp
+3/8/2024 18:45:21	6366	Q42	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	0	6	2	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Played defensively
+3/8/2024 18:46:50	8575	Q42	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	1	0	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Got disabled at the end; didn’t seem to do anything valuable with the notes it picked up
+3/8/2024 18:54:41	3091	Q43	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	5	5	0	1	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 18:55:38	7085	Q43	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	1	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	Yes	
+3/8/2024 19:00:36	5130	Q44	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	2	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Note got stuck under robot multiple times
+3/8/2024 19:01:06	3489	Q44	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	0	5	5	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	3	0	0	0	No	
+3/8/2024 19:02:31	342	Q44	John Molfenter	Anderson	0	0	0	1	0	0	0	0	0	0	0	6	3	2	1	0	0	0	1	0	0	0	Ground	Success	FALSE	TRUE	FALSE	FALSE	FALSE	FALSE	3	0	0	0	No	Fairly consistent from beyond the auto line
+3/8/2024 19:08:16	6167	Q45	John Molfenter	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	2	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/8/2024 19:08:19	3329	Q45	Sanjith	Anderson	1	0	1	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Played defense
+3/8/2024 19:08:33	8736	Q45	Antony	Anderson	1	0	1	0	0	0	0	0	0	0	0	5	3	2	0	0	0	0	1	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Efficient
+3/9/2024 9:35:28	7085	Q46	Victor	Anderson	0	0	0	0	0	0	0	0	0	0	0	12	0	0	0	1	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Jerky driving; tends to do wheelies (not in a good way)
+3/9/2024 9:37:20	281	Q46	Dhanya	Anderson	3	0	1	0	0	0	0	0	0	0	2	6	4	2	1	0	1	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	Yes	
+3/9/2024 9:37:20	2974	Q46	Sophie	Anderson	1	0	1	0	0	0	0	0	0	0	2	3	6	3	1	0	0	1	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	they are speedy; good at shooting
+3/9/2024 9:37:43	4189	Q46	Albert Mathisz	Anderson	1	0	1	0	0	0	0	0	0	0	0	7	1	0	1	0	0	0	0	0	0	0	Ground	Failed	TRUE	FALSE	TRUE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 9:37:43	6366	Q46	Aditya H	Anderson	0	0	0	0	0	0	0	0	0	0	1	4	0	0	0	1	0	0	0	0	0	0	Ground	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	2	0	0	No	inaccurate shooting
+3/9/2024 9:37:49	7676	Q46	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	0	0	0	1	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	1	6	0	0	No	Caused at least 4 tech fouls
+3/9/2024 9:45:57	8575	Q47	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	1	3	3	0	1	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	collected notes to help team
+3/9/2024 9:45:58	8137	Q47	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	0	8	0	0	0	1	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	Mainly a defense bot
+3/9/2024 9:46:35	9477	Q47	Aditya H	Anderson	0	0	0	0	0	0	0	0	0	0	1	6	4	0	1	0	0	1	0	0	0	0	Both	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	Yes	thhey shot a LOT at the speaker
+3/9/2024 9:46:37	1648	Q47	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	1	3	5	0	1	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	Yes	Used serve to their advantage for climb also shot very accurately 
+3/9/2024 9:54:52	343	Q48	Victor	Anderson	2	0	1	0	0	0	0	0	0	0	0	6	3	4	1	0	1	0	0	0	0	0	Both	Success	TRUE	TRUE	TRUE	FALSE	FALSE	FALSE	3	0	0	0	No	
+3/9/2024 9:54:55	1319	Q48	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	0	9	1	0	1	0	0	0	0	0	0	0	Both	Success	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/9/2024 9:55:01	1539	Q48	Sophie	Anderson	1	0	1	0	0	0	0	0	0	0	2	10	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	very slow
+3/9/2024 9:55:08	1293	Q48	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	2	5	0	2	0	1	0	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/9/2024 9:55:39	4451	Q48	Isaac boroughs	Anderson	1	0	1	0	1	0	0	0	0	0	0	3	6	0	1	0	1	0	0	0	0	0	Ground	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	3	0	0	0	Yes	Very efficient
+3/9/2024 9:55:46	3976	Q48	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	10	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	played defensr; got disabled at beggining and did not move again
+3/9/2024 10:01:19	342	Q49	Marwan Makhtoub	Anderson	0	0	0	0	0	0	0	0	0	0	2	4	3	0	0	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	0	1	0	0	Yes	Fast and nice climb 
+3/9/2024 10:02:17	7085	Q49	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	1	8	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 10:02:20	1287	Q49	Victor	Anderson	2	0	1	0	0	0	0	0	0	0	0	15	4	0	0	0	0	0	0	0	0	0	Both	NoTry	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 10:02:26	3490	Q49	Sophie	Anderson	2	0	1	0	0	0	0	0	0	0	1	4	3	2	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/9/2024 10:02:27	281	Q49	Albert Mathisz	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	1	2	1	0	1	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 10:02:30	9561	Q49	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	0	7	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	6	0	0	No	Sat in reds area
+3/9/2024 10:11:06	8575	Q50	Sophie	Anderson	1	0	1	0	0	0	0	0	0	0	1	4	6	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/9/2024 10:11:07	6961	Q50	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	10	10	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	1	0	0	No	Pushbot; disabled for the last half of the match
+3/9/2024 10:11:14	5130	Q50	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	0	4	1	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	2	0	0	No	Defense
+3/9/2024 10:11:39	4533	Q50	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	1	15	0	1	1	0	0	1	0	0	0	0	Source	Success with Partner	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	they only shot at amp and dumped notes in there repeatedly
+3/9/2024 10:21:28	3091	Q51	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	1	11	0	0	0	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	absent
+3/9/2024 10:21:41	3976	Q51	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 10:22:01	9477	Q51	Antony	Anderson	0	0	0	1	0	0	0	0	0	0	1	5	5	0	1	0	0	0	1	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Modified kitbot; quite efficient; prefers speaker but does it really well
+3/9/2024 10:22:26	1051	Q51	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	4	0	1	0	0	0	0	0	0	0	Both	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/9/2024 10:30:16	4451	Q52	Antony	Anderson	2	0	0	0	0	0	0	0	0	0	1	15	5	0	1	0	0	0	1	0	0	0	Both	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	Really effective and efficient 
+3/9/2024 10:30:31	3329	Q52	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	1	15	0	0	0	0	0	0	0	0	0	0	None	Failed	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	1	0	0	No	spent a lot of time just standing in front of the opposing speaker not doing anything
+3/9/2024 10:30:31	2815	Q52	Albert Mathisz	Anderson	1	0	1	0	0	0	0	0	0	0	0	15	2	0	1	0	0	0	0	0	0	0	Both	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	TRUE	0	0	0	0	No	
+3/9/2024 10:30:37	1293	Q52	Isaac Boroughs	Anderson	0	0	0	1	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	
+3/9/2024 10:31:11	6366	Q52	Sophie	Anderson	2	0	1	0	1	0	0	0	0	0	1	3	2	0	1	0	0	1	0	0	0	0	Ground	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/9/2024 10:37:31	1319	Q53	Sophie	Anderson	1	0	1	0	0	0	0	0	0	0	1	4	1	0	1	0	0	0	0	0	0	0	Ground	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	
+3/9/2024 10:37:55	6167	Q53	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	1	15	2	0	1	0	0	1	0	0	0	0	Source	NoTry	TRUE	FALSE	FALSE	FALSE	FALSE	FALSE	2	1	0	0	No	
+3/9/2024 10:37:58	3489	Q53	Antony	Anderson	1	0	1	0	0	0	0	0	0	0	1	5	6	0	1	0	0	0	0	0	0	0	Both	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	Got 7 notes in speaker
+3/9/2024 10:38:16	1648	Q53	Albert Mathisz	Anderson	0	0	0	0	0	0	0	0	0	0	0	5	3	0	1	0	0	0	0	0	0	0	Both	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 10:49:32	7085	Q54	Antony	Anderson	0	0	0	0	0	0	0	0	0	0	1	7	0	0	0	0	0	0	0	0	0	0	Source	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	Kitbot; played defense entire time
+3/9/2024 10:49:35	3976	Q54	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	1	15	0	0	0	1	0	0	0	0	0	0	None	NoTry	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 10:49:58	9561	Q54	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	1	0	0	No	Out of control; Parked rather than playing defense
+3/9/2024 10:57:40	1287	Q55	Antony	Anderson	1	0	1	0	0	0	0	0	0	0	1	6	1	2	1	0	0	0	0	0	0	0	Both	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	No	Can do amp and speaker
+3/9/2024 10:57:44	6961	Q55	Isaac Boroughs	Anderson	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	0	0	0	0	0	0	0	None	Failed	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	2	0	0	0	No	Defense bot (Pizza box)
+3/9/2024 10:57:51	2815	Q55	Sophie	Anderson	3	0	1	0	0	0	0	0	0	0	1	5	5	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	Yes	
+3/9/2024 10:58:18	1287	Q55	Marwan Makhtoub	Anderson	1	0	0	0	0	0	0	0	0	0	1	2	3	2	1	0	1	0	0	0	0	0	Both	Success	TRUE	TRUE	FALSE	TRUE	FALSE	FALSE	0	0	0	0	Yes	Fast and semi accurate around 50% accuracy
+3/9/2024 11:05:40	3329	Q56	Sophie	Anderson	0	0	0	0	0	0	0	0	0	0	3	5	2	0	1	0	0	0	0	0	0	0	Ground	Success	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	0	0	0	0	No	
+3/9/2024 11:05:40	281	Q56	Albert Mathisz	Anderson	0	1	0	0	0	0	0	0	0	0	0	6	0	2	0	0	0	0	0	0	0	0	Both	Success	TRUE	TRUE	TRUE	TRUE	FALSE	FALSE	2	0	0	0	No	
+3/9/2024 11:06:27	1319	Q56	aditya h	Anderson	0	0	0	0	0	0	0	0	0	0	1	15	0	0	0	0	0	0	0	0	0	0	None	NoTry	TRUE	TRUE	FALSE	FALSE	FALSE	FALSE	2	0	0	0	No	didnt do anything; played some defense
