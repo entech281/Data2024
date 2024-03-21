@@ -4,7 +4,7 @@ import st_scoring_widget
 from pch_teams import ALL_TEAMS
 
 from  models import ScoutingRecord,ClimbEnum,PickupEnum,EventEnum, Matches
-from gsheet_backend import write_scouting_row,get_match_data
+from gsheet_backend import write_match_scouting_row,get_match_data
 from st_scoring_widget import frc_scoring_tracker
 import pandas as pd
 
@@ -126,7 +126,7 @@ def build_scouting_form():
         #we need that here to avoid the boundary condition after first form load
         submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,on_click=toggle_form_key)
         if submitted:
-            write_scouting_row(SECRETS,record)
+            write_match_scouting_row(SECRETS, record)
             st.text("Response Saved!");
 
 
