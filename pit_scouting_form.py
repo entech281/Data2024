@@ -3,8 +3,9 @@ import streamlit as st
 import st_scoring_widget
 from pch_teams import ALL_TEAMS
 
-from  models import PitScoutingRecord,DriveEnum,PickupEnum,CanClimbEnum, StartLocEnum,PickupEnum,ShotLocEnum, EventEnum
-from gsheet_backend import write_scouting_row,get_match_data
+from  models import PitScoutingRecord,DriveEnum,PickupEnum,CanClimbEnum, StartLocEnum,PickupEnum,ShotLocEnum,EventEnum
+from gsheet_backend import write_pit_scouting_row,get_pits_data
+
 from st_scoring_widget import frc_scoring_tracker
 import pandas as pd
 
@@ -39,7 +40,9 @@ def build_pit_scouting_form():
     with pit_form:
         col1,col2,empty1,empty2 = st.columns(4)
         with col1:
+
             record.team_number = st.selectbox(label="Team", key="team_pit_number", options=ALL_TEAMS)
+
             record.scouter_name = st.text_input("Scout Name",value=st.session_state['actual_scouter_name'])
             st.session_state['actual_scouter_name'] = record.scouter_name
 
@@ -89,9 +92,11 @@ def build_pit_scouting_form():
 
         #note: very important: in streamlit callbacks execute before the rest of the scirpt
         #we need that here to avoid the boundary condition after first form load
+
         submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,on_click=toggle_form_key)
+
         if submitted:
-            #write_scouting_row(SECRETS,record)
+            write_pit_scouting_row(SECRETS,record)
             st.text("Response Saved!");
 
 

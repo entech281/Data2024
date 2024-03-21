@@ -7,7 +7,9 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import altair as alt
 import os
+
 from match_scouting_form import build_match_scouting_form
+
 from pit_scouting_form import build_pit_scouting_form
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 from models import EventEnum
@@ -15,8 +17,8 @@ from models import EventEnum
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
-
-if True:
+LOCAL_MODE=False
+if LOCAL_MODE:
     print("Using local mode")
     import localfile_backend as gsheet_backend
 else:
