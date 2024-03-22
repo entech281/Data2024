@@ -103,7 +103,7 @@ def write_match_scouting_row(secrets, rec:ScoutingRecord):
     s = _connect_sheet(secrets,tab=MATCH_TAB)
     t = rec.as_tuple()
     print("Writing Record:",t)
-    s.append_row(t)
+    #s.append_row(t)
 
 def write_pit_scouting_row(secrets, rec:PitScoutingRecord):
     rec.calc_fields()

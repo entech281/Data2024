@@ -2,7 +2,7 @@ import streamlit as st
 
 import st_scoring_widget
 from pch_teams import ALL_TEAMS
-
+import time
 from  models import ScoutingRecord,ClimbEnum,PickupEnum,EventEnum, Matches
 from gsheet_backend import write_match_scouting_row,get_match_data
 from st_scoring_widget import frc_scoring_tracker
@@ -13,6 +13,10 @@ INITIAL_FORM_VERSION=1
 
 if FORM_VERSION_KEY not in st.session_state:
     st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
+
+def notify_saved():
+    st.toast(":white_check_mark: Response Saved!")
+    time.sleep(2)
 
 def increment_form_version():
     if FORM_VERSION_KEY not in st.session_state:
@@ -128,11 +132,12 @@ def build_match_scouting_form():
 
         #note: very important: in streamlit callbacks execute before the rest of the scirpt
         #we need that here to avoid the boundary condition after first form load
-        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
+        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,on_click=notify_saved)
         if submitted:
             write_match_scouting_row(SECRETS, record)
-            st.text("Response Saved!");
+
             increment_form_version()
+
             st.rerun()
 
 
