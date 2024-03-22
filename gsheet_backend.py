@@ -92,7 +92,7 @@ def get_pits_data(secrets):
         df['tstamp'] = pd.to_datetime(df['tstamp'])
     else:
         df = pd.DataFrame(columns=PitScoutingRecord.dot_column_headers())
-    print("returning pit data",df)
+    #print("returning pit data",df)
     return df
 
 

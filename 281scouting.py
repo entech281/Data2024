@@ -81,7 +81,7 @@ def build_team_focus_tab(analyzed,summary):
         title_str += ("/" + focus_event)
         analyzed_and_filtered = analyzed_and_filtered[analyzed_and_filtered['event.name'] == focus_event]
         event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
-        print("Event Summary df:", event_summary_df)
+        #print("Event Summary df:", event_summary_df)
 
     event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
 
@@ -92,7 +92,7 @@ def build_team_focus_tab(analyzed,summary):
 
         event_summary_df = event_summary_df [ event_summary_df['team.number'] == focus_team]
         team_pit_data = pit_data_for_team(focus_team)
-        print("team pit data:",team_pit_data)
+        #print("team pit data:",team_pit_data)
 
 
     st.header(title_str)
@@ -100,8 +100,8 @@ def build_team_focus_tab(analyzed,summary):
         st.header("No Data")
     else:
         event_summary_dict = event_summary_df.to_dict(orient='records')[0]
-        print("event summary dict:",event_summary_dict)
-        col1,col2,col3,col4,col5 = st.columns(4)
+        #print("event summary dict:",event_summary_dict)
+        col1,col2,col3,col4,col5 = st.columns(5)
         with col1:
             avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
             frc_rank = int(event_summary_dict['frc_rank'])
@@ -122,12 +122,39 @@ def build_team_focus_tab(analyzed,summary):
             if len(team_pit_data) == 0:
                 st.header("No Pit Data")
             else:
-                st.metric(label="Dimensions", value=team_pit_data[
-                    "{0.1f}x{0.1f}in {0.1f} lb ".format(team_pit_data["robot.width"],team_pit_data["robot.length"],team_pit_data["robot.weight"])
-                ])
-                st.metric(label="Drive", value=team_pit_data[
-                   team_pit_data["robot.drive"]
-                ])
+                st.caption("Robot Specs")
+                st.markdown(""" 
+                    **Dimensions** : {0:1.1f} x{1:1.1f} x {2:1.1f} h   
+                    **Weight**:  {3:1.1f} lb  
+                    **Climb** : {4:s}   
+                    **UnderStage** : {5:s}    
+                    **Drive** : {6:s}    
+                """.format(
+                    team_pit_data["robot.width"],
+                    team_pit_data["robot.length"],
+                    team_pit_data["robot.height"],
+                    team_pit_data["robot.weight"],
+                    str(team_pit_data["climb"]),
+                    str(team_pit_data["under.stage"]),
+                    team_pit_data["robot.drive"]
+                ))
+
+        with col5:
+            st.caption("Scoring")
+            st.markdown("""
+                **Drive** : {0:s}  
+                **Climb** : {1:s}  
+                **Scoring Methods** : {2:s}  
+                **Shooting Prefs** : {3:s}  
+            """.format(
+                team_pit_data["robot.drive"],
+                team_pit_data["climb"],
+                team_pit_data["score.abilities"],
+                team_pit_data["pref.shoot"]
+            ))
+            st.caption("Autos")
+            st.text(team_pit_data["autos"])
+
 
         st.header("scoring timeline")
         plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['speaker.pts','amp.pts'])
