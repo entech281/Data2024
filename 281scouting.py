@@ -77,8 +77,11 @@ def build_team_focus_tab(analyzed,summary):
     focus_event = st.selectbox("Look at Event", options=EventEnum.options())
     title_str = "Team "
 
+    # TODO: this is an icky situation where the streamlit model of code plus visual stinks
+    # we want to filtermatch data first, but for display we want team first
+    # need to use st.container to solve
     if focus_event:
-        title_str += ("/" + focus_event)
+        title_str += (focus_event)
         analyzed_and_filtered = analyzed_and_filtered[analyzed_and_filtered['event.name'] == focus_event]
         event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
         #print("Event Summary df:", event_summary_df)
@@ -138,6 +141,8 @@ def build_team_focus_tab(analyzed,summary):
                     str(team_pit_data["under.stage"]),
                     team_pit_data["robot.drive"]
                 ))
+                st.caption("Notes")
+                st.text(team_pit_data["notes"])
 
         with col5:
             st.caption("Scoring Characteristics")
@@ -299,8 +304,9 @@ def build_match_tab():
         return
     st.header("Analyzed Match Data")
     st.text("Choose Filters")
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3,col4 = st.columns(4)
     filtered_data = analyzed
+    filtered_summary = summary
     with col1:
         pickup_filter = st.multiselect("Ground Pickup", options=list(analyzed['robot.pickup'].unique()))
         if len(pickup_filter) > 0:
@@ -325,6 +331,12 @@ def build_match_tab():
                 filtered_data = filtered_data[filtered_data["match.number"].str.startswith('Q')]
             elif match_type_filter == 'Final':
                 filtered_data = filtered_data[filtered_data["match.number"].str.startswith('F')]
+
+    with col4:
+        focus_event = st.selectbox("Filter by Event", options=EventEnum.options())
+        if focus_event != EventEnum.ALL:
+            filtered_data = filtered_data[filtered_data['event.name'] == focus_event]
+            filtered_summary = team_analysis.team_summary(filtered_data)
 
     st.header("{d} Matching matches".format(d=len(filtered_data)))
 
@@ -369,7 +381,7 @@ def build_match_tab():
     #       )
 
     st.header("Team Stats")
-    filtered_summary = summary
+
 
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
 
@@ -417,14 +429,7 @@ def build_match_tab():
         pass
 
     st.header("{d} Matching teams".format(d=len(filtered_summary)))
-    AgGrid(filtered_summary,
-           gridOptions=summary_gb.build(),
-           columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
-           height=800,
-           allow_unsafe_jscode=True,
-           width="100%'",
-           custom_css={"#gridToolBar": {"padding-bottom": "0px !important", }}
-           )
+    st.dataframe(data=filtered_summary)
 
 
 teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting,pit_data_tab = st.tabs([

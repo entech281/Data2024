@@ -23,6 +23,7 @@ class PickupEnum:
         return [PickupEnum.GROUND,PickupEnum.SOURCE,PickupEnum.BOTH,PickupEnum.NONE]
 
 class EventEnum:
+    ALL = "All"
     ANDERSON = 'Anderson'
     CHARLESTON= 'Charleston'
     GWINNETT = 'Gwinnett'
@@ -30,7 +31,7 @@ class EventEnum:
 
     @classmethod
     def options(cls):
-        return [EventEnum.ANDERSON,EventEnum.CHARLESTON,EventEnum.PCHCHAMPS,EventEnum.GWINNETT]
+        return [EventEnum.ALL, EventEnum.ANDERSON,EventEnum.CHARLESTON,EventEnum.PCHCHAMPS,EventEnum.GWINNETT]
 
 class DriveEnum:
     SWERVE = 'Swerve'
