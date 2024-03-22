@@ -8,28 +8,29 @@ from gsheet_backend import write_match_scouting_row,get_match_data
 from st_scoring_widget import frc_scoring_tracker
 import pandas as pd
 
-FORM_SUBMIT_KEY="form_key"
+FORM_VERSION_KEY="form_version"
+INITIAL_FORM_VERSION=1
 
-if FORM_SUBMIT_KEY not in st.session_state:
-    st.session_state[FORM_SUBMIT_KEY] = 0
+if FORM_VERSION_KEY not in st.session_state:
+    st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
+
+def increment_form_version():
+    if FORM_VERSION_KEY not in st.session_state:
+        st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
+
+    old_version = st.session_state[FORM_VERSION_KEY]
+    new_version = old_version + 1
+    st.session_state[FORM_VERSION_KEY] = new_version
 
 def get_refreshed_form_key(root_name):
-    if FORM_SUBMIT_KEY not in st.session_state:
-        st.session_state[FORM_SUBMIT_KEY] = 0
+    if FORM_VERSION_KEY not in st.session_state:
+        st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
 
-    return root_name + str(st.session_state[FORM_SUBMIT_KEY])
-
-def toggle_form_key():
-    if FORM_SUBMIT_KEY not in st.session_state:
-        st.session_state[FORM_SUBMIT_KEY] = 0
-
-    if st.session_state[FORM_SUBMIT_KEY] == 1:
-        st.session_state[FORM_SUBMIT_KEY] = 0
-    else:
-        st.session_state[FORM_SUBMIT_KEY] = 1
-
+    #return root_name
+    return root_name + str(st.session_state[FORM_VERSION_KEY])
 
 def build_match_scouting_form():
+
     record = ScoutingRecord()
     SECRETS = st.secrets["gsheets"]
     st.title("Scouting 2024 Charleston")
@@ -127,9 +128,11 @@ def build_match_scouting_form():
 
         #note: very important: in streamlit callbacks execute before the rest of the scirpt
         #we need that here to avoid the boundary condition after first form load
-        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,on_click=toggle_form_key)
+        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
         if submitted:
             write_match_scouting_row(SECRETS, record)
             st.text("Response Saved!");
+            increment_form_version()
+            st.rerun()
 
 

@@ -20,8 +20,8 @@ function resetValues(){
     ]
 }
 
-function update() {
-
+function update_component() {
+     Streamlit.setComponentValue(currentValues);
 }
 
 /**
@@ -53,7 +53,7 @@ function onRender(event) {
     const far_value = document.getElementById("far_value");
 
     function update(){
-        Streamlit.setComponentValue(currentValues);
+        update_component();
         amp_value.innerText = currentValues[1] + " | " + currentValues[0];
         subwoofer_value.innerText = currentValues[3] + " | " + currentValues[2];
         podium_value.innerText = currentValues[5] + " | " + currentValues[4];
