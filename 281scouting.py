@@ -290,7 +290,7 @@ def build_team_tab():
 
 def build_pit_tab(pit_data):
     st.header("Pit Data")
-    st.dataframe(data=pit_data,column_config={
+    st.dataframe(data=pit_data,height=600,column_config={
         #a stacked bar here woudl be ideal!
         #these oculd also be over time which would be cool too
         "tstamp": st.column_config.DatetimeColumn(),
