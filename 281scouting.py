@@ -45,7 +45,7 @@ def pit_data_for_team(team_num):
     else:
         return {}
 
-st.title("281 2024 Scouting Data")
+st.title("281 2024 Scouting Data  [BETA]")
 
 (analyzed, summary) = load_match_data()
 pit_data = load_pit_data()
@@ -119,10 +119,10 @@ def build_team_focus_tab(analyzed,summary):
             st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
 
         with col4:
+            st.caption("Robot Specs")
             if len(team_pit_data) == 0:
-                st.header("No Pit Data")
+                st.text("[No Pit Data]")
             else:
-                st.caption("Robot Specs")
                 st.markdown(""" 
                     **Dimensions** : {0:1.1f} x{1:1.1f} x {2:1.1f} h   
                     **Weight**:  {3:1.1f} lb  
@@ -140,20 +140,23 @@ def build_team_focus_tab(analyzed,summary):
                 ))
 
         with col5:
-            st.caption("Scoring")
-            st.markdown("""
-                **Drive** : {0:s}  
-                **Climb** : {1:s}  
-                **Scoring Methods** : {2:s}  
-                **Shooting Prefs** : {3:s}  
-            """.format(
-                team_pit_data["robot.drive"],
-                team_pit_data["climb"],
-                team_pit_data["score.abilities"],
-                team_pit_data["pref.shoot"]
-            ))
-            st.caption("Autos")
-            st.text(team_pit_data["autos"])
+            st.caption("Scoring Characteristics")
+            if len(team_pit_data) == 0:
+                st.text("[No Pit Data]")
+            else:
+                st.markdown("""
+                    **Drive** : {0:s}  
+                    **Climb** : {1:s}  
+                    **Scoring Methods** : {2:s}  
+                    **Shooting Prefs** : {3:s}  
+                """.format(
+                    team_pit_data["robot.drive"],
+                    team_pit_data["climb"],
+                    team_pit_data["score.abilities"],
+                    team_pit_data["pref.shoot"]
+                ))
+                st.caption("Autos")
+                st.text(team_pit_data["autos"])
 
 
         st.header("scoring timeline")
