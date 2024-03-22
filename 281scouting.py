@@ -246,7 +246,16 @@ def build_team_tab():
 
     st.header("Team Summary")
 
-    top_teams = team_analysis.compute_top_team_summary(summary)
+    focus_event = st.selectbox("Filter By Event", options=EventEnum.options())
+    summary_df = summary
+    analyzed_and_filtered=analyzed
+    if focus_event != EventEnum.ALL:
+        analyzed_and_filtered = analyzed_and_filtered[analyzed_and_filtered['event.name'] == focus_event]
+        summary_df = team_analysis.team_summary(analyzed_and_filtered)
+
+
+
+    top_teams = team_analysis.compute_top_team_summary(summary_df)
 
     top_teams = top_teams.astype({'team.number': 'object'})
     top_teams = top_teams.rename(columns={'team.number': 'team_number'})
