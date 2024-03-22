@@ -36,6 +36,15 @@ def load_pit_data():
     raw_data = gsheet_backend.get_pits_data(SECRETS)
     return raw_data
 
+
+def pit_data_for_team(team_num):
+    all_data = load_pit_data()
+    team_data = all_data[ all_data['team.number'] == team_num]
+    if len(team_data) > 0:
+        return team_data.to_dict(orient='records')[0]
+    else:
+        return {}
+
 st.title("281 2024 Scouting Data")
 
 (analyzed, summary) = load_match_data()
@@ -66,7 +75,7 @@ def build_team_focus_tab(analyzed,summary):
 
     focus_team = st.selectbox("Look at Team", options=teamlist)
     focus_event = st.selectbox("Look at Event", options=EventEnum.options())
-    title_str = "Team Details for "
+    title_str = "Team "
 
     if focus_event:
         title_str += ("/" + focus_event)
@@ -77,12 +86,13 @@ def build_team_focus_tab(analyzed,summary):
     event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
 
     if focus_team:
-        title_str += str(focus_team)
+        title_str += (" " + str(focus_team))
         general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
         strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
 
         event_summary_df = event_summary_df [ event_summary_df['team.number'] == focus_team]
-
+        team_pit_data = pit_data_for_team(focus_team)
+        print("team pit data:",team_pit_data)
 
 
     st.header(title_str)
@@ -91,7 +101,7 @@ def build_team_focus_tab(analyzed,summary):
     else:
         event_summary_dict = event_summary_df.to_dict(orient='records')[0]
         print("event summary dict:",event_summary_dict)
-        col1,col2,col3 = st.columns(3)
+        col1,col2,col3,col4,col5 = st.columns(4)
         with col1:
             avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
             frc_rank = int(event_summary_dict['frc_rank'])
@@ -108,16 +118,31 @@ def build_team_focus_tab(analyzed,summary):
             st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
             st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
 
+        with col4:
+            if len(team_pit_data) == 0:
+                st.header("No Pit Data")
+            else:
+                st.metric(label="Dimensions", value=team_pit_data[
+                    "{0.1f}x{0.1f}in {0.1f} lb ".format(team_pit_data["robot.width"],team_pit_data["robot.length"],team_pit_data["robot.weight"])
+                ])
+                st.metric(label="Drive", value=team_pit_data[
+                   team_pit_data["robot.drive"]
+                ])
+
         st.header("scoring timeline")
         plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['speaker.pts','amp.pts'])
         plot3.update_layout(height=300)
         st.plotly_chart(plot3)
 
-        st.header("Strategy Notes")
-        st.dataframe(strategy_comments)
 
-        st.header("General Notes")
-        st.dataframe(general_comments)
+        col1,col2= st.columns(2)
+        with col1:
+            st.header("General Notes")
+            st.dataframe(general_comments)
+        with col2:
+
+            st.header("Strategy Notes")
+            st.dataframe(strategy_comments)
 
 
 
