@@ -59,30 +59,38 @@ summary_gb.configure_side_bar(filters_panel=True)
 
 
 def build_team_focus_tab(analyzed,summary):
+    analyzed_and_filtered = analyzed
     if not HAS_DATA:
         st.header("No Data")
         return
 
-    focus_team = st.selectbox("Look at  Team", options=teamlist)
+    focus_team = st.selectbox("Look at Team", options=teamlist)
     focus_event = st.selectbox("Look at Event", options=EventEnum.options())
     title_str = "Team Details for "
+
+    if focus_event:
+        title_str += ("/" + focus_event)
+        analyzed_and_filtered = analyzed_and_filtered[analyzed_and_filtered['event.name'] == focus_event]
+        event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
+        print("Event Summary df:", event_summary_df)
+
+    event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
+
     if focus_team:
         title_str += str(focus_team)
         general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
         strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
-        perf_over_time = analyzed[analyzed['team.number'] == focus_team]
-        summary_row = summary [ summary['team.number'] == focus_team]
 
-    if focus_event:
-        title_str += ("/" + focus_event)
-        perf_over_time = perf_over_time[perf_over_time['event.name'] == focus_event]
-        event_summary_df = team_analysis.team_summary(perf_over_time)
+        event_summary_df = event_summary_df [ event_summary_df['team.number'] == focus_team]
+
+
 
     st.header(title_str)
     if len(event_summary_df) == 0:
         st.header("No Data")
     else:
         event_summary_dict = event_summary_df.to_dict(orient='records')[0]
+        print("event summary dict:",event_summary_dict)
         col1,col2,col3 = st.columns(3)
         with col1:
             avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
@@ -101,7 +109,7 @@ def build_team_focus_tab(analyzed,summary):
             st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
 
         st.header("scoring timeline")
-        plot3 = px.bar(perf_over_time, x='match.number', y=['speaker.pts','amp.pts'])
+        plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['speaker.pts','amp.pts'])
         plot3.update_layout(height=300)
         st.plotly_chart(plot3)
 
