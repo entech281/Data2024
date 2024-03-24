@@ -3,7 +3,7 @@ import streamlit as st
 import st_scoring_widget
 from pch_teams import ALL_TEAMS
 import time
-from  models import ScoutingRecord,ClimbEnum,PickupEnum,EventEnum, Matches
+from  models import ScoutingRecord,ClimbEnum,PickupEnum, Matches
 from gsheet_backend import write_match_scouting_row,get_match_data
 from st_scoring_widget import frc_scoring_tracker
 import pandas as pd
@@ -37,7 +37,7 @@ def build_match_scouting_form():
 
     record = ScoutingRecord()
     SECRETS = st.secrets["gsheets"]
-    st.title("Scouting 2024 Charleston")
+    st.title("Match Scouting 2024 DCMP")
 
     match_form = st.form(key="match_row",clear_on_submit=True,border=True)
 
@@ -52,18 +52,17 @@ def build_match_scouting_form():
             record.match_number = st.selectbox(label="Match",options=Matches.make_matches())
 
         with col2:
-            record.event_name = st.selectbox(label="Event", key="event_name" ,options=EventEnum.options())
 
-            record.scouter_name = st.text_input("Scout Name",value=st.session_state['actual_scouter_name'])
+            record.scouter_name = st.text_input("Your Initials (2 chars)",value=st.session_state['actual_scouter_name'],max_chars=2)
             st.session_state['actual_scouter_name'] = record.scouter_name
 
             record.team_present = st.checkbox(label="Team Present",key="present")
 
-        st.header("Auto")
+        st.header("Auto Scoring")
 
         record.mobility = st.checkbox("Mobility", key='mobility')
-        (amp_attempted_auto ,
-         record.notes_amp_auto,
+        (record.amp_attempted_auto ,
+         record.amp_completed_auto,
          record.speaker_subwoofer_attempted_auto,
          record.speaker_subwoofer_completed_auto,
          record.speaker_podium_attempted_auto,
@@ -90,10 +89,10 @@ def build_match_scouting_form():
         with empty:
             pass
 
-        st.header("Teleop ")
+        st.header("Teleop Scoring")
 
-        (amp_attempted_teleop ,
-         record.notes_amp_teleop,
+        (record.amp_attempted_teleop ,
+         record.amp_completed_teleop,
          record.speaker_subwoofer_attempted_teleop,
          record.speaker_subwoofer_completed_teleop,
          record.speaker_podium_attempted_teleop,
@@ -103,10 +102,10 @@ def build_match_scouting_form():
          ) = frc_scoring_tracker(key=get_refreshed_form_key("telop_scoring"))
 
         st.header("Defense")
-        col1, empty1, empty2 = st.columns(3)
+        col1, col2 = st.columns(2)
         with col1:
             record.defense_forced_penalties = st.number_input('Forced Penalties',key='defense_forced_penalties',min_value=0,step=1)
-
+        with col2:
             record.defense_rating = st.number_input('Rating',key='defense_rating',min_value=0,step=1, max_value=5)
 
 
@@ -124,7 +123,7 @@ def build_match_scouting_form():
 
             record.high_note = st.checkbox ("HighNote",key='highnote')
 
-        record.strategy = st.text_area("Did they employ a strategy that might exaggerate their stats")
+        record.strategy = st.text_area("Did they employ a strategy that might exaggerate their stats [Explain]")
         record.notes = st.text_area("Other Comments")
 
         #note: very important: in streamlit callbacks execute before the rest of the scirpt

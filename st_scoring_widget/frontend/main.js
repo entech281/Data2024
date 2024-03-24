@@ -54,51 +54,51 @@ function onRender(event) {
 
     function update(){
         update_component();
-        amp_value.innerText = currentValues[1] + " | " + currentValues[0];
-        subwoofer_value.innerText = currentValues[3] + " | " + currentValues[2];
-        podium_value.innerText = currentValues[5] + " | " + currentValues[4];
-        far_value.innerText = currentValues[7] + " | " + currentValues[6];
+        amp_value.innerText = currentValues[0] + " | " + currentValues[1];
+        subwoofer_value.innerText = currentValues[2] + " | " + currentValues[3];
+        podium_value.innerText = currentValues[4] + " | " + currentValues[5];
+        far_value.innerText = currentValues[6] + " | " + currentValues[7];
     }
     document.getElementById("clear").onclick = function(e){
         resetValues();
         update();
     }
     amp_score.onclick = function(e){
-        currentValues[0]++;
+        currentValues[1]++;
         update();
 
     }
     amp_miss.onclick = function(e){
-        currentValues[1]++;
+        currentValues[0]++;
         update();
 
     }
 
     subwoofer_score.onclick = function(e){
-        currentValues[2]++;
+        currentValues[3]++;
         update();
 
     }
     subwoofer_miss.onclick = function(e){
-        currentValues[3]++;
+        currentValues[2]++;
         update();
     }
 
     podium_score.onclick = function(e){
-        currentValues[4]++;
+        currentValues[5]++;
         update();
     }
     podium_miss.onclick = function(e){
-        currentValues[5]++;
+        currentValues[4]++;
         update();
     }
 
     far_score.onclick = function(e){
-        currentValues[6]++;
+        currentValues[7]++;
         update();
     }
     far_miss.onclick = function(e){
-        currentValues[7]++;
+        currentValues[6]++;
         update();
     }
     update();

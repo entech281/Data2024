@@ -1,18 +1,11 @@
 import streamlit as st
-import pandas as pd
 import team_analysis
-import gsheet_backend
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
-import altair as alt
-import os
 
 from match_scouting_form import build_match_scouting_form
-
 from pit_scouting_form import build_pit_scouting_form
-from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
-from models import EventEnum
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
@@ -25,7 +18,7 @@ else:
     print("Reading gsheet. To use local mode, set environment using set LOCAL=true")
     import gsheet_backend
 
-CACHE_SECONDS=30
+CACHE_SECONDS=0
 @st.cache_data(ttl=CACHE_SECONDS)
 def load_match_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
@@ -45,65 +38,42 @@ def pit_data_for_team(team_num):
     else:
         return {}
 
-st.title("281 2024 Scouting Data ")
+st.title("281 2024 DCMP Scouting")
 
 (analyzed, summary) = load_match_data()
 pit_data = load_pit_data()
 teamlist = list(summary['team.number'])
 
 
-HAS_DATA = True
-
-analyzed_gb = GridOptionsBuilder.from_dataframe(analyzed)
-analyzed_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
-analyzed_gb.configure_default_column(groupable="true", filterable="true", width=50)
-analyzed_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
-analyzed_gb.configure_side_bar(filters_panel=True)
-
-summary_gb = GridOptionsBuilder.from_dataframe(summary)
-summary_gb.configure_pagination(enabled=True, paginationAutoPageSize=True)
-summary_gb.configure_default_column(groupable="true", filterable="true")
-summary_gb.configure_grid_options(alwaysShowHorizontalScroll=True)
-summary_gb.configure_side_bar(filters_panel=True)
-
+def write_markdown_list( vals):
+    s = ""
+    for v in vals:
+        s += ("* " + v + "___" + "\n")
+    return s
 
 def build_team_focus_tab(analyzed,summary):
     analyzed_and_filtered = analyzed
-    if not HAS_DATA:
+    if len(analyzed_and_filtered) == 0:
         st.header("No Data")
         return
 
-    focus_team = st.selectbox("Look at Team", options=teamlist)
-    focus_event = st.selectbox("Look at Event", options=EventEnum.options())
-    title_str = "Team "
-
-    # TODO: this is an icky situation where the streamlit model of code plus visual stinks
-    # we want to filtermatch data first, but for display we want team first
-    # need to use st.container to solve
-    if focus_event:
-        title_str += (focus_event)
-        analyzed_and_filtered = analyzed_and_filtered[analyzed_and_filtered['event.name'] == focus_event]
-        event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
-        #print("Event Summary df:", event_summary_df)
-
-    event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
+    focus_team = st.selectbox("Choose Team", options=teamlist)
 
     if focus_team:
-        title_str += (" " + str(focus_team))
+        event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
+        analyzed_and_filtered = analyzed_and_filtered[ analyzed_and_filtered["team.number"] == focus_team]
         general_comments = team_analysis.get_comments_for_team(focus_team,analyzed,'notes')
         strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
 
         event_summary_df = event_summary_df [ event_summary_df['team.number'] == focus_team]
         team_pit_data = pit_data_for_team(focus_team)
-        #print("team pit data:",team_pit_data)
 
 
-    st.header(title_str)
     if len(event_summary_df) == 0:
         st.header("No Data")
     else:
         event_summary_dict = event_summary_df.to_dict(orient='records')[0]
-        #print("event summary dict:",event_summary_dict)
+
         col1,col2,col3,col4,col5 = st.columns(5)
         with col1:
             avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
@@ -163,27 +133,32 @@ def build_team_focus_tab(analyzed,summary):
                 st.caption("Autos")
                 st.text(team_pit_data["autos"])
 
+        st.header("Accuracy")
+        accuracy_table = team_analysis.compute_scoring_table(summary,focus_team)
+        st.dataframe(accuracy_table, hide_index=True, column_config={
+            'Amp': st.column_config.Column(width="small"),
+            'Subwoofer': st.column_config.Column(width="small"),
+            'Podium': st.column_config.Column(width="small"),
+            'Other': st.column_config.Column(width="small"),
+        })
+
 
         st.header("scoring timeline")
-        plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['speaker.pts','amp.pts'])
+        plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['notes.speaker.auto','notes.speaker.teleop','notes.amp.auto', 'notes.amp.teleop'])
         plot3.update_layout(height=300)
         st.plotly_chart(plot3)
 
 
-        col1,col2= st.columns(2)
-        with col1:
-            st.header("General Notes")
-            st.dataframe(general_comments)
-        with col2:
 
-            st.header("Strategy Notes")
-            st.dataframe(strategy_comments)
+        st.header("General Notes")
+        st.markdown(write_markdown_list(general_comments))
 
-
+        st.header("Strategy Notes")
+        st.markdown(write_markdown_list(strategy_comments))
 
 
 def build_defense_tab(analyzed,summary):
-    if not HAS_DATA:
+    if len(analyzed)==0:
         st.header("No Data")
         return
     focus_team = st.selectbox("Look at  Team", options=teamlist,key="defense_team")
@@ -213,7 +188,7 @@ def build_defense_tab(analyzed,summary):
         st.dataframe(general_comments)
 
 def build_match_predictor():
-    if not HAS_DATA:
+    if len(analyzed)==0:
         st.header("No Data")
         return
 
@@ -240,27 +215,19 @@ def build_match_predictor():
 
 
 def build_team_tab():
-    if not HAS_DATA:
+    if len(analyzed)==0:
         st.header("No Data")
         return
 
     st.header("Team Summary")
-
-    focus_event = st.selectbox("Filter By Event", options=EventEnum.options())
     summary_df = summary
-    analyzed_and_filtered=analyzed
-    if focus_event != EventEnum.ALL:
-        analyzed_and_filtered = analyzed_and_filtered[analyzed_and_filtered['event.name'] == focus_event]
-        summary_df = team_analysis.team_summary(analyzed_and_filtered)
-
-
 
     top_teams = team_analysis.compute_top_team_summary(summary_df)
 
     top_teams = top_teams.astype({'team.number': 'object'})
     top_teams = top_teams.rename(columns={'team.number': 'team_number'})
 
-    bar = px.bar(top_teams, x='team_number', y=['teleop', 'auto'], category_orders={
+    bar = px.bar(top_teams, x='team_number', y=['teleop', 'auto'],title="Point For Top Teams", category_orders={
         'team_number': top_teams['team_number']
     }).update_xaxes(type='category')
     bar.add_traces(go.Scatter(
@@ -290,6 +257,9 @@ def build_team_tab():
 
 def build_pit_tab(pit_data):
     st.header("Pit Data")
+    if len(pit_data)==0:
+        st.header("No Data")
+        return
     st.dataframe(data=pit_data,height=600,column_config={
         #a stacked bar here woudl be ideal!
         #these oculd also be over time which would be cool too
@@ -308,12 +278,12 @@ def build_pit_tab(pit_data):
     )
 
 def build_match_tab():
-    if not HAS_DATA:
+    if len(analyzed)==0:
         st.header("No Data")
         return
     st.header("Analyzed Match Data")
     st.text("Choose Filters")
-    col1, col2, col3,col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
     filtered_data = analyzed
     filtered_summary = summary
     with col1:
@@ -341,12 +311,6 @@ def build_match_tab():
             elif match_type_filter == 'Final':
                 filtered_data = filtered_data[filtered_data["match.number"].str.startswith('F')]
 
-    with col4:
-        focus_event = st.selectbox("Filter by Event", options=EventEnum.options())
-        if focus_event != EventEnum.ALL:
-            filtered_data = filtered_data[filtered_data['event.name'] == focus_event]
-            filtered_summary = team_analysis.team_summary(filtered_data)
-
     st.header("{d} Matching matches".format(d=len(filtered_data)))
 
     #see optoins here: https://docs.streamlit.io/library/api-reference/data/st.dataframe
@@ -369,26 +333,17 @@ def build_match_tab():
             max_value=30,
         ),
         'auto_scoring_summary':st.column_config.BarChartColumn(
-            "Auto: SPK POD MED MID",
+            "Auto: AMP SPK POD OTHER",
             y_min=0,
             y_max=5
         ),
         'teleop_scoring_summary': st.column_config.BarChartColumn(
-            "Tele: SPK POD MED MID",
+            "Tele: AMP SPK POD OTHER",
             y_min=0,
             y_max=5
         ),
 
     })
-    #AgGrid(filtered_data,
-    #       gridOptions=analyzed_gb.build(),
-    #       columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
-    #       height=400,
-    #       allow_unsafe_jscode=True,
-    #       width="100%'",
-    #       custom_css={"#gridToolBar": {"padding-bottom": "0px !important", }}
-    #       )
-
     st.header("Team Stats")
 
 
@@ -416,14 +371,7 @@ def build_match_tab():
         filtered_summary = filter_data_with_field_slider("avg_notes_amp", "Amp,Avg", filtered_summary)
 
     with col4:
-        def make_accuracy_slider(field_name):
-            MIN_ACCURACY = 0.0
-            MAX_ACCURACY = 3.0
-            return st.slider(field_name, MIN_ACCURACY, MAX_ACCURACY, (MIN_ACCURACY, MAX_ACCURACY))
-
-        pod_teleop_acry = make_accuracy_slider('pod_teleop_acry')
-        filtered_summary = filtered_summary[filtered_summary["pod_teleop_acry"] >= pod_teleop_acry[0]]
-        filtered_summary = filtered_summary[filtered_summary["pod_teleop_acry"] <= pod_teleop_acry[1]]
+        pass
 
     with col5:
         pass
@@ -442,7 +390,7 @@ def build_match_tab():
 
 
 teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting,pit_data_tab = st.tabs([
-   'Teams' ,'Matches', 'Defense', 'Match Predictor','Team Focus','Match Scouting','Pit Scouting','Pit Data'])
+   'Teams' ,'Matches', 'Defense', 'Match Predictor','Team Detail','Match Scouting','Pit Scouting','Pit Data'])
 with teams:
     build_team_tab()
 

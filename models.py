@@ -22,17 +22,6 @@ class PickupEnum:
     def options(cls):
         return [PickupEnum.GROUND,PickupEnum.SOURCE,PickupEnum.BOTH,PickupEnum.NONE]
 
-class EventEnum:
-    ALL = "All"
-    ANDERSON = 'Anderson'
-    CHARLESTON= 'Charleston'
-    GWINNETT = 'Gwinnett'
-    PCHCHAMPS = 'PCH Champs'
-
-    @classmethod
-    def options(cls):
-        return [EventEnum.ALL, EventEnum.ANDERSON,EventEnum.CHARLESTON,EventEnum.PCHCHAMPS,EventEnum.GWINNETT]
-
 class DriveEnum:
     SWERVE = 'Swerve'
     MECANUM = 'Mecanum'
@@ -88,29 +77,31 @@ class ScoutingRecord(BaseModel):
     team_number: int = 0
     match_number: str = ''
     scouter_name: str = ''
-    event_name: str = EventEnum.CHARLESTON
-    notes_speaker_auto: int = 0
-    notes_amp_auto: int = 0
-    speaker_subwoofer_completed_auto: int = 0 #neither/scored/attempted in the current sheet for these
+
+    #auto scoring
+    amp_completed_auto: int = 0
+    amp_attempted_auto: int = 0
+    speaker_subwoofer_completed_auto: int = 0
     speaker_subwoofer_attempted_auto: int = 0
     speaker_podium_completed_auto: int = 0
     speaker_podium_attempted_auto: int = 0
     speaker_medium_completed_auto: int = 0
     speaker_medium_attempted_auto: int = 0
-    speaker_midfield_completed_auto: int = 0
-    speaker_midfield_attempted_auto: int = 0
-    robot_disabled_time: int = 0
-    robot_speed: float = 0.0
-    notes_speaker_teleop: int = 0
-    notes_amp_teleop: int = 0
-    speaker_subwoofer_completed_teleop: int = 0  #neither/scored/attempted in the current sheet for these
+
+
+    #teleop scoring
+    amp_completed_teleop: int = 0
+    amp_attempted_teleop: int = 0
+    speaker_subwoofer_completed_teleop: int = 0
     speaker_subwoofer_attempted_teleop: int = 0
     speaker_podium_completed_teleop: int = 0
     speaker_podium_attempted_teleop: int = 0
     speaker_medium_completed_teleop: int = 0
     speaker_medium_attempted_teleop: int = 0
-    speaker_midfield_completed_teleop: int = 0
-    speaker_midfield_attempted_teleop: int = 0
+
+    #other
+    robot_disabled_time: int = 0
+    robot_speed: float = 0.0
     robot_pickup: str = PickupEnum.SOURCE
     climb: str = ClimbEnum.NOTRY
     team_present: bool = False
@@ -129,16 +120,7 @@ class ScoutingRecord(BaseModel):
 
 
     def calc_fields(self):
-        #note: attempted means 'how many misses' not how many misses plus successes'
-        self.notes_speaker_teleop = self.speaker_subwoofer_completed_teleop +\
-                                    self.speaker_podium_completed_teleop +\
-                                    self.speaker_medium_completed_teleop + self.speaker_midfield_completed_teleop
-        print("computed speaker teleop=",self.notes_speaker_teleop)
-
-        self.notes_speaker_auto = self.speaker_subwoofer_completed_auto  +\
-                                    self.speaker_podium_completed_auto  +\
-                                    self.speaker_medium_completed_auto  + self.speaker_midfield_completed_auto
-        print("computed speaker auto=", self.notes_speaker_auto)
+        pass
 
     def as_tuple(self):
         m = self.model_dump()

@@ -4,14 +4,16 @@ import pandas as pd
 from models import ScoutingRecord,PitScoutingRecord
 from datetime import datetime
 
-MATCH_TAB = 0
-PIT_TAB = 1
+CHARLESTON_MATCH_TAB = 0
+CHARLESTON_PIT_TAB = 1
+PCH_DCMP_MATCH_TAB = 2
+PCH_DCMP_PIT_TAB = 3
+
 
 SHEET_ID='1JHUOVxvL_UDA3tqxTiwWO095eOxppAWJi7PtDnxnGt8'
 
 
-
-def _connect_sheet(secrets,tab=MATCH_TAB):
+def _connect_sheet(secrets,tab):
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
     ]
@@ -27,7 +29,7 @@ def _connect_sheet(secrets,tab=MATCH_TAB):
 
 
 def get_match_data(secrets):
-    gs = _connect_sheet(secrets,tab=MATCH_TAB)
+    gs = _connect_sheet(secrets,tab=PCH_DCMP_MATCH_TAB)
 
     def _write_match_scouting_header_if_needed(secrets, sheet):
 
@@ -72,7 +74,7 @@ def _write_pit_scouting_header_if_needed(secrets, sheet):
         sheet.append_row(headers)
 
 def get_pits_data(secrets):
-    gs = _connect_sheet(secrets,tab=PIT_TAB)
+    gs = _connect_sheet(secrets,tab=PCH_DCMP_PIT_TAB)
     _write_pit_scouting_header_if_needed(secrets, gs)
 
     d = gs.get()
@@ -100,14 +102,14 @@ def get_pits_data(secrets):
 
 def write_match_scouting_row(secrets, rec:ScoutingRecord):
     rec.calc_fields()
-    s = _connect_sheet(secrets,tab=MATCH_TAB)
+    s = _connect_sheet(secrets,tab=PCH_DCMP_MATCH_TAB)
     t = rec.as_tuple()
     print("Writing Record:",t)
     s.append_row(t)
 
 def write_pit_scouting_row(secrets, rec:PitScoutingRecord):
     rec.calc_fields()
-    s = _connect_sheet(secrets,tab=PIT_TAB)
+    s = _connect_sheet(secrets,tab=PCH_DCMP_PIT_TAB)
     _write_pit_scouting_header_if_needed(secrets,s)
     t = rec.as_tuple()
     print("Writing Record:",t)
