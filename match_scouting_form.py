@@ -102,9 +102,6 @@ def build_match_scouting_form():
          record.speaker_medium_completed_teleop
          ) = frc_scoring_tracker(key=get_refreshed_form_key("telop_scoring"))
 
-
-        record.robot_speed = st.slider("Seconds to Cross Whole Field", min_value=3, max_value=10, value=5, step=1)
-
         st.header("Defense")
         col1, empty1, empty2 = st.columns(3)
         with col1:

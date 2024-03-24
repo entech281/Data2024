@@ -88,7 +88,7 @@ class ScoutingRecord(BaseModel):
     team_number: int = 0
     match_number: str = ''
     scouter_name: str = ''
-    event_name: str = ''
+    event_name: str = EventEnum.CHARLESTON
     notes_speaker_auto: int = 0
     notes_amp_auto: int = 0
     speaker_subwoofer_completed_auto: int = 0 #neither/scored/attempted in the current sheet for these
@@ -133,8 +133,17 @@ class ScoutingRecord(BaseModel):
         self.notes_speaker_teleop = self.speaker_subwoofer_completed_teleop +\
                                     self.speaker_podium_completed_teleop +\
                                     self.speaker_medium_completed_teleop + self.speaker_midfield_completed_teleop
+        print("computed speaker teleop=",self.notes_speaker_teleop)
+
+        self.notes_speaker_auto = self.speaker_subwoofer_completed_auto  +\
+                                    self.speaker_podium_completed_auto  +\
+                                    self.speaker_medium_completed_auto  + self.speaker_midfield_completed_auto
+        print("computed speaker auto=", self.notes_speaker_auto)
+
     def as_tuple(self):
-        return list(self.model_dump().values())
+        m = self.model_dump()
+        print("model before export",m)
+        return list(m.values())
 
 
     @staticmethod

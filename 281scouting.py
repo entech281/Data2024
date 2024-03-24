@@ -45,7 +45,7 @@ def pit_data_for_team(team_num):
     else:
         return {}
 
-st.title("281 2024 Scouting Data  [BETA]")
+st.title("281 2024 Scouting Data ")
 
 (analyzed, summary) = load_match_data()
 pit_data = load_pit_data()
