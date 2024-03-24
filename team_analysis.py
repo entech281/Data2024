@@ -74,32 +74,62 @@ def analyze(raw_data):
 
 def compute_scoring_table(team_summary,team_number):
     # TODO: probably a much more elegant way to columnize this!
-    s = team_summary [ team_summary["team.number"] == team_number]
-
-    def make_accuracy_str( thing, phase):
-        completed_colname = "%s_completed_%s" % ( thing, phase)
-        attempated_colname = "%s_attempted_%s" % (thing, phase)
-        return "{0} / {1}".format(s[completed_colname].iloc[0], (s[completed_colname].iloc[0] + s[attempated_colname].iloc[0]))
-
-    return pd.DataFrame(
+    s = team_summary [ team_summary["team.number"] == team_number].to_dict(orient="records")[0]
+ 
+    auto_data = pd.DataFrame(
         [
             {
-                "Phase": "auto",
-                "Amp": make_accuracy_str("amp","auto"),
-                "Subwoofer": make_accuracy_str("speaker_subwoofer", "auto"),
-                "Podium": make_accuracy_str("speaker_podium", "auto"),
-                "Other": make_accuracy_str("speaker_medium", "auto"),
+                "Area": "Amp",
+                "missed": s["amp_attempted_auto"],
+                "made" : s["amp_completed_auto"]
             },
             {
-                "Phase": "teleop",
-                "Amp": make_accuracy_str("amp", "teleop"),
-                "Subwoofer": make_accuracy_str("speaker_subwoofer", "teleop"),
-                "Podium": make_accuracy_str("speaker_podium", "teleop"),
-                "Other": make_accuracy_str("speaker_medium", "teleop"),
+                "Area": "Subwoofer",
+                "missed": s["speaker_subwoofer_attempted_auto"],
+                "made": s["speaker_subwoofer_completed_auto"]
+            },
+            {
+                "Area": "Podium",
+                "missed": s["speaker_podium_attempted_auto"],
+                "made": s["speaker_podium_completed_auto"]
+            },
+            {
+                "Area": "Other",
+                "missed": s["speaker_medium_attempted_auto"],
+                "made": s["speaker_medium_completed_auto"]
             }
-
         ]
-)
+    )
+    tele_data = pd.DataFrame(
+        [
+            {
+                "Area": "Amp",
+                "missed": s["amp_attempted_teleop"],
+                "made" : s["amp_completed_teleop"]
+            },
+            {
+                "Area": "Subwoofer",
+                "missed": s["speaker_subwoofer_attempted_teleop"],
+                "made": s["speaker_subwoofer_completed_teleop"]
+            },
+            {
+                "Area": "Podium",
+                "missed": s["speaker_podium_attempted_teleop"],
+                "made": s["speaker_podium_completed_teleop"]
+            },
+            {
+                "Area": "Other",
+                "missed": s["speaker_medium_attempted_teleop"],
+                "made": s["speaker_medium_completed_teleop"]
+            }
+        ]
+    )
+    auto_data["attempts"] = auto_data["made"] + auto_data["missed"]
+    auto_data["accuracy"] = auto_data["made"] / auto_data["attempts"]
+    tele_data["attempts"] = tele_data["made"] + tele_data["missed"]
+    tele_data["accuracy"] = tele_data["made"] / tele_data["attempts"]
+    return (auto_data,tele_data)
+
 
 def team_summary(analzyed_data):
     team_summary = analzyed_data.groupby('team.number').agg(

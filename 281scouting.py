@@ -2,6 +2,18 @@ import streamlit as st
 import team_analysis
 import plotly.express as px
 import plotly.graph_objects as go
+from  matplotlib.colors import LinearSegmentedColormap
+
+
+
+
+def get_accuracy_colormap():
+    c = ["darkred","red","lightcoral","white", "palegreen","green","darkgreen"]
+    v = [0,.15,.4,.5,0.6,.9,1.]
+    l = list(zip(v,c))
+    cmap=LinearSegmentedColormap.from_list('rg',l, N=256)
+    return cmap
+
 import plotly.figure_factory as ff
 
 from match_scouting_form import build_match_scouting_form
@@ -133,19 +145,19 @@ def build_team_focus_tab(analyzed,summary):
                 st.caption("Autos")
                 st.text(team_pit_data["autos"])
 
-        st.header("Accuracy")
-        accuracy_table = team_analysis.compute_scoring_table(summary,focus_team)
-        st.dataframe(accuracy_table, hide_index=True, column_config={
-            'Amp': st.column_config.Column(width="small"),
-            'Subwoofer': st.column_config.Column(width="small"),
-            'Podium': st.column_config.Column(width="small"),
-            'Other': st.column_config.Column(width="small"),
-        })
+        (auto_table, tele_table) = team_analysis.compute_scoring_table(summary,focus_team)
 
-
+        col1,col2= st.columns(2)
+        with col1:
+            st.subheader("Auto Accuracy")
+            st.dataframe(
+                data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).format(precision=2),hide_index=True)
+        with col2:
+            st.subheader("Teleop Accuracy")
+            st.dataframe(data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).format(precision=2),hide_index=True)
         st.header("scoring timeline")
         plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['notes.speaker.auto','notes.speaker.teleop','notes.amp.auto', 'notes.amp.teleop'])
-        plot3.update_layout(height=300,yaxis_title="Points")
+        plot3.update_layout(height=300,yaxis_title="Notes Scored")
         st.plotly_chart(plot3)
 
 
@@ -227,6 +239,8 @@ def build_team_tab():
     top_teams = top_teams.astype({'team.number': 'object'})
     top_teams = top_teams.rename(columns={'team.number': 'team_number'})
 
+    max_rp = top_teams["rps"].max()*1.25
+
     bar = px.bar(top_teams, x='team_number', y=['teleop', 'auto'],title="Point For Top Teams", category_orders={
         'team_number': top_teams['team_number']
     }).update_xaxes(type='category').update_layout(yaxis_title="Points")
@@ -234,9 +248,11 @@ def build_team_tab():
         x=top_teams['team_number'],
         y=top_teams['rps'],
         mode='markers',
+        yaxis="y2",
         marker=go.scatter.Marker(color="Red", size=12),
         name="rps")
-    )
+    )   #.update_yaxes(ranage=[0,max_rp])
+    bar.update_layout(yaxis2=dict(overlaying='y', side='right', range=[0,max_rp],showgrid=False))
     st.plotly_chart(bar, use_container_width=True)
 
     col1, col2 = st.columns(2)
@@ -311,7 +327,7 @@ def build_match_tab():
             elif match_type_filter == 'Final':
                 filtered_data = filtered_data[filtered_data["match.number"].str.startswith('F')]
 
-    st.header("{d} Matching matches".format(d=len(filtered_data)))
+    st.header("{d} Matches".format(d=len(filtered_data)))
 
     #see optoins here: https://docs.streamlit.io/library/api-reference/data/st.dataframe
     filtered_data_with_summary = team_analysis.compute_bar_scoring_summaries(filtered_data)
@@ -389,8 +405,8 @@ def build_match_tab():
     st.dataframe(data=filtered_summary)
 
 
-teams,match_data,defense, match_predictor,team_focus,match_scouting,pit_scouting,pit_data_tab = st.tabs([
-   'Teams' ,'Matches', 'Defense', 'Match Predictor','Team Detail','Match Scouting','Pit Scouting','Pit Data'])
+match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab = st.tabs([
+   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data'])
 with teams:
     build_team_tab()
 
