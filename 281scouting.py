@@ -18,7 +18,7 @@ else:
     print("Reading gsheet. To use local mode, set environment using set LOCAL=true")
     import gsheet_backend
 
-CACHE_SECONDS=0
+CACHE_SECONDS=30
 @st.cache_data(ttl=CACHE_SECONDS)
 def load_match_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
@@ -145,7 +145,7 @@ def build_team_focus_tab(analyzed,summary):
 
         st.header("scoring timeline")
         plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['notes.speaker.auto','notes.speaker.teleop','notes.amp.auto', 'notes.amp.teleop'])
-        plot3.update_layout(height=300)
+        plot3.update_layout(height=300,yaxis_title="Points")
         st.plotly_chart(plot3)
 
 
@@ -229,7 +229,7 @@ def build_team_tab():
 
     bar = px.bar(top_teams, x='team_number', y=['teleop', 'auto'],title="Point For Top Teams", category_orders={
         'team_number': top_teams['team_number']
-    }).update_xaxes(type='category')
+    }).update_xaxes(type='category').update_layout(yaxis_title="Points")
     bar.add_traces(go.Scatter(
         x=top_teams['team_number'],
         y=top_teams['rps'],
