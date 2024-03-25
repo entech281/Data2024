@@ -64,6 +64,9 @@ def write_markdown_list( vals):
     return s
 
 def build_team_focus_tab(analyzed,summary):
+
+    # TODO: separate calculations and presentation, so that
+    # compare page can call it for each team, and render side-by-side
     analyzed_and_filtered = analyzed
     if len(analyzed_and_filtered) == 0:
         st.header("No Data")
@@ -405,8 +408,24 @@ def build_match_tab():
     st.dataframe(data=filtered_summary)
 
 
-match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab = st.tabs([
-   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data'])
+def build_team_compare(analyzed, summary):
+
+
+    st.header("Team Compare")
+    teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist)
+
+    filtered_summary = summary [ summary["team.number"].isin(teams_to_compare)]
+
+    if len(filtered_summary) == 0:
+        st.header("No Data. Select at least 1 team")
+        return
+
+    filtered_summary = filtered_summary.transpose()
+    st.dataframe(filtered_summary, hide_index=False)
+
+
+match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare = st.tabs([
+   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data','Team Compare'])
 with teams:
     build_team_tab()
 
@@ -429,3 +448,6 @@ with pit_scouting:
 
 with pit_data_tab:
     build_pit_tab(pit_data)
+
+with team_compare:
+    build_team_compare(analyzed,summary)
