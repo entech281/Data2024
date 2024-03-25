@@ -3,7 +3,7 @@ import team_analysis
 import plotly.express as px
 import plotly.graph_objects as go
 from  matplotlib.colors import LinearSegmentedColormap
-
+from streamlit_extras.grid import grid
 
 
 
@@ -412,16 +412,110 @@ def build_team_compare(analyzed, summary):
 
 
     st.header("Team Compare")
-    teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist)
+    teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist,placeholder="")
 
     filtered_summary = summary [ summary["team.number"].isin(teams_to_compare)]
 
-    if len(filtered_summary) == 0:
-        st.header("No Data. Select at least 1 team")
-        return
+    #TODO : ducpliated mostly from test foucs-- need to factor that out
+    def display_team(team_number):
+        st.header(team_number)
 
-    filtered_summary = filtered_summary.transpose()
-    st.dataframe(filtered_summary, hide_index=False)
+        event_summary_df = summary [ summary['team.number'] == team_number]
+        team_pit_data = pit_data_for_team(team_number)
+        event_summary_dict = event_summary_df.to_dict(orient='records')[0]
+
+        avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
+        frc_rank = int(event_summary_dict['frc_rank'])
+
+        with st.container(height=600):
+            st.metric(label="Rank By Avg Pts", value=avg_pts_rank)
+            st.metric(label="Rank By Rank Pts", value=frc_rank)
+
+
+            st.metric(label="Avg Match Pts", value="{:.2f}".format(event_summary_dict['avg_total_pts']))
+            st.metric(label="Climb Pts", value="{:.2f}".format(event_summary_dict['climb_pts']))
+
+            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
+            st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
+
+        with st.container(height=200):
+            st.caption("Robot Specs")
+            if len(team_pit_data) == 0:
+                st.text("[No Pit Data]")
+            else:
+                st.markdown(""" 
+                    **Dimensions** : {0:1.1f} x{1:1.1f} x {2:1.1f} h   
+                    **Weight**:  {3:1.1f} lb  
+                    **Climb** : {4:s}   
+                    **UnderStage** : {5:s}    
+                    **Drive** : {6:s}    
+                """.format(
+                    team_pit_data["robot.width"],
+                    team_pit_data["robot.length"],
+                    team_pit_data["robot.height"],
+                    team_pit_data["robot.weight"],
+                    str(team_pit_data["climb"]),
+                    str(team_pit_data["under.stage"]),
+                    team_pit_data["robot.drive"]
+                ))
+                st.caption("Notes")
+                st.text(team_pit_data["notes"])
+
+        with st.container(height=200):
+            st.caption("Scoring Characteristics")
+            if len(team_pit_data) == 0:
+                st.text("[No Pit Data]")
+            else:
+                st.markdown("""
+                    **Drive** : {0:s}  
+                    **Climb** : {1:s}  
+                    **Scoring Methods** : {2:s}  
+                    **Shooting Prefs** : {3:s}  
+                """.format(
+                    team_pit_data["robot.drive"],
+                    team_pit_data["climb"],
+                    team_pit_data["score.abilities"],
+                    team_pit_data["pref.shoot"]
+                ))
+                st.caption("Autos")
+                st.text(team_pit_data["autos"])
+
+        (auto_table, tele_table) = team_analysis.compute_scoring_table(summary,team_number)
+        with st.container(height=250):
+            st.subheader("Auto Accuracy")
+            st.dataframe(
+                data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).format(precision=2),hide_index=True)
+        with st.container(height=250):
+            st.subheader("Teleop Accuracy")
+            st.dataframe(data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).format(precision=2),hide_index=True)
+
+
+    col2,col3,col4 = st.columns(3)
+
+    with col2:
+        if len(filtered_summary)> 0:
+            display_team(teams_to_compare[0])
+        else:
+            st.header("Choose First Team")
+
+    with col3:
+        if len(filtered_summary)> 1:
+            display_team(teams_to_compare[1])
+        else:
+            st.header("Choose 2nd Team")
+
+
+    with col4:
+        if len(filtered_summary)> 2:
+            display_team(teams_to_compare[2])
+        else:
+            st.header("Choose 3rd Team")
+
+
+
+
+    #filtered_summary = filtered_summary.transpose()
+    #st.dataframe(filtered_summary, hide_index=False)
 
 
 match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare = st.tabs([
