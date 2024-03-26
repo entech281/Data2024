@@ -157,7 +157,7 @@ def team_summary(analzyed_data):
         amp_completed_teleop=('amp.completed.teleop', 'sum'),
         speaker_subwoofer_completed_teleop=('speaker.subwoofer.completed.teleop', 'sum'),
         speaker_subwoofer_attempted_teleop=('speaker.subwoofer.attempted.teleop', 'sum'),
-        speaker_podium_completed_teleop=('speaker.subwoofer.completed.teleop', 'sum'),
+        speaker_podium_completed_teleop=('speaker.podium.completed.teleop', 'sum'),
         speaker_podium_attempted_teleop=('speaker.podium.attempted.teleop', 'sum'),
         speaker_medium_completed_teleop=('speaker.subwoofer.completed.teleop', 'sum'),
         speaker_medium_attempted_teleop=('speaker.medium.attempted.teleop', 'sum'),
