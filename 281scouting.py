@@ -154,10 +154,10 @@ def build_team_focus_tab(analyzed,summary):
         with col1:
             st.subheader("Auto Accuracy")
             st.dataframe(
-                data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).format(precision=2),hide_index=True)
+                data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).background_gradient(vmin=0,vmax=25, subset=['missed','made']).format(precision=2),hide_index=True)
         with col2:
             st.subheader("Teleop Accuracy")
-            st.dataframe(data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).format(precision=2),hide_index=True)
+            st.dataframe(data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).background_gradient(vmin=0,vmax=25, subset=['missed','made']).format(precision=2),hide_index=True)
         st.header("scoring timeline")
         plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['notes.speaker.auto','notes.speaker.teleop','notes.amp.auto', 'notes.amp.teleop'])
         plot3.update_layout(height=300,yaxis_title="Notes Scored")
