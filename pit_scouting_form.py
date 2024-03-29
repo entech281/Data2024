@@ -47,6 +47,7 @@ def build_pit_scouting_form():
             st.session_state['actual_scouter_name'] = record.scouter_name
 
         st.header("Robot Specs")
+        st.subheader("All measurements are without bumpers")
 
         col1,col2,col3 = st.columns(3)
 
