@@ -78,8 +78,14 @@ def build_team_focus_tab(analyzed,summary):
     with col1:
         focus_team = st.selectbox("Choose Team", options=teamlist)
     with col2:
-        team_tags = st.multiselect("Team Tags",options=TEAM_TAGS)
-
+        if focus_team:
+            tm = gsheet_backend.get_tag_manager(SECRETS)
+            existing_team_tags = tm.get_tags_for_team(focus_team)
+            new_team_tags = st.multiselect("Team Tags",options=TEAM_TAGS,default=existing_team_tags)
+            if set(new_team_tags) !=  set(existing_team_tags):
+                tm.update_tags_for_team(focus_team,new_team_tags)
+        else:
+            st.subheader("<Choose Team>")
     if focus_team:
         event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
         analyzed_and_filtered = analyzed_and_filtered[ analyzed_and_filtered["team.number"] == focus_team]
@@ -428,6 +434,7 @@ def build_team_update_tab():
 
 def build_team_compare(analyzed, summary):
 
+    tag_manager = gsheet_backend.get_tag_manager(SECRETS)
 
     st.header("Team Compare")
     teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist,placeholder="")
@@ -445,6 +452,8 @@ def build_team_compare(analyzed, summary):
         avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
         frc_rank = int(event_summary_dict['frc_rank'])
 
+        with st.container(height=150):
+            st.multiselect("Tags", options=TEAM_TAGS, default=tag_manager.get_tags_for_team(team_number))
         with st.container(height=600):
             st.metric(label="Rank By Avg Pts", value=avg_pts_rank)
             st.metric(label="Rank By Rank Pts", value=frc_rank)
@@ -455,6 +464,7 @@ def build_team_compare(analyzed, summary):
 
             st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
             st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
+
 
         with st.container(height=200):
             st.caption("Robot Specs")
@@ -539,16 +549,6 @@ def build_tags_page():
     st.header("Tags")
 
     st.dataframe(data=tag_manager.df)
-
-    selected_team = st.selectbox("Select team", options=teamlist)
-
-    if selected_team:
-        selected = st.multiselect("Select Tags",options=TEAM_TAGS, default=tag_manager.get_tags_for_team(selected_team),on_change=refresh_tags)
-        tag_manager.update_tags_for_team(selected_team,selected)
-        st.write(selected)
-
-    #filtered_summary = filtered_summary.transpose()
-    #st.dataframe(filtered_summary, hide_index=False)
 
 
 match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare,tags = st.tabs([
