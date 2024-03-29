@@ -21,6 +21,7 @@ from pit_scouting_form import build_pit_scouting_form
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
+TEAM_TAGS = ['DNP','DEFENSE','FAV','GOOD_DRIVER']
 
 LOCAL_MODE=False
 if LOCAL_MODE:
@@ -30,7 +31,7 @@ else:
     print("Reading gsheet. To use local mode, set environment using set LOCAL=true")
     import gsheet_backend
 
-CACHE_SECONDS=30
+CACHE_SECONDS=60
 @st.cache_data(ttl=CACHE_SECONDS)
 def load_match_data():
     raw_data= gsheet_backend.get_match_data(SECRETS)
@@ -41,6 +42,7 @@ def load_pit_data():
     raw_data = gsheet_backend.get_pits_data(SECRETS)
     return raw_data
 
+tag_manager = gsheet_backend.get_tag_manager(SECRETS)
 
 def pit_data_for_team(team_num):
     all_data = load_pit_data()
@@ -72,7 +74,11 @@ def build_team_focus_tab(analyzed,summary):
         st.header("No Data")
         return
 
-    focus_team = st.selectbox("Choose Team", options=teamlist)
+    col1, col2 = st.columns(2)
+    with col1:
+        focus_team = st.selectbox("Choose Team", options=teamlist)
+    with col2:
+        team_tags = st.multiselect("Team Tags",options=TEAM_TAGS)
 
     if focus_team:
         event_summary_df = team_analysis.team_summary(analyzed_and_filtered)
@@ -82,7 +88,6 @@ def build_team_focus_tab(analyzed,summary):
 
         event_summary_df = event_summary_df [ event_summary_df['team.number'] == focus_team]
         team_pit_data = pit_data_for_team(focus_team)
-
 
     if len(event_summary_df) == 0:
         st.header("No Data")
@@ -274,11 +279,15 @@ def build_team_tab():
                            size='avg_total_pts')
         st.plotly_chart(plot2)
 
+
+
 def build_pit_tab(pit_data):
     st.header("Pit Data")
     if len(pit_data)==0:
         st.header("No Data")
         return
+
+    st.header("Pit Data")
     st.dataframe(data=pit_data,height=600,column_config={
         #a stacked bar here woudl be ideal!
         #these oculd also be over time which would be cool too
@@ -292,9 +301,7 @@ def build_pit_tab(pit_data):
         "autos": st.column_config.ListColumn(
             "Autos"
         ),
-
-    }
-    )
+    })
 
 def build_match_tab():
     if len(analyzed)==0:
@@ -408,6 +415,17 @@ def build_match_tab():
     st.dataframe(data=filtered_summary)
 
 
+def build_team_update_tab():
+    st.header("Set Tags")
+    form = st.form(key="updateTags")
+    with form:
+        teamlist = list(summary['team.number'])
+        selected_team = st.selectbox("Choose Team", options=teamlist)
+        team_tags = st.multiselect("Choose Tags",key="team_tags")
+        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
+        if submitted:
+            print("Writing Tags", selected_team, team_tags)
+
 def build_team_compare(analyzed, summary):
 
 
@@ -512,14 +530,29 @@ def build_team_compare(analyzed, summary):
             st.header("Choose 3rd Team")
 
 
+def refresh_tags():
+    print("refreshing...")
 
+    tag_manager.update()
+
+def build_tags_page():
+    st.header("Tags")
+
+    st.dataframe(data=tag_manager.df)
+
+    selected_team = st.selectbox("Select team", options=teamlist)
+
+    if selected_team:
+        selected = st.multiselect("Select Tags",options=TEAM_TAGS, default=tag_manager.get_tags_for_team(selected_team),on_change=refresh_tags)
+        tag_manager.update_tags_for_team(selected_team,selected)
+        st.write(selected)
 
     #filtered_summary = filtered_summary.transpose()
     #st.dataframe(filtered_summary, hide_index=False)
 
 
-match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare = st.tabs([
-   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data','Team Compare'])
+match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare,tags = st.tabs([
+   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data','Team Compare','Tags'])
 with teams:
     build_team_tab()
 
@@ -545,3 +578,8 @@ with pit_data_tab:
 
 with team_compare:
     build_team_compare(analyzed,summary)
+
+with tags:
+    build_tags_page()
+
+
