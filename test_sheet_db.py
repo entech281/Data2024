@@ -13,12 +13,14 @@ def get_creds():
     return config['gsheets']
 
 
-def test_simple_dataframe():
-    secrets = get_creds()
-    tag_mgr = gsheet_backend.create_team_manager(secrets)
 
-    print("before update tags=",tag_mgr.get_tags_for_team(281))
-    tag_mgr.update_tags_for_team(281,['z','y','w'])
-
-    print("after update tags=",tag_mgr.get_tags_for_team(281))
+secrets = get_creds()
+gs = gsheet_backend._connect(secrets)
+wb = gs.worksheet("DCMP_Tags")
+df = pd.DataFrame(wb.get_all_records())
+#print(df)
+df['tag_list'] = df['tags'].str.split(",")
+df = df.explode('tag_list')[['team_number','tag_list']]
+print(df)
+print(df.groupby('tag_list')['team_number'].apply(list))
 

@@ -81,7 +81,7 @@ def build_team_focus_tab(analyzed,summary):
         if focus_team:
             tm = gsheet_backend.get_tag_manager(SECRETS)
             existing_team_tags = tm.get_tags_for_team(focus_team)
-            new_team_tags = st.multiselect("Team Tags",options=TEAM_TAGS,default=existing_team_tags)
+            new_team_tags = st.multiselect("Team Tags",options=tm.all_tag_list,default=existing_team_tags)
             if set(new_team_tags) !=  set(existing_team_tags):
                 tm.update_tags_for_team(focus_team,new_team_tags)
         else:
@@ -421,17 +421,6 @@ def build_match_tab():
     st.dataframe(data=filtered_summary)
 
 
-def build_team_update_tab():
-    st.header("Set Tags")
-    form = st.form(key="updateTags")
-    with form:
-        teamlist = list(summary['team.number'])
-        selected_team = st.selectbox("Choose Team", options=teamlist)
-        team_tags = st.multiselect("Choose Tags",key="team_tags")
-        submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
-        if submitted:
-            print("Writing Tags", selected_team, team_tags)
-
 def build_team_compare(analyzed, summary):
 
     tag_manager = gsheet_backend.get_tag_manager(SECRETS)
@@ -453,7 +442,7 @@ def build_team_compare(analyzed, summary):
         frc_rank = int(event_summary_dict['frc_rank'])
 
         with st.container(height=150):
-            st.multiselect("Tags", options=TEAM_TAGS, default=tag_manager.get_tags_for_team(team_number))
+            st.multiselect("Tags", options=tag_manager.all_tag_list, default=tag_manager.get_tags_for_team(team_number))
         with st.container(height=600):
             st.metric(label="Rank By Avg Pts", value=avg_pts_rank)
             st.metric(label="Rank By Rank Pts", value=frc_rank)
@@ -546,9 +535,22 @@ def refresh_tags():
     tag_manager.update()
 
 def build_tags_page():
-    st.header("Tags")
 
-    st.dataframe(data=tag_manager.df)
+    col1,col2,col3= st.columns(3)
+
+    with col1:
+        st.subheader("tags by team")
+        st.dataframe(data=tag_manager.df,hide_index=True)
+
+    with col2:
+        st.subheader("Teams by Tag")
+        st.dataframe(data=tag_manager.tag_summary)
+
+    with col3:
+        st.subheader("defined tags")
+        st.table(data=tag_manager.all_tag_list)
+
+
 
 
 match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare,tags = st.tabs([
