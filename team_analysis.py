@@ -1,7 +1,7 @@
 from  models import ClimbEnum,PickupEnum
 import pandas as pd
 import numpy as np
-
+import tba
 
 def compute_top_team_summary(summary):
     top_teams = summary.sort_values(by='avg_total_pts', inplace=False, ascending=False)
@@ -194,8 +194,21 @@ def team_summary(analzyed_data):
 
     team_summary = team_summary.sort_values(by='avg_total_pts', ascending=False).reset_index()
     team_summary['team.number'] = team_summary['team.number'].astype(int)
-
-    return team_summary.fillna(0)
+    team_summary = team_summary.fillna(0)
+    team_summary['team_number'] = team_summary['team.number']
+    tba_data = tba.get_tba_team_stats(tba.PchEvents.CHARLESTON)
+    #print("tba_data",tba_data)
+    #print("team_summary",team_summary)
+    df = pd.merge(tba_data,team_summary,on='team_number',how='left')
+    df['team.number'] = df['team_number']
+    def pick_best_epa(row):
+        if np.isnan(row['avg_total_pts']):
+            return row['opr']
+        else:
+            return row['avg_total_pts']
+    df['epa'] = df.apply(pick_best_epa,axis=1)
+    print(df)
+    return df
 
 def team_analyze(all_data):
     # rename columns to shorter better names
@@ -210,30 +223,6 @@ def team_analyze(all_data):
 
     base_data = all_data
 
-    #base_data.rename(inplace=True, columns={
-    #    'notes_speaker_auto': 'notes.speaker.auto',
-    #    'notes_speaker_teleop': 'notes.speaker.teleop',
-    #    'notes_amp_auto': 'notes.amp.auto',
-    #    'notes_amp_teleop': 'notes.amp.teleop',
-    #})
-
-    #base_data["total.notes.attempted.auto"] = base_data["amp.attempted.auto"] + base_data["speaker.subwoofer.attempted.auto"] + base_data["speaker.podium.attempted.auto"] + base_data["speaker.podium.attempted.auto"]
-
-    #base_data["total.notes.attempted.teleop"] = base_data["amp.attempted.teleop"] + base_data["speaker.subwoofer.attempted.teleop"] + base_data["speaker.podium.attempted.teleop"] + base_data["speaker.medium.attempted.teleop"]
-    #base_data["notes.completed.teleop"] = base_data["amp.completed.teleop"] + base_data[ "speaker.subwoofer.completed.teleop"] + base_data["speaker.podium.completed.teleop"] + base_data[ "speaker.medium.completed.teleop"]
-    #base_data["total.notes.attempted"] = base_data["total.notes.attempted.auto"]  + base_data["total.notes.attempted.teleop"] 
-    #base_data["total.notes.completed"] = base_data["total.notes.completed.auto"]  + base_data["total.notes.completed.teleop"] 
-    
-    #base_data["notes.attempted.amp"] = base_data["amp.attempted.auto"] +  base_data["amp.attempted.teleop"]
-    #base_data["notes.attempted.sub"] =base_data["speaker.subwoofer.attempted.auto"] +  base_data["speaker.subwoofer.attempted.teleop"]
-    #base_data["notes.attempted.pod"] =base_data["speaker.podium.attempted.auto"] + base_data[ "speaker.subwoofer.completed.teleop"]
-    #base_data['Notes.attempted.mid'] = base_data["speaker.medium.attempted.auto"] + base_data[ "speaker.medium.completed.teleop"]
-    
-    #base_data["notes.completed.amp"] = base_data["amp.completed.auto"] +  base_data["amp.completed.teleop"]
-    #base_data["notes.completed.sub"] =base_data["speaker.subwoofer.completed.auto"] +  base_data["speaker.subwoofer.completed.teleop"]
-    #base_data["notes.completed.pod"] =base_data["speaker.podium.completed.auto"] + base_data[ "speaker.subwoofer.completed.teleop"]
-    #base_data['Notes.completed.mid'] = base_data["speaker.medium.completed.auto"] + base_data[ "speaker.medium.completed.teleop"]
-    
     base_data["notes.speaker.auto"] =  base_data[ "speaker.subwoofer.completed.auto"] + base_data["speaker.podium.completed.auto"] + base_data[ "speaker.medium.completed.auto"]
     base_data["notes.speaker.teleop"] = base_data[ "speaker.subwoofer.completed.teleop"] + base_data["speaker.podium.completed.teleop"] + base_data[ "speaker.medium.completed.teleop"]
     base_data["total.notes.speaker"] = base_data["notes.speaker.auto"] + base_data["notes.speaker.teleop"]
@@ -268,52 +257,6 @@ def team_analyze(all_data):
         }, 0.0)
     base_data['climb.pts'] = base_data.apply(calc_auto_docking_pts, axis=1)
 
-
-    #def calc_accuracy_row(row,completed_field_name, attempted_field_name):
-    #    total_shots = row[completed_field_name] + row[attempted_field_name]
-    #    if total_shots> 0:
-    #        return row[completed_field_name]/total_shots
-    #    else:
-    #        return 0.0
-
-
-    # AUTO RELIABILITY
-    #def calc_sub_auto_acry(row):
-    #    return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.subwoofer.attempted.auto')
-    #base_data['sub.auto.acry'] =base_data.apply(calc_sub_auto_acry, axis=1)
-
-    #def calc_mid_auto_acry(row):
-    #    return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.medium.attempted.auto')
-    #base_data['mid.auto.acry'] = base_data.apply(calc_mid_auto_acry, axis=1)
-
-    #def calc_amp_auto_acry(row):
-    #    return calc_accuracy_row(row,'amp.completed.auto','amp.attempted.auto')
-    #base_data['pod.auto.acry'] = base_data.apply(calc_amp_auto_acry, axis=1)
-
-
-    #def calc_pod_auto_acry(row):
-    #    return calc_accuracy_row(row,'speaker.podium.completed.auto','speaker.podium.attempted.auto')
-    #base_data['pod.auto.acry'] = base_data.apply(calc_pod_auto_acry, axis=1)
-
-
-    #TELEOP RELIABILITY
-
-    #def calc_amp_teleop_acry(row):
-    #    return calc_accuracy_row(row,'amp.completed.teleop','amp.attempted.teleop')
-    #base_data['pod.auto.acry'] = base_data.apply(calc_amp_teleop_acry, axis=1)
-
-    #def calc_sub_teleop_acry(row):
-    #    return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.subwoofer.attempted.teleop')
-    #base_data['sub.teleop.acry'] = base_data.apply(calc_sub_teleop_acry, axis=1)
-
-    #def calc_mid_teleop_acry(row):
-    #    return calc_accuracy_row(row,'speaker.medium.completed.auto','speaker.medium.attempted.teleop')
-    #base_data['mid.teleop.acry'] = base_data.apply(calc_mid_teleop_acry, axis=1)
-
-
-    #def calc_pod_teleop_acry(row):
-    #    return calc_accuracy_row(row, 'speaker.podium.completed.auto', 'speaker.podium.attempted.teleop')
-    #base_data['pod.teleop.acry'] = base_data.apply(calc_pod_teleop_acry, axis=1)
 
 
     base_data['teleop.pts']= base_data['notes.speaker.teleop']*2.0 + \

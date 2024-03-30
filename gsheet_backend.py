@@ -134,7 +134,7 @@ class TeamTagManager:
 
     def get_tags_for_team(self,team_number):
         t = self.df[ self.df["team_number"] == team_number]
-        print(t)
+        #print(t)
         if len(t) != 0:
             s = t.iloc[0]['tags']
             if s is not None and len(s) > 0:
@@ -151,10 +151,8 @@ class TeamTagManager:
         else:
             self.df.loc[self.df['team_number'] == team_number, 'tags'] = tags_str
 
-        print(self.df)
-
-        #set_with_dataframe(self.worksheet_tab, self.df)
-        #self.refresh()
+        set_with_dataframe(self.worksheet_tab, self.df)
+        self.update()
 
 
 def get_pits_data(secrets):

@@ -12,3 +12,4 @@ pytest
 pydantic
 toml
 streamlit_extras
+requests
