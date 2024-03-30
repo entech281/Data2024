@@ -1,10 +1,12 @@
 import streamlit as st
+import pandas as pd
+import tba
 import team_analysis
 import plotly.express as px
 import plotly.graph_objects as go
 from  matplotlib.colors import LinearSegmentedColormap
 from streamlit_extras.grid import grid
-
+TBA_EVENT_KEY='2024sccha'
 
 
 def get_accuracy_colormap():
@@ -21,14 +23,15 @@ from pit_scouting_form import build_pit_scouting_form
 
 st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
-TEAM_TAGS = ['DNP','DEFENSE','FAV','GOOD_DRIVER']
+
+tba.set_auth_key(st.secrets["tba"]["auth_key"])
 
 LOCAL_MODE=False
 if LOCAL_MODE:
     print("Using local mode")
     import localfile_backend as gsheet_backend
 else:
-    print("Reading gsheet. To use local mode, set environment using set LOCAL=true")
+
     import gsheet_backend
 
 CACHE_SECONDS=60
@@ -56,7 +59,7 @@ st.title("281 2024 DCMP Scouting")
 
 (analyzed, summary) = load_match_data()
 pit_data = load_pit_data()
-teamlist = list(summary['team.number'])
+teamlist = tba.get_all_pch_team_numbers()
 
 
 def write_markdown_list( vals):
@@ -82,7 +85,7 @@ def build_team_focus_tab(analyzed,summary):
             tm = gsheet_backend.get_tag_manager(SECRETS)
             existing_team_tags = tm.get_tags_for_team(focus_team)
             new_team_tags = st.multiselect("Team Tags",options=tm.all_tag_list,default=existing_team_tags)
-            if set(new_team_tags) !=  set(existing_team_tags):
+            if set(new_team_tags) != set(existing_team_tags):
                 tm.update_tags_for_team(focus_team,new_team_tags)
         else:
             st.subheader("<Choose Team>")
@@ -95,92 +98,107 @@ def build_team_focus_tab(analyzed,summary):
         event_summary_df = event_summary_df [ event_summary_df['team.number'] == focus_team]
         team_pit_data = pit_data_for_team(focus_team)
 
-    if len(event_summary_df) == 0:
-        st.header("No Data")
+    if len(event_summary_df) > 0:
+        d = event_summary_df.to_dict(orient='records')[0]
+        event_summary_dict = {
+            'rank_by_avg_pts': str(d['rank_by_avg_pts']),
+            'frc_rank': str(d['frc_rank']),
+            'avg_total_pts': "{:.2f}".format(d['avg_total_pts']),
+            'climb_pts': "{:.2f}".format(d['climb_pts']),
+            'avg_notes_speaker': "{:.2f}".format(d['avg_notes_speaker']),
+            'avg_notes_amp': "{:.2f}".format(d['avg_notes_amp'])
+        }
     else:
-        event_summary_dict = event_summary_df.to_dict(orient='records')[0]
+        event_summary_dict = {
+            'rank_by_avg_pts':'n/a',
+            'frc_rank':'n/a',
+            'avg_total_pts': 'n/a',
+            'climb_pts': 'n/a',
+            'avg_notes_speaker':'n/a',
+            'avg_notes_amp': 'n/a'
+        }
+    team_tba_stats = tba.get_tba_team_stats_for_team(TBA_EVENT_KEY,focus_team)
+    #print("Team stats=",team_tba_stats)
+    col1,col2,col3,col4,col5 = st.columns(5)
+    with col1:
+        st.metric(label="Our Rank By Avg Pts",value=event_summary_dict['rank_by_avg_pts'])
+        st.metric(label="Our Rank By Rank Pts", value=event_summary_dict['frc_rank'])
+        st.metric(label="TBA Rank",value=team_tba_stats["rank"])
+    with col2:
+        st.metric(label="Avg Match Pts", value=event_summary_dict['avg_total_pts'])
+        st.metric(label="Climb Pts", value=event_summary_dict['climb_pts'])
+        st.metric(label="TBA OPR", value=team_tba_stats["opr"])
+    with col3:
+        st.metric(label="Avg Speaker Notes", value=event_summary_dict['avg_notes_speaker'])
+        st.metric(label="Avg Amp Notes", value=event_summary_dict['avg_notes_amp'])
+        st.metric(label="TBA DPR", value=team_tba_stats["dpr"])
 
-        col1,col2,col3,col4,col5 = st.columns(5)
-        with col1:
-            avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
-            frc_rank = int(event_summary_dict['frc_rank'])
-            st.metric(label="Rank By Avg Pts",value=avg_pts_rank)
-            st.metric(label="Rank By Rank Pts", value=frc_rank)
-            if avg_pts_rank > frc_rank:
-                st.warning("OverRanked!",icon="⚠")
+    with col4:
+        st.caption("Robot Specs")
+        if len(team_pit_data) == 0:
+            st.text("[No Pit Data]")
+        else:
+            st.markdown(""" 
+                **Dimensions** : {0:1.1f} x{1:1.1f} x {2:1.1f} h   
+                **Weight**:  {3:1.1f} lb  
+                **Climb** : {4:s}   
+                **UnderStage** : {5:s}    
+                **Drive** : {6:s}    
+            """.format(
+                team_pit_data["robot.width"],
+                team_pit_data["robot.length"],
+                team_pit_data["robot.height"],
+                team_pit_data["robot.weight"],
+                str(team_pit_data["climb"]),
+                str(team_pit_data["under.stage"]),
+                team_pit_data["robot.drive"]
+            ))
+            st.caption("Notes")
+            st.text(team_pit_data["notes"])
 
-        with col2:
-            st.metric(label="Avg Match Pts", value="{:.2f}".format(event_summary_dict['avg_total_pts']))
-            st.metric(label="Climb Pts", value="{:.2f}".format(event_summary_dict['climb_pts']))
-
-        with col3:
-            st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
-            st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
-
-        with col4:
-            st.caption("Robot Specs")
-            if len(team_pit_data) == 0:
-                st.text("[No Pit Data]")
-            else:
-                st.markdown(""" 
-                    **Dimensions** : {0:1.1f} x{1:1.1f} x {2:1.1f} h   
-                    **Weight**:  {3:1.1f} lb  
-                    **Climb** : {4:s}   
-                    **UnderStage** : {5:s}    
-                    **Drive** : {6:s}    
-                """.format(
-                    team_pit_data["robot.width"],
-                    team_pit_data["robot.length"],
-                    team_pit_data["robot.height"],
-                    team_pit_data["robot.weight"],
-                    str(team_pit_data["climb"]),
-                    str(team_pit_data["under.stage"]),
-                    team_pit_data["robot.drive"]
-                ))
-                st.caption("Notes")
-                st.text(team_pit_data["notes"])
-
-        with col5:
-            st.caption("Scoring Characteristics")
-            if len(team_pit_data) == 0:
-                st.text("[No Pit Data]")
-            else:
-                st.markdown("""
-                    **Drive** : {0:s}  
-                    **Climb** : {1:s}  
-                    **Scoring Methods** : {2:s}  
-                    **Shooting Prefs** : {3:s}  
-                """.format(
-                    team_pit_data["robot.drive"],
-                    team_pit_data["climb"],
-                    team_pit_data["score.abilities"],
-                    team_pit_data["pref.shoot"]
-                ))
-                st.caption("Autos")
-                st.text(team_pit_data["autos"])
-
-        (auto_table, tele_table) = team_analysis.compute_scoring_table(summary,focus_team)
-
-        col1,col2= st.columns(2)
-        with col1:
-            st.subheader("Auto Accuracy")
-            st.dataframe(
-                data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).background_gradient(vmin=0,vmax=25, subset=['missed','made']).format(precision=2),hide_index=True)
-        with col2:
-            st.subheader("Teleop Accuracy")
-            st.dataframe(data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).background_gradient(vmin=0,vmax=25, subset=['missed','made']).format(precision=2),hide_index=True)
-        st.header("scoring timeline")
-        plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['notes.speaker.auto','notes.speaker.teleop','notes.amp.auto', 'notes.amp.teleop'])
-        plot3.update_layout(height=300,yaxis_title="Notes Scored")
-        st.plotly_chart(plot3)
+    with col5:
+        st.caption("Scoring Characteristics")
+        if len(team_pit_data) == 0:
+            st.text("[No Pit Data]")
+        else:
+            st.markdown("""
+                **Drive** : {0:s}  
+                **Climb** : {1:s}  
+                **Scoring Methods** : {2:s}  
+                **Shooting Prefs** : {3:s}  
+            """.format(
+                team_pit_data["robot.drive"],
+                team_pit_data["climb"],
+                team_pit_data["score.abilities"],
+                team_pit_data["pref.shoot"]
+            ))
+            st.caption("Autos")
+            st.text(team_pit_data["autos"])
 
 
+    (auto_table, tele_table) = team_analysis.compute_scoring_table(summary,focus_team)
 
-        st.header("General Notes")
-        st.markdown(write_markdown_list(general_comments))
+    col1,col2= st.columns(2)
+    with col1:
+        st.subheader("Auto Accuracy")
+        st.dataframe(
+            data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).background_gradient(vmin=0,vmax=25, subset=['missed','made']).format(precision=2),hide_index=True)
+    with col2:
+        st.subheader("Teleop Accuracy")
+        st.dataframe(data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(),subset='accuracy',vmin=0.0,vmax=1.0).background_gradient(vmin=0,vmax=25, subset=['missed','made']).format(precision=2),hide_index=True)
+    st.header("scoring timeline")
+    plot3 = px.bar(analyzed_and_filtered, x='match.number', y=['notes.speaker.auto','notes.speaker.teleop','notes.amp.auto', 'notes.amp.teleop'])
+    plot3.update_layout(height=300,yaxis_title="Notes Scored")
+    st.plotly_chart(plot3)
 
-        st.header("Strategy Notes")
-        st.markdown(write_markdown_list(strategy_comments))
+
+
+
+    st.header("General Notes")
+    st.markdown(write_markdown_list(general_comments))
+
+    st.header("Strategy Notes")
+    st.markdown(write_markdown_list(strategy_comments))
 
 
 def build_defense_tab(analyzed,summary):
@@ -193,11 +211,24 @@ def build_defense_tab(analyzed,summary):
         st.header("Team Details for %s" % focus_team)
         general_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'notes')
         perf_over_time = analyzed[analyzed['team.number'] == focus_team]
-        summary_row = summary [ summary['team.number']== focus_team].to_dict(orient='records')[0]
+
+        if len(perf_over_time == 0):
+            st.write("No Peformance Data")
+            return
+
+        s = summary [ summary['team.number']== focus_team].to_dict(orient='records')
+        if len(s) > 0:
+            s = s[0]
+            summary_row = {
+                'avg_speed' : "{:.2f}".format(s['avg_speed'])
+            }
+        else:
+            st.write("No Summary Data")
+            return
 
         col1,col2 = st.columns(2)
         with col1:
-            st.metric(label="Avg Speed",value="{:.2f}".format(summary_row['avg_speed']))
+            st.metric(label="Avg Speed",value=summary_row['avg_speed'])
         with col2:
             pass
         st.header("defense rating timeline")
@@ -230,15 +261,21 @@ def build_match_predictor():
         blue_teams = st.multiselect("Blue Team", key="blueteams", max_selections=3, options=teamlist)
 
     if len(red_teams) == 3 and len(blue_teams) == 3:
-        blue_score = summary[summary["team.number"].isin(blue_teams)].sum()[
-            ['avg_auto', 'avg_teleop', 'avg_notes_speaker', 'avg_notes_amp', 'avg_total_pts']]
-        red_score = summary[summary["team.number"].isin(red_teams)].sum()[
-            ['avg_auto', 'avg_teleop', 'avg_notes_speaker', 'avg_notes_amp', 'avg_total_pts']]
-        with red_col:
-            st.write(red_score)
-        with blue_col:
-            st.write(blue_score)
+        blue_score = pd.DataFrame({'score': summary[summary["team.number"].isin(blue_teams)].sum()[
+            ['avg_auto', 'avg_teleop', 'avg_notes_speaker', 'avg_notes_amp', 'avg_total_pts','epa']
+        ]})
 
+        red_score = pd.DataFrame({ 'score': summary[summary["team.number"].isin(red_teams)].sum()[
+            ['avg_auto', 'avg_teleop', 'avg_notes_speaker', 'avg_notes_amp', 'avg_total_pts','epa']
+        ]})
+        with red_col:
+            st.dataframe(data=red_score,column_config={
+                'score': st.column_config.NumberColumn(width='medium',format='%0.2f')
+            })
+        with blue_col:
+            st.dataframe(data=blue_score,column_config={
+                'score': st.column_config.NumberColumn(width='medium', format='%0.2f')
+            })
 
 def build_team_tab():
     if len(analyzed)==0:
@@ -271,19 +308,20 @@ def build_team_tab():
 
     col1, col2 = st.columns(2)
     with col1:
-        st.header("Teleop vs Auto")
-        plot = px.scatter(summary, x='avg_auto', y='avg_teleop', hover_name='team.number', size='avg_total_pts')
-        st.plotly_chart(plot)
+        #st.header("Teleop vs Auto")
+        #plot = px.scatter(summary, x='avg_auto', y='avg_teleop', hover_name='team.number', size='avg_total_pts')
+        #st.plotly_chart(plot)
 
-        st.header("Teleop vs Speed")
-        plot2 = px.scatter(summary, x='avg_speed', y='avg_teleop', hover_name='team.number', size='avg_total_pts')
-        st.plotly_chart(plot2)
-
+        #st.header("Teleop vs Speed")
+        #plot2 = px.scatter(summary, x='avg_speed', y='avg_teleop', hover_name='team.number', size='avg_total_pts')
+        #st.plotly_chart(plot2)
+        pass
     with col2:
-        st.header("Speaker vs Amp")
-        plot2 = px.scatter(summary, x='avg_notes_speaker', y='avg_notes_amp', hover_name='team.number',
-                           size='avg_total_pts')
-        st.plotly_chart(plot2)
+        #st.header("Speaker vs Amp")
+        #plot2 = px.scatter(summary, x='avg_notes_speaker', y='avg_notes_amp', hover_name='team.number',
+        #                   size='avg_total_pts')
+        #st.plotly_chart(plot2)
+        pass
 
 
 
@@ -431,21 +469,25 @@ def build_team_compare(analyzed, summary):
     filtered_summary = summary [ summary["team.number"].isin(teams_to_compare)]
 
     #TODO : ducpliated mostly from test foucs-- need to factor that out
-    def display_team(team_number):
+    def display_team(team_number,index):
         st.header(team_number)
 
         event_summary_df = summary [ summary['team.number'] == team_number]
         team_pit_data = pit_data_for_team(team_number)
         event_summary_dict = event_summary_df.to_dict(orient='records')[0]
 
-        avg_pts_rank = int(event_summary_dict['rank_by_avg_pts'])
-        frc_rank = int(event_summary_dict['frc_rank'])
+        avg_pts_rank = str(event_summary_dict['rank_by_avg_pts'])
+        frc_rank = str(event_summary_dict['frc_rank'])
 
-        with st.container(height=150):
-            st.multiselect("Tags", options=tag_manager.all_tag_list, default=tag_manager.get_tags_for_team(team_number))
-        with st.container(height=600):
-            st.metric(label="Rank By Avg Pts", value=avg_pts_rank)
-            st.metric(label="Rank By Rank Pts", value=frc_rank)
+        with st.container(height=200):
+            st.multiselect("Tags", key='tags'+str(index), options=tag_manager.all_tag_list, default=tag_manager.get_tags_for_team(team_number))
+        with st.container(height=800):
+
+            team_tba_stats = tba.get_tba_team_stats_for_team(TBA_EVENT_KEY, team_number)
+
+
+            st.metric(label="Our Rank By Avg Pts", value=avg_pts_rank)
+            st.metric(label="Our Rank By Rank Pts", value=frc_rank)
 
 
             st.metric(label="Avg Match Pts", value="{:.2f}".format(event_summary_dict['avg_total_pts']))
@@ -454,6 +496,9 @@ def build_team_compare(analyzed, summary):
             st.metric(label="Avg Speaker Notes", value="{:.2f}".format(event_summary_dict['avg_notes_speaker']))
             st.metric(label="Avg Amp Notes", value="{:.2f}".format(event_summary_dict['avg_notes_amp']))
 
+            st.metric(label="TBA Rank", value=team_tba_stats["rank"])
+            st.metric(label="TBA OPR", value=team_tba_stats["opr"])
+            st.metric(label="TBA DPR", value=team_tba_stats["dpr"])
 
         with st.container(height=200):
             st.caption("Robot Specs")
@@ -511,26 +556,25 @@ def build_team_compare(analyzed, summary):
 
     with col2:
         if len(filtered_summary)> 0:
-            display_team(teams_to_compare[0])
+            display_team(teams_to_compare[0],0)
         else:
             st.header("Choose First Team")
 
     with col3:
         if len(filtered_summary)> 1:
-            display_team(teams_to_compare[1])
+            display_team(teams_to_compare[1],1)
         else:
             st.header("Choose 2nd Team")
 
 
     with col4:
         if len(filtered_summary)> 2:
-            display_team(teams_to_compare[2])
+            display_team(teams_to_compare[2],2)
         else:
             st.header("Choose 3rd Team")
 
 
 def refresh_tags():
-    print("refreshing...")
 
     tag_manager.update()
 

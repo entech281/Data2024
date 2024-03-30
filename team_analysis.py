@@ -199,7 +199,7 @@ def team_summary(analzyed_data):
     tba_data = tba.get_tba_team_stats(tba.PchEvents.CHARLESTON)
     #print("tba_data",tba_data)
     #print("team_summary",team_summary)
-    df = pd.merge(tba_data,team_summary,on='team_number',how='left')
+    df = pd.merge(tba_data,team_summary,on='team_number',how='outer')
     df['team.number'] = df['team_number']
     def pick_best_epa(row):
         if np.isnan(row['avg_total_pts']):
