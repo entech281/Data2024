@@ -1,1 +1,0 @@
-streamlit run 281scouting.py

@@ -5,9 +5,14 @@ import team_analysis
 import plotly.express as px
 import plotly.graph_objects as go
 from  matplotlib.colors import LinearSegmentedColormap
+from ordered_set import OrderedSet
+
 from streamlit_extras.grid import grid
 TBA_EVENT_KEY='2024sccha'
 
+SECRETS = st.secrets["gsheets"]
+
+tba.set_auth_key(st.secrets["tba"]["auth_key"])
 
 def get_accuracy_colormap():
     c = ["darkred","red","lightcoral","white", "palegreen","green","darkgreen"]
@@ -16,15 +21,12 @@ def get_accuracy_colormap():
     cmap=LinearSegmentedColormap.from_list('rg',l, N=256)
     return cmap
 
-import plotly.figure_factory as ff
 
 from match_scouting_form import build_match_scouting_form
 from pit_scouting_form import build_pit_scouting_form
 
 st.set_page_config(layout="wide")
-SECRETS = st.secrets["gsheets"]
 
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
 
 LOCAL_MODE=False
 if LOCAL_MODE:
@@ -261,11 +263,11 @@ def build_match_predictor():
         blue_teams = st.multiselect("Blue Team", key="blueteams", max_selections=3, options=teamlist)
 
     if len(red_teams) == 3 and len(blue_teams) == 3:
-        blue_score = pd.DataFrame({'score': summary[summary["team.number"].isin(blue_teams)].sum()[
+        blue_score = pd.DataFrame({'score': summary[summary["team.number"].isin(blue_teams)].sum(numeric_only=True)[
             ['avg_auto', 'avg_teleop', 'avg_notes_speaker', 'avg_notes_amp', 'avg_total_pts','epa']
         ]})
 
-        red_score = pd.DataFrame({ 'score': summary[summary["team.number"].isin(red_teams)].sum()[
+        red_score = pd.DataFrame({ 'score': summary[summary["team.number"].isin(red_teams)].sum(numeric_only=True)[
             ['avg_auto', 'avg_teleop', 'avg_notes_speaker', 'avg_notes_amp', 'avg_total_pts','epa']
         ]})
         with red_col:
@@ -594,11 +596,124 @@ def build_tags_page():
         st.subheader("defined tags")
         st.table(data=tag_manager.all_tag_list)
 
+def build_alliance_selection():
+
+    available_teams = teamlist.copy()
+    col1,col2,col3,col4 = st.columns(4)
 
 
+    CELL_HEIGHT=220
+    with col1:
+        a8 = st.container(height=CELL_HEIGHT)
+        a1 = st.container(height=CELL_HEIGHT)
+    with col2:
+        a7 = st.container(height=CELL_HEIGHT)
+        a2 = st.container(height=CELL_HEIGHT)
+    with col3:
+        a6 = st.container(height=CELL_HEIGHT)
+        a3 = st.container(height=CELL_HEIGHT)
+    with col4:
+        a5 = st.container(height=CELL_HEIGHT)
+        a4 = st.container(height=CELL_HEIGHT)
 
-match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare,tags = st.tabs([
-   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data','Team Compare','Tags'])
+    def alliance_builder(alliance_number):
+        AL = str(alliance_number)
+        col1,col2 = st.columns(2)
+        with col1:
+            st.caption("Alliance %d EPA:" % alliance_number)
+        with col2:
+            d = st.empty()
+        t = st.multiselect("Teams:", key="%sT" % AL, options=available_teams,max_selections=3,placeholder="Choose 3")
+
+        #return (a,b,c,d)
+        return (t,d)
+
+    # TODO: make with a loop
+    with a1:
+        al1 = alliance_builder(1)
+    with a2:
+        al2 = alliance_builder(2)
+    with a3:
+        al3 = alliance_builder(3)
+    with a4:
+        al4 = alliance_builder(4)
+    with a5:
+        al5 = alliance_builder(5)
+    with a6:
+        al6 = alliance_builder(6)
+    with a7:
+        al7 = alliance_builder(7)
+    with a8:
+        al8 = alliance_builder(8)
+
+
+    def get_selected_teams(alliance_obj):
+        s = set(alliance_obj[0])
+        return s
+
+    def get_all_selected_teams(alliance_list):
+        s = set()
+        for al in alliance_list:
+            s.update(get_selected_teams(al))
+        return s
+
+    def set_epa(alliance_obj,value):
+        alliance_obj[1].markdown("**{0:0.2f}**".format(value))
+
+    available_teams_set = OrderedSet(available_teams)
+    taken_teams =get_all_selected_teams([al1,al2,al3,al4,al5,al6,al7,al8])
+    #print("taken teams=",taken_teams)
+    remaining_teams = available_teams_set - taken_teams
+    #print("remaining_teams = ", remaining_teams)
+    #st.session_state['alliance_teams'] = remaining_teams
+    all_team_data = team_analysis.get_all_joined_team_data(SECRETS)
+    remaining_teams_df = all_team_data[ all_team_data['team_number'].isin(remaining_teams)]
+
+
+    for a in [al1,al2,al3,al4,al5,al6,al7,al8]:
+        score = team_analysis.get_epa_for_teams(summary,get_selected_teams(a))
+        set_epa(a,score)
+
+    st.subheader("%d remaining Teams" % len(remaining_teams_df))
+    #print("df",remaining_teams_df.columns)
+    st.dataframe(data=remaining_teams_df,hide_index=True,column_config={
+        'team_number': st.column_config.NumberColumn(label="Team",width="Small",format="%d"),
+        'record': st.column_config.TextColumn(label="record", width="Small"),
+        'tag_list': st.column_config.TextColumn(label="tags", width="Medium"),
+        'rank': st.column_config.NumberColumn(label="rank", width="Small"),
+        'rank_by_avg_pts': st.column_config.NumberColumn(label="epa rank", width="Small"),
+        'robot.pickup': st.column_config.TextColumn(label="pickup", width="Small"),
+        'robot.drive': st.column_config.TextColumn(label="drive", width="Small"),
+        'robot.weight': st.column_config.TextColumn(label="weight", width="Small"),
+        'avg_teleop': st.column_config.NumberColumn(label="avg_teleop", width="Small",format="%0.2f"),
+        'avg_auto': st.column_config.NumberColumn(label="avg_auto", width="Small", format="%0.2f"),
+        'avg_endgame': st.column_config.NumberColumn(label="avg_endgame", width="Small", format="%0.2f"),
+        'avg_notes_speaker': st.column_config.NumberColumn(label="avg_notes_spk", width="Small", format="%0.2f"),
+        'avg_notes_amp': st.column_config.NumberColumn(label="avg_notes_amp", width="Small", format="%0.2f"),
+        'subwoofer_accuracy_teleop': st.column_config.NumberColumn(label="subwoof_acry_tele", width="Small", format="%0.2f"),
+        'podium_tele_accuracy': st.column_config.NumberColumn(label="podium_acry_tele", width="Small",format="%0.2f"),
+        'amp_accuracy_teleop': st.column_config.NumberColumn(label="apm_acry_tele", width="Small", format="%0.2f")
+    },column_order=(
+        'team_number',
+        'record',
+        'tag_list',
+        'rank',
+        'rank_by_avg_pts',
+        'robot.pickup',
+        'robot.weight',
+        'avg_teleop',
+        'avg_auto',
+        'avg_endgame',
+        'avg_notes_speaker',
+        'avg_notes_amp',
+        'subwoofer_accuracy_teleop',
+        'podium_tele_accuracy',
+        'amp_accuracy_teleop'
+    ))
+
+
+match_scouting,pit_scouting, team_focus,teams,match_data,defense, match_predictor,pit_data_tab,team_compare,tags,alliance_selection = st.tabs([
+   'Match Scouting','Pit Scouting','Team Detail','Teams' ,'Matches', 'Defense', 'Match Predictor','Pit Data','Team Compare','Tags','Alliance Selection'])
 with teams:
     build_team_tab()
 
@@ -627,5 +742,8 @@ with team_compare:
 
 with tags:
     build_tags_page()
+
+with alliance_selection:
+    build_alliance_selection()
 
 

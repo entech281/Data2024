@@ -12,8 +12,6 @@ CHARLESTON_MATCH_TAB = 0
 CHARLESTON_PIT_TAB = 1
 PCH_DCMP_MATCH_TAB = 2
 PCH_DCMP_PIT_TAB = 3
-#PCH_DCMP_MATCH_TAB = 5
-#PCH_DCMP_PIT_TAB = 6
 
 
 SHEET_ID='1JHUOVxvL_UDA3tqxTiwWO095eOxppAWJi7PtDnxnGt8'
@@ -90,7 +88,7 @@ def _write_pit_scouting_header_if_needed(secrets, sheet):
     cell_value = sheet.acell('A1').value
     if cell_value is None or len(cell_value) == 0 or cell_value == "None":
         headers=PitScoutingRecord.dot_column_headers()
-        print("writing headers",headers)
+        #print("writing headers",headers)
         sheet.append_row(headers)
 
 def get_tag_manager(secrets):
@@ -103,7 +101,7 @@ def get_tag_manager(secrets):
 
 class TeamTagManager:
     def __init__(self, gs):
-        print("Initialzing TagManager")
+        #print("Initialzing TagManager")
         self.spreadsheet = gs
         self.worksheet_tab = gs.worksheet("DCMP_Tags")
         self.tag_list_sheet = gs.worksheet("TeamTags")
@@ -115,7 +113,7 @@ class TeamTagManager:
         self.all_tag_list = list(tag_list_df['Tags'])
 
     def update(self):
-        print("Refreshing Team Tags!",self.df)
+        #print("Refreshing Team Tags!",self.df)
 
         set_with_dataframe(self.worksheet_tab, self.df)
         self.fetch()
@@ -125,12 +123,16 @@ class TeamTagManager:
         tag_list_df = tag_list_df.replace(np.NaN, '')
         #print("Fetched Value=",tag_list_df)
         self.df = tag_list_df
+        self.df['team_number'] = self.df['team_number'].apply(int)
         tag_list_df['tag_list'] = tag_list_df['tags'].str.split(",")
         tag_list_df = tag_list_df.explode('tag_list')[['team_number', 'tag_list']]
 
         self.tag_summary = tag_list_df.groupby('tag_list')['team_number'].apply(list)
-        print("TagThing", self.tag_summary)
+        #print("TagThing", self.tag_summary)
 
+
+    def get_tags_by_team(self):
+        return self.df [ ['team_number','tag_list']]
 
     def get_tags_for_team(self,team_number):
         t = self.df[ self.df["team_number"] == team_number]
@@ -142,7 +144,7 @@ class TeamTagManager:
         return []
 
     def update_tags_for_team(self,team_number, tags):
-        print("Update team = ",team_number, "tags=",str(tags))
+        #print("Update team = ",team_number, "tags=",str(tags))
         tags_str = ",".join(tags)
 
         if len(self.df[self.df['team_number'] == team_number]) == 0:
@@ -151,7 +153,8 @@ class TeamTagManager:
         else:
             self.df.loc[self.df['team_number'] == team_number, 'tags'] = tags_str
 
-        set_with_dataframe(self.worksheet_tab, self.df)
+        df_to_write = self.df [ ['team_number','tags']]
+        set_with_dataframe(self.worksheet_tab, df_to_write)
         self.update()
 
 
@@ -160,7 +163,7 @@ def get_pits_data(secrets):
     _write_pit_scouting_header_if_needed(secrets, gs)
 
     d = gs.get()
-    print("pit data, got", len(d))
+    #print("pit data, got", len(d))
     if len(d) == 0:
 
         return None
@@ -180,8 +183,10 @@ def get_pits_data(secrets):
         df['tstamp'] = pd.to_datetime(df['tstamp'])
     else:
         df = pd.DataFrame(columns=PitScoutingRecord.dot_column_headers())
-    #print("returning pit data",df)
-    return df
+    # filter to most recent pit scouting row, in caes we have more than one
+    most_recent_row_per_team = df[df.groupby('team.number')['tstamp'].transform('max') == df['tstamp']]
+    most_recent_row_per_team['team_number'] = most_recent_row_per_team['team.number']
+    return most_recent_row_per_team
 
 
 
@@ -190,7 +195,7 @@ def write_match_scouting_row(secrets, rec:ScoutingRecord):
     rec.calc_fields()
     s = _connect_sheet(secrets,tab=PCH_DCMP_MATCH_TAB)
     t = rec.as_tuple()
-    print("Writing Record:",t)
+    #print("Writing Record:",t)
     s.append_row(t)
 
 def write_pit_scouting_row(secrets, rec:PitScoutingRecord):
@@ -198,5 +203,5 @@ def write_pit_scouting_row(secrets, rec:PitScoutingRecord):
     s = _connect_sheet(secrets,tab=PCH_DCMP_PIT_TAB)
     _write_pit_scouting_header_if_needed(secrets,s)
     t = rec.as_tuple()
-    print("Writing Record:",t)
+    #print("Writing Record:",t)
     s.append_row(t)

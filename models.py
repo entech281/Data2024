@@ -130,7 +130,7 @@ class ScoutingRecord(BaseModel):
 
     @staticmethod
     def snake_column_headers():
-        return ScoutingRecord.__fields__.keys()
+        return ScoutingRecord.model_fields.keys()
 
     @staticmethod
     def dot_column_headers():
@@ -168,7 +168,7 @@ class PitScoutingRecord(BaseModel):
 
     @staticmethod
     def snake_column_headers():
-        return PitScoutingRecord.__fields__.keys()
+        return PitScoutingRecord.model_fields.keys()
 
     @staticmethod
     def dot_column_headers():

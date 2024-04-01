@@ -1,8 +1,9 @@
+import gsheet_backend
 from  models import ClimbEnum,PickupEnum
 import pandas as pd
 import numpy as np
 import tba
-
+pd.options.mode.copy_on_write = True
 def compute_top_team_summary(summary):
     top_teams = summary.sort_values(by='avg_total_pts', inplace=False, ascending=False)
     top_teams = top_teams.head(24)
@@ -56,6 +57,28 @@ def compute_bar_scoring_summaries(analyzed_matches):
     ]]
     return pared_down
 
+
+def get_all_joined_team_data(secrets):
+    all_pch_teams = tba.get_all_pch_team_df()
+    pit_data = gsheet_backend.get_pits_data(secrets)
+    tag_data = gsheet_backend.get_tag_manager(secrets).get_tags_by_team()
+    #print("tag-data",tag_data)
+    raw_data= gsheet_backend.get_match_data(secrets)
+    analyzed_data = team_analyze(raw_data)
+    summary_data = team_summary(analyzed_data) #has tba data already in it
+    a = pd.merge(all_pch_teams,summary_data,on='team_number',how='outer',suffixes=('_pch','_summary'))
+    b = pd.merge(a,pit_data,on='team_number',how='outer',suffixes=('_pch','_pit'))
+    c = pd.merge(b,tag_data,on='team_number',how='outer',suffixes=('_pch','_tag'))
+
+    #teams with no rank get 999, for sorting purposes
+    c['rank'].replace(np.nan,999,inplace=True)
+    c['rank_by_avg_pts'].replace(np.nan, 999, inplace=True)
+    return c
+
+
+def get_alliance_selection_summary(secrets):
+    all_data = get_all_joined_team_data(secrets)
+    return all_data
 
 
 def get_comments_for_team(team_number, analyzed, comment_type):
@@ -130,6 +153,9 @@ def compute_scoring_table(team_summary,team_number):
     tele_data["accuracy"] = tele_data["made"] / tele_data["attempts"]
     return (auto_data,tele_data)
 
+def get_epa_for_teams(summary_df,team_list):
+    r = summary_df[ summary_df['team_number'].isin(team_list)]
+    return r['epa'].sum()
 
 def team_summary(analzyed_data):
     team_summary = analzyed_data.groupby('team.number').agg(
@@ -162,14 +188,6 @@ def team_summary(analzyed_data):
         speaker_medium_completed_teleop=('speaker.medium.completed.teleop', 'sum'),
         speaker_medium_attempted_teleop=('speaker.medium.attempted.teleop', 'sum'),
 
-        
-        #sub_auto_acry=('sub.auto.acry','mean'),
-        #mid_auto_acry=('mid.auto.acry','mean'),
-        #pod_auto_acry=('pod.auto.acry','mean'),
-        #sub_teleop_acry=('sub.teleop.acry','mean'),
-        #mid_teleop_acry=('mid.teleop.acry','mean'),
-        #pod_teleop_acry=('pod.teleop.acry','mean'),
-
         rps=('rp.pts','sum'),
         avg_speed=('fast.pts','mean'),
         parks_pts=('park.pts','mean'),
@@ -182,6 +200,16 @@ def team_summary(analzyed_data):
     team_summary['frc_rank'] = team_summary[
         ['rps','avg_coop_pts','avg_total_pts','avg_auto','avg_endgame']
     ].apply(tuple,axis=1).rank(method='dense',ascending=False)
+    
+    #teleop accuracies
+    # TODO: duplicated for individual team in compute_scoring_table
+    team_summary['subwoofer_accuracy_teleop'] = team_summary['speaker_subwoofer_completed_teleop'] / ( team_summary['speaker_subwoofer_attempted_teleop'] +  team_summary['speaker_subwoofer_completed_teleop'])
+    team_summary['podium_accuracy_teleop'] = team_summary['speaker_podium_completed_teleop'] / ( team_summary['speaker_podium_attempted_teleop'] + team_summary['speaker_podium_completed_teleop'])
+    team_summary['amp_accuracy_teleop'] = team_summary['amp_completed_teleop'] / ( team_summary['amp_attempted_teleop'] + team_summary['amp_completed_teleop'])
+
+    team_summary['subwoofer_accuracy_auto'] = team_summary['speaker_subwoofer_completed_auto'] / ( team_summary['speaker_subwoofer_attempted_auto'] +  team_summary['speaker_subwoofer_completed_auto'])
+    team_summary['podium_accuracy_auto'] = team_summary['speaker_podium_completed_auto'] / ( team_summary['speaker_podium_attempted_auto'] + team_summary['speaker_podium_completed_auto'])
+    team_summary['amp_accuracy_auto'] = team_summary['amp_completed_auto'] / ( team_summary['amp_attempted_auto'] + team_summary['amp_completed_auto'])
 
     #ranking method
     # 1 raking points
@@ -196,10 +224,10 @@ def team_summary(analzyed_data):
     team_summary['team.number'] = team_summary['team.number'].astype(int)
     team_summary = team_summary.fillna(0)
     team_summary['team_number'] = team_summary['team.number']
+    # TODO: change to DCMP when it becomes populated
     tba_data = tba.get_tba_team_stats(tba.PchEvents.CHARLESTON)
-    #print("tba_data",tba_data)
-    #print("team_summary",team_summary)
-    df = pd.merge(tba_data,team_summary,on='team_number',how='outer')
+    #print("tba_data=",tba_data)
+    df = pd.merge(tba_data,team_summary,on='team_number',how='outer',suffixes=('_tba,','_ts'))
     df['team.number'] = df['team_number']
     def pick_best_epa(row):
         if np.isnan(row['avg_total_pts']):
@@ -207,7 +235,7 @@ def team_summary(analzyed_data):
         else:
             return row['avg_total_pts']
     df['epa'] = df.apply(pick_best_epa,axis=1)
-    print(df)
+    #print(df)
     return df
 
 def team_analyze(all_data):

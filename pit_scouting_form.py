@@ -1,13 +1,10 @@
 import streamlit as st
+import tba
 
-import st_scoring_widget
-from pch_teams import ALL_TEAMS
+ALL_TEAMS = tba.get_all_pch_team_numbers()
 
 from  models import PitScoutingRecord,DriveEnum,PickupEnum,CanClimbEnum, StartLocEnum,PickupEnum,ShotLocEnum
 from gsheet_backend import write_pit_scouting_row,get_pits_data
-
-from st_scoring_widget import frc_scoring_tracker
-import pandas as pd
 
 FORM_SUBMIT_KEY="pit_form_key"
 

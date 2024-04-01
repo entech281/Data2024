@@ -1,8 +1,7 @@
 import streamlit as st
-
-import st_scoring_widget
-from pch_teams import ALL_TEAMS
 import time
+
+import tba
 from  models import ScoutingRecord,ClimbEnum,PickupEnum, Matches
 from gsheet_backend import write_match_scouting_row,get_match_data
 from st_scoring_widget import frc_scoring_tracker
@@ -10,7 +9,7 @@ import pandas as pd
 
 FORM_VERSION_KEY="form_version"
 INITIAL_FORM_VERSION=1
-
+ALL_TEAMS = tba.get_all_pch_team_numbers()
 if FORM_VERSION_KEY not in st.session_state:
     st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
 

@@ -58,20 +58,28 @@ def get_event_oprs(event_key):
 
 @cachetools.func.ttl_cache(maxsize=128, ttl=60*10)
 def get_all_pch_team_numbers():
+    df = get_all_pch_team_df()
+    return list(df['team_number'])
+
+
+@cachetools.func.ttl_cache(maxsize=128, ttl=60*10)
+def get_all_pch_team_df():
     # use the list of PCH teams
     r = _get("/district/{district_key}/rankings".format(district_key=Keys.PCH_DISTRICT))
     df = pd.DataFrame(r)
     df['team_number'] = df['team_key'].apply(team_number_from_key)
-    return list(df['team_number'])
-    #print(df)
-
+    df.rename(inplace=True,columns={
+        'rank': 'district_rank',
+        'event_points': 'distrit_points'
+    })
+    return df
 
 # not documented, but it is in seconds
 @cachetools.func.ttl_cache(maxsize=128, ttl=30)
 def get_tba_team_stats(event_name):
-    oprs = get_event_oprs('2024sccha')
-    ranks = get_event_rankings('2024sccha')
-    return pd.merge(ranks,oprs,on='team_number',how='left')
+    oprs = get_event_oprs(event_name)
+    ranks = get_event_rankings(event_name)
+    return pd.merge(ranks,oprs,on='team_number',how='outer',suffixes=('_event','_opr'))
 
 def get_tba_team_stats_for_team(event_name, team_number):
     df = get_tba_team_stats("2024sccha")
