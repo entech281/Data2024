@@ -7,7 +7,7 @@ def test_that_tests_run():
     pass
 
 def get_creds():
-    with open('.streamlit/secrets.toml', 'r') as f:
+    with open('../.streamlit/secrets.toml', 'r') as f:
         config = toml.load(f)
     return config['gsheets']
 

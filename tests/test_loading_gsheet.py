@@ -6,7 +6,7 @@ import team_analysis
 
 
 def get_creds():
-    with open('.streamlit/secrets.toml', 'r') as f:
+    with open('../.streamlit/secrets.toml', 'r') as f:
         config = toml.load(f)
     return config
 
