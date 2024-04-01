@@ -22,7 +22,7 @@ if len(analyzed) == 0:
     st.header("No Data")
     st.stop()
 
-st.header("Analyzed Match Data")
+st.title("Analyzed Match Data")
 st.text("Choose Filters")
 col1, col2, col3 = st.columns(3)
 filtered_data = analyzed

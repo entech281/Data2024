@@ -4,6 +4,7 @@ import gsheet_backend
 SECRETS = st.secrets["gsheets"]
 tag_manager = gsheet_backend.get_tag_manager(SECRETS)
 st.set_page_config(layout="wide")
+st.title("Team Compare")
 col1, col2, col3 = st.columns(3)
 
 with col1:

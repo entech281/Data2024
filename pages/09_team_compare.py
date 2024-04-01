@@ -3,6 +3,7 @@ import team_analysis
 import tba
 import gsheet_backend
 from matplotlib.colors import LinearSegmentedColormap
+st.set_page_config(layout="wide")
 SECRETS = st.secrets["gsheets"]
 
 TBA_EVENT_KEY = '2024sccha'
@@ -39,7 +40,7 @@ def pit_data_for_team(team_num):
 
 tag_manager = gsheet_backend.get_tag_manager(SECRETS)
 teamlist = tba.get_all_pch_team_numbers()
-st.header("Team Compare")
+st.title("Team Compare")
 teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist,
                                   placeholder="")
 
