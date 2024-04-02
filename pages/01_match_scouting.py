@@ -60,7 +60,7 @@ with match_form:
                                             max_chars=2)
         st.session_state['actual_scouter_name'] = record.scouter_name
 
-        record.team_present = st.checkbox(label="Team Present", key="present")
+        record.team_present = st.checkbox(label="Team Present", key="present",value=True)
 
     st.header("Auto Scoring")
 
