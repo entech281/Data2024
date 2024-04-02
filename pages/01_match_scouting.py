@@ -1,18 +1,19 @@
+import config
 import streamlit as st
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
 import time
-
+import controller
 import tba
 from models import ScoutingRecord, ClimbEnum, PickupEnum, Matches
 from gsheet_backend import write_match_scouting_row
 from st_scoring_widget import frc_scoring_tracker
 
-
 FORM_VERSION_KEY = "form_version"
-SECRETS = st.secrets["gsheets"]
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
 
 INITIAL_FORM_VERSION = 1
 ALL_TEAMS = tba.get_all_pch_team_numbers()
+
+
 if FORM_VERSION_KEY not in st.session_state:
     st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
 
@@ -135,7 +136,7 @@ with match_form:
     submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,
                                       on_click=notify_saved)
     if submitted:
-        write_match_scouting_row(SECRETS, record)
+        write_match_scouting_row( record)
 
         increment_form_version()
 

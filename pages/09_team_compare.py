@@ -1,46 +1,19 @@
+import config
 import streamlit as st
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
 import team_analysis
+import controller
 import tba
 import gsheet_backend
-from matplotlib.colors import LinearSegmentedColormap
+
 st.set_page_config(layout="wide")
-SECRETS = st.secrets["gsheets"]
-
-TBA_EVENT_KEY = '2024sccha'
-CACHE_SECONDS = 60
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_match_data():
-    raw_data = gsheet_backend.get_match_data(SECRETS)
-    return team_analysis.analyze(raw_data)
-
-#TODO: duplicateds with team_detail
-def get_accuracy_colormap():
-    c = ["darkred", "red", "lightcoral", "white", "palegreen", "green", "darkgreen"]
-    v = [0, .15, .4, .5, 0.6, .9, 1.]
-    l = list(zip(v, c))
-    cmap = LinearSegmentedColormap.from_list('rg', l, N=256)
-    return cmap
-
-#TODO: this is garbage! and probably dont even need it now that we joined all
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_pit_data():
-    raw_data = gsheet_backend.get_pits_data(SECRETS)
-    return raw_data
-
-def pit_data_for_team(team_num):
-    all_data = load_pit_data()
-    team_data = all_data[all_data['team.number'] == team_num]
-    if len(team_data) > 0:
-        return team_data.to_dict(orient='records')[0]
-    else:
-        return {}
-
-(analyzed, summary) = load_match_data()
-
-tag_manager = gsheet_backend.get_tag_manager(SECRETS)
-teamlist = tba.get_all_pch_team_numbers()
 st.title("Team Compare")
+
+tag_manager = gsheet_backend.get_tag_manager()
+(analyzed, summary) = controller.load_match_data()
+teamlist = tba.get_all_pch_team_numbers()
+
+
 teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist,
                                   placeholder="")
 
@@ -53,7 +26,7 @@ def display_team(team_number, index):
     st.header(team_number)
 
     event_summary_df = summary[summary['team.number'] == team_number]
-    team_pit_data = pit_data_for_team(team_number)
+    team_pit_data = controller.pit_data_for_team(team_number)
     event_summary_dict = event_summary_df.to_dict(orient='records')[0]
 
     avg_pts_rank = str(event_summary_dict['rank_by_avg_pts'])
@@ -64,7 +37,7 @@ def display_team(team_number, index):
                        default=tag_manager.get_tags_for_team(team_number))
     with st.container(height=800):
 
-        team_tba_stats = tba.get_tba_team_stats_for_team(TBA_EVENT_KEY, team_number)
+        team_tba_stats = tba.get_tba_team_stats_for_team_current_event( team_number)
 
         st.metric(label="Our Rank By Avg Pts", value=avg_pts_rank)
         st.metric(label="Our Rank By Rank Pts", value=frc_rank)
@@ -125,12 +98,12 @@ def display_team(team_number, index):
     with st.container(height=250):
         st.subheader("Auto Accuracy")
         st.dataframe(
-            data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+            data=auto_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
                                                       vmax=1.0).format(precision=2), hide_index=True)
     with st.container(height=250):
         st.subheader("Teleop Accuracy")
         st.dataframe(
-            data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+            data=tele_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
                                                       vmax=1.0).format(precision=2), hide_index=True)
 
 col2, col3, col4 = st.columns(3)

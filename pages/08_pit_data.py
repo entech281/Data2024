@@ -1,16 +1,10 @@
+import config
 import streamlit as st
-import gsheet_backend
-
-SECRETS = st.secrets["gsheets"]
-CACHE_SECONDS = 60
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
+import controller
 
 
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_pit_data():
-    raw_data = gsheet_backend.get_pits_data(SECRETS)
-    return raw_data
-
-pit_data = load_pit_data()
+pit_data = controller.load_pit_data()
 st.title("Pit Data")
 
 if len(pit_data) == 0:

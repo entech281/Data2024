@@ -1,61 +1,18 @@
+import config
 import streamlit as st
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
 import team_analysis
+import controller
 import tba
 import gsheet_backend
 import plotly.express as px
-from matplotlib.colors import LinearSegmentedColormap
-
-SECRETS = st.secrets["gsheets"]
-
-TBA_EVENT_KEY = '2024sccha'
-CACHE_SECONDS = 60
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
-
-def write_markdown_list(vals):
-    s = ""
-    for v in vals:
-        s += ("* " + v + "___" + "\n")
-    return s
-
-def get_accuracy_colormap():
-    c = ["darkred", "red", "lightcoral", "white", "palegreen", "green", "darkgreen"]
-    v = [0, .15, .4, .5, 0.6, .9, 1.]
-    l = list(zip(v, c))
-    cmap = LinearSegmentedColormap.from_list('rg', l, N=256)
-    return cmap
-
-# TODO: duplicated tons
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_match_data():
-    raw_data = gsheet_backend.get_match_data(SECRETS)
-    return team_analysis.analyze(raw_data)
-
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_pit_data():
-    raw_data = gsheet_backend.get_pits_data(SECRETS)
-    return raw_data
-
-
-tag_manager = gsheet_backend.get_tag_manager(SECRETS)
-
-# TODO: duplicated in several files
-def pit_data_for_team(team_num):
-    all_data = load_pit_data()
-    team_data = all_data[all_data['team.number'] == team_num]
-    if len(team_data) > 0:
-        return team_data.to_dict(orient='records')[0]
-    else:
-        return {}
-
 
 st.title("Team Detail")
-
-(analyzed, summary) = load_match_data()
+tag_manager = gsheet_backend.get_tag_manager()
+(analyzed, summary) = controller.load_match_data()
 teamlist = tba.get_all_pch_team_numbers()
 
 
-# TODO: separate calculations and presentation, so that
-# compare page can call it for each team, and render side-by-side
 analyzed_and_filtered = analyzed
 if len(analyzed_and_filtered) == 0:
     st.header("No Data")
@@ -66,7 +23,7 @@ with col1:
     focus_team = st.selectbox("Choose Team", options=teamlist)
 with col2:
     if focus_team:
-        tm = gsheet_backend.get_tag_manager(SECRETS)
+        tm = gsheet_backend.get_tag_manager()
         existing_team_tags = tm.get_tags_for_team(focus_team)
         new_team_tags = st.multiselect("Team Tags", options=tm.all_tag_list, default=existing_team_tags)
         if set(new_team_tags) != set(existing_team_tags):
@@ -80,7 +37,7 @@ if focus_team:
     strategy_comments = team_analysis.get_comments_for_team(focus_team, analyzed, 'strategy')
 
     event_summary_df = event_summary_df[event_summary_df['team.number'] == focus_team]
-    team_pit_data = pit_data_for_team(focus_team)
+    team_pit_data = controller.pit_data_for_team(focus_team)
 
 if len(event_summary_df) > 0:
     d = event_summary_df.to_dict(orient='records')[0]
@@ -101,8 +58,8 @@ else:
         'avg_notes_speaker': 'n/a',
         'avg_notes_amp': 'n/a'
     }
-team_tba_stats = tba.get_tba_team_stats_for_team(TBA_EVENT_KEY, focus_team)
-# print("Team stats=",team_tba_stats)
+team_tba_stats = tba.get_tba_team_stats_for_team_current_event( focus_team)
+
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     st.metric(label="Our Rank By Avg Pts", value=event_summary_dict['rank_by_avg_pts'])
@@ -165,14 +122,14 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("Auto Accuracy")
     st.dataframe(
-        data=auto_table.style.background_gradient(cmap=get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+        data=auto_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
                                                   vmax=1.0).background_gradient(vmin=0, vmax=25,
                                                                                 subset=['missed', 'made']).format(
             precision=2), hide_index=True)
 with col2:
     st.subheader("Teleop Accuracy")
     st.dataframe(
-        data=tele_table.style.background_gradient(cmap=get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+        data=tele_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
                                                   vmax=1.0).background_gradient(vmin=0, vmax=25,
                                                                                 subset=['missed', 'made']).format(
             precision=2), hide_index=True)
@@ -183,7 +140,7 @@ plot3.update_layout(height=300, yaxis_title="Notes Scored")
 st.plotly_chart(plot3)
 
 st.header("General Notes")
-st.markdown(write_markdown_list(general_comments))
+st.markdown(controller.write_markdown_list(general_comments))
 
 st.header("Strategy Notes")
-st.markdown(write_markdown_list(strategy_comments))
+st.markdown(controller.write_markdown_list(strategy_comments))

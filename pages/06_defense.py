@@ -1,25 +1,18 @@
+import config
 import streamlit as st
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
 import team_analysis
 import tba
+import controller
 import gsheet_backend
 import plotly.express as px
 
-CACHE_SECONDS = 60
-SECRETS = st.secrets["gsheets"]
-
-
 st.title("Defense Analysis")
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_match_data():
-    raw_data = gsheet_backend.get_match_data(SECRETS)
-    return team_analysis.analyze(raw_data)
 
-
-
-
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
+tag_manager = gsheet_backend.get_tag_manager()
+(analyzed, summary) = controller.load_match_data()
 teamlist = tba.get_all_pch_team_numbers()
-(analyzed, summary) = load_match_data()
+
 focus_team = st.selectbox("Look at  Team", options=teamlist, key="defense_team")
 
 if len(analyzed) == 0:

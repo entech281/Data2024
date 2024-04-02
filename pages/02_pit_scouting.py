@@ -1,10 +1,10 @@
-import tba
+import config
 import streamlit as st
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
+import tba
 from models import PitScoutingRecord, DriveEnum, CanClimbEnum, StartLocEnum, PickupEnum, ShotLocEnum
 from gsheet_backend import write_pit_scouting_row
 
-SECRETS = st.secrets["gsheets"]
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
 ALL_TEAMS = tba.get_all_pch_team_numbers()
 
 
@@ -96,10 +96,9 @@ with pit_form:
 
     # note: very important: in streamlit callbacks execute before the rest of the scirpt
     # we need that here to avoid the boundary condition after first form load
-
     submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,
                                       on_click=toggle_form_key)
 
     if submitted:
-        write_pit_scouting_row(SECRETS, record)
+        write_pit_scouting_row( record)
         st.text("Response Saved!")

@@ -1,28 +1,24 @@
+import config
 import streamlit as st
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
 import gsheet_backend
+import controller
 import team_analysis
 import tba
 
 st.set_page_config(layout="wide")
-CACHE_SECONDS = 60
-SECRETS = st.secrets["gsheets"]
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
+st.title("Analyzed Match Data")
 
-# TODO: duplicated tons
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_match_data():
-    raw_data = gsheet_backend.get_match_data(SECRETS)
-    return team_analysis.analyze(raw_data)
-
-
-(analyzed, summary) = load_match_data()
+tag_manager = gsheet_backend.get_tag_manager()
+(analyzed, summary) = controller.load_match_data()
+teamlist = tba.get_all_pch_team_numbers()
 
 
 if len(analyzed) == 0:
     st.header("No Data")
     st.stop()
 
-st.title("Analyzed Match Data")
+
 st.text("Choose Filters")
 col1, col2, col3 = st.columns(3)
 filtered_data = analyzed

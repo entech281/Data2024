@@ -1,25 +1,17 @@
+import config
 import streamlit as st
-import team_analysis
+config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
+import controller
 import tba
 import gsheet_backend
 import pandas as pd
 
-from matplotlib.colors import LinearSegmentedColormap
-SECRETS = st.secrets["gsheets"]
 
-TBA_EVENT_KEY = '2024sccha'
-CACHE_SECONDS = 60
-tba.set_auth_key(st.secrets["tba"]["auth_key"])
-
-@st.cache_data(ttl=CACHE_SECONDS)
-def load_match_data():
-    raw_data = gsheet_backend.get_match_data(SECRETS)
-    return team_analysis.analyze(raw_data)
-
-st.title("Match Preditor")
-
-(analyzed, summary) = load_match_data()
+tag_manager = gsheet_backend.get_tag_manager()
+(analyzed, summary) = controller.load_match_data()
 teamlist = tba.get_all_pch_team_numbers()
+
+st.title("Match Predictor")
 
 
 if len(analyzed) == 0:
