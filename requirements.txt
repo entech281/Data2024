@@ -14,3 +14,4 @@ toml
 streamlit_extras
 requests
 ordered_set
+gspread_dataframe
