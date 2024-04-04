@@ -91,7 +91,8 @@ taken_teams = get_all_selected_teams([al1, al2, al3, al4, al5, al6, al7, al8])
 
 remaining_teams = available_teams_set - taken_teams
 
-all_team_data = controller.get_all_joined_team_data()
+(analyzed_data, summary_data) = controller.get_all_joined_team_data()
+all_team_data = summary_data
 remaining_teams_df = all_team_data[all_team_data['team_number'].isin(remaining_teams)]
 
 for a in [al1, al2, al3, al4, al5, al6, al7, al8]:

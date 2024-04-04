@@ -34,19 +34,37 @@ def _get(url, result_type='json'):
 def team_number_from_key(frc_team_key):
     return int(frc_team_key.replace('frc', ''))
 
+def zero_if_column_missing(df,col_name):
+    df_return = df
+    if col_name not in df.columns:
+        df_return[col_name] = 0
+    return df_return
 
 def get_event_rankings(event_key):
     r = _get("/event/{event_key}/rankings".format(event_key=event_key))
     df = pd.DataFrame(r['rankings'])
-    df['record'] = df['record'].apply(lambda x: "{0}-{1}-{2}".format(x['wins'], x['losses'], x['ties']))
-    df['team_number'] = df['team_key'].apply(lambda x: team_number_from_key(x))
-    return df[['team_number', 'rank', 'record']]
+
+    if 'record' in df.columns:
+        df['record'] = df['record'].apply(lambda x: "{0}-{1}-{2}".format(x['wins'], x['losses'], x['ties']))
+        df['team_number'] = df['team_key'].apply(lambda x: team_number_from_key(x))
+        return df[['team_number', 'rank', 'record']]
+    else:
+        df =  pd.DataFrame()
+        df = zero_if_column_missing(df, 'team_number')
+        return df
 
 
 def get_event_oprs(event_key):
+
     r = _get("/event/{event_key}/oprs".format(event_key=event_key), result_type='text')
     df = pd.read_json(r, orient='columns').reset_index()
     df['team_number'] = df['index'].apply(team_number_from_key)
+
+    df = zero_if_column_missing(df,'oprs')
+    df = zero_if_column_missing(df, 'dprs')
+    df = zero_if_column_missing(df, 'ccwms')
+    df = zero_if_column_missing(df, 'team_number')
+
     df = df[['team_number', 'oprs', 'dprs', 'ccwms']]
     df.columns = ['team_number', 'opr', 'dpr', 'ccwm']
     return df
@@ -54,26 +72,31 @@ def get_event_oprs(event_key):
 
 @cachetools.func.ttl_cache(maxsize=128, ttl=60 * 10)
 def get_all_pch_team_numbers():
-    df = get_all_pch_team_df()
+    df = get_all_pch_rankings_df()
     return list(df['team_number'])
-
 
 @cachetools.func.ttl_cache(maxsize=128, ttl=60 * 10)
 def get_all_pch_team_df():
+    df = get_all_pch_rankings_df()
+    return df
+
+@cachetools.func.ttl_cache(maxsize=128, ttl=60 * 10)
+def get_all_pch_rankings_df():
     # use the list of PCH teams
     r = _get("/district/{district_key}/rankings".format(district_key=Keys.PCH_DISTRICT))
     df = pd.DataFrame(r)
     df['team_number'] = df['team_key'].apply(team_number_from_key)
     df.rename(inplace=True, columns={
         'rank': 'district_rank',
-        'event_points': 'distrit_points'
+        'event_points': 'district_points'
     })
-    return df
+    return df[['team_number','district_rank','point_total','team_key']]
 
 
 # not documented, but it is in seconds
 @cachetools.func.ttl_cache(maxsize=128, ttl=30)
 def get_tba_team_stats(event_name):
+    print("Getting event key",event_name)
     oprs = get_event_oprs(event_name)
     ranks = get_event_rankings(event_name)
     return pd.merge(ranks, oprs, on='team_number', how='outer', suffixes=('_event', '_opr'))

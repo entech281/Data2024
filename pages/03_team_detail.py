@@ -121,18 +121,24 @@ with col5:
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Auto Accuracy")
-    st.dataframe(
-        data=auto_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
-                                                  vmax=1.0).background_gradient(vmin=0, vmax=25,
-                                                                                subset=['missed', 'made']).format(
-            precision=2), hide_index=True)
+    if auto_table is not None:
+        st.dataframe(
+            data=auto_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+                                                      vmax=1.0).background_gradient(vmin=0, vmax=25,
+                                                                                    subset=['missed', 'made']).format(
+                precision=2), hide_index=True)
+    else:
+        st.subheader("No played matches")
 with col2:
     st.subheader("Teleop Accuracy")
-    st.dataframe(
-        data=tele_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
-                                                  vmax=1.0).background_gradient(vmin=0, vmax=25,
-                                                                                subset=['missed', 'made']).format(
-            precision=2), hide_index=True)
+    if tele_table is not None:
+        st.dataframe(
+            data=tele_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+                                                      vmax=1.0).background_gradient(vmin=0, vmax=25,
+                                                                                    subset=['missed', 'made']).format(
+                precision=2), hide_index=True)
+    else:
+        st.subheader("No played matches")
 st.header("scoring timeline")
 plot3 = px.bar(analyzed_and_filtered, x='match.number',
                y=['notes.speaker.auto', 'notes.speaker.teleop', 'notes.amp.auto', 'notes.amp.teleop'])

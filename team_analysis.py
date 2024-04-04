@@ -101,7 +101,13 @@ def analyze(raw_data):
 
 def compute_scoring_table(team_summary, team_number):
     # TODO: probably a much more elegant way to columnize this!
-    s = team_summary[team_summary["team.number"] == team_number].to_dict(orient="records")[0]
+
+    df = team_summary[team_summary["team.number"] == team_number]
+
+    if len(df) == 0:
+        return (None,None)
+
+    s = df.to_dict(orient="records")[0]
 
     auto_data = pd.DataFrame(
         [
@@ -239,7 +245,7 @@ def team_summary(analzyed_data):
     team_summary = team_summary.fillna(0)
     team_summary['team_number'] = team_summary['team.number']
     # TODO: change to DCMP when it becomes populated
-    tba_data = tba.get_tba_team_stats(tba.PchEvents.CHARLESTON)
+    tba_data = tba.get_tba_team_stats(tba.PchEvents.DCMP)
     # print("tba_data=",tba_data)
     df = pd.merge(tba_data, team_summary, on='team_number', how='outer', suffixes=('_tba,', '_ts'))
     df['team.number'] = df['team_number']

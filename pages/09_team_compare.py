@@ -10,14 +10,14 @@ st.set_page_config(layout="wide")
 st.title("Team Compare")
 
 tag_manager = gsheet_backend.get_tag_manager()
-(analyzed, summary) = controller.load_match_data()
-teamlist = tba.get_all_pch_team_numbers()
+(analyzed, summary) = controller.get_all_joined_team_data()
 
+teamlist = tba.get_all_pch_team_numbers()
 
 teams_to_compare = st.multiselect("Select up to 3 Teams", key="compareteams", max_selections=3, options=teamlist,
                                   placeholder="")
 
-filtered_summary = summary[summary["team.number"].isin(teams_to_compare)]
+filtered_summary = summary[summary["team_number"].isin(teams_to_compare)]
 
 
 
@@ -27,6 +27,7 @@ def display_team(team_number, index):
 
     event_summary_df = summary[summary['team.number'] == team_number]
     team_pit_data = controller.pit_data_for_team(team_number)
+
     event_summary_dict = event_summary_df.to_dict(orient='records')[0]
 
     avg_pts_rank = str(event_summary_dict['rank_by_avg_pts'])
@@ -97,14 +98,20 @@ def display_team(team_number, index):
     (auto_table, tele_table) = team_analysis.compute_scoring_table(summary, team_number)
     with st.container(height=250):
         st.subheader("Auto Accuracy")
-        st.dataframe(
-            data=auto_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
-                                                      vmax=1.0).format(precision=2), hide_index=True)
+        if auto_table is not None:
+            st.dataframe(
+                data=auto_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+                                                          vmax=1.0).format(precision=2), hide_index=True)
+        else:
+            st.subheader("No played matches")
     with st.container(height=250):
         st.subheader("Teleop Accuracy")
-        st.dataframe(
-            data=tele_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
-                                                      vmax=1.0).format(precision=2), hide_index=True)
+        if tele_table is not None:
+            st.dataframe(
+                data=tele_table.style.background_gradient(cmap=controller.get_accuracy_colormap(), subset='accuracy', vmin=0.0,
+                                                          vmax=1.0).format(precision=2), hide_index=True)
+        else:
+            st.subheader("No played matches")
 
 col2, col3, col4 = st.columns(3)
 
