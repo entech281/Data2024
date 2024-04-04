@@ -105,6 +105,18 @@ def get_tba_team_stats(event_name):
 def get_tba_team_stats_for_team_current_event(team_number):
     return get_tba_team_stats_for_team(current_config['tba']['tba_event_key'],team_number)
 
+# not documented, but it is in seconds
+@cachetools.func.ttl_cache(maxsize=128, ttl=30)
+def get_tba_teams_for_event(event_name):
+    # use the list of PCH teams
+    r = _get("/event/{event_key}/teams".format(event_key=event_name))
+    df = pd.DataFrame(r)
+    #df['team_number'] = df['team_key'].apply(team_number_from_key)
+    df.rename(inplace=True, columns={
+        'rank': 'district_rank',
+        'event_points': 'district_points'
+    })
+    return df
 
 def get_tba_team_stats_for_team(event_name, team_number):
     df = get_tba_team_stats("2024sccha")

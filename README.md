@@ -7,12 +7,9 @@ https://streamlit.io/components
 
 
 # TODO
-* add team selection page
-  * filter teams already picked
-  * show/filter by our tags
-  * filters for typcial things
-  
-* pull in TBA data
+* really need to find which tba endpoint returns JUST teams, even before matches start
+* better scouting leaderboard, showing which teams need to be scouted
+
 
 ##AGGrid Details
 https://streamlit-aggrid.readthedocs.io/en/docs/

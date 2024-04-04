@@ -32,16 +32,24 @@ scouting_summary = summary [ [
     'strategy',
     'notes'
 ]]
-num_scouted = len(scouting_summary[ scouting_summary['robot.weight'] > 0 ])
-total = len(scouting_summary)
+scouted_teams = set(scouting_summary[ scouting_summary['robot.weight'] > 0 ]['team_number'].unique())
+all_teams =set(tba.get_tba_teams_for_event(tba.PchEvents.DCMP)['team_number'])
+#print("all teams:",all_teams)
+#print("teams scouted:",scouted_teams)
 scouter_leaderboard = scouting_summary.groupby('scouter.name').count().reset_index()[['scouter.name','team_number']]
 scouter_leaderboard.rename(columns={'team_number':'teams'},inplace=True)
 scouter_leaderboard = scouter_leaderboard.sort_values(by='teams',ascending=False)
 col1, col2,col3 = st.columns(3)
 with col1:
-    st.metric("Scouted Teams",value=num_scouted)
+    st.metric("Scouted Teams",value=len(scouted_teams))
+with col2:
+    st.metric("Total Teams", value=len(all_teams))
 
 
+
+teams_left = all_teams- scouted_teams
+st.subheader("Teams we still need to scout")
+st.write(teams_left)
 st.subheader("Scouting Leaderboard")
 st.dataframe(scouter_leaderboard, height=400,hide_index=True)
 
