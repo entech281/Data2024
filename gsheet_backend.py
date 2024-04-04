@@ -188,14 +188,14 @@ def get_pits_data():
 
 def write_match_scouting_row(rec: ScoutingRecord):
     rec.calc_fields()
-    s = _connect_sheet(gsheet_creds, tab=PCH_DCMP_MATCH_TAB)
+    s = _connect_sheet( PCH_DCMP_MATCH_TAB)
     t = rec.as_tuple()
     s.append_row(t)
 
 
 def write_pit_scouting_row(rec: PitScoutingRecord):
     rec.calc_fields()
-    s = _connect_sheet(gsheet_creds, tab=PCH_DCMP_PIT_TAB)
-    _write_pit_scouting_header_if_needed(gsheet_creds, s)
+    s = _connect_sheet( PCH_DCMP_PIT_TAB)
+    _write_pit_scouting_header_if_needed(s)
     t = rec.as_tuple()
     s.append_row(t)
