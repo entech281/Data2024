@@ -52,7 +52,7 @@ all_match_numbers = sorted(list(df['match_number']))
 record.tstamp =  datetime.now().isoformat()
 st.title("Match Scouting 2024 DCMP")
 
-selected_match_number = st.number_input(label="Match Number",key="selected_match_number",min_value=1,max_value=100,step=1)
+selected_match_number = st.number_input(label="Match Number",key="selected_match_number",min_value=1,max_value=100,step=1,value=46)
 
 match_form = st.form(key="match_row", clear_on_submit=True, border=True)
 
