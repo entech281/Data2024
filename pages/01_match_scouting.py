@@ -1,5 +1,6 @@
 import config
 import streamlit as st
+from datetime import datetime
 config.configure(st.secrets) #TODO: how to ensure this happens no matter which page you start on?
 import time
 import controller
@@ -41,7 +42,7 @@ def get_refreshed_form_key(root_name):
 
 
 record = ScoutingRecord()
-
+record.tstamp =  datetime.now().isoformat()
 st.title("Match Scouting 2024 DCMP")
 
 match_form = st.form(key="match_row", clear_on_submit=True, border=True)
@@ -117,7 +118,7 @@ with match_form:
     st.header("End Game")
     col1, col2, empty1, empty2 = st.columns(4)
     with col1:
-        record.rps = st.number_input('RPs', key="rps", min_value=0, max_value=4, step=1)
+
 
         record.climb = st.radio("Climb", key='climb', options=ClimbEnum.options(), index=2)
     with col2:
@@ -127,6 +128,7 @@ with match_form:
         record.alliance_coop = st.checkbox("Coop", key='coop')
 
         record.high_note = st.checkbox("HighNote", key='highnote')
+        record.rps = st.number_input('RPs', key="rps", min_value=0, max_value=4, step=1)
 
     record.strategy = st.text_area("Did they employ a strategy that might exaggerate their stats [Explain]")
     record.notes = st.text_area("Other Comments")

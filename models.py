@@ -73,6 +73,7 @@ class Matches:
         return matches
 
 class ScoutingRecord(BaseModel):
+
     tstamp: str = datetime.now().isoformat()
     team_number: int = 0
     match_number: str = ''

@@ -4,7 +4,7 @@ config.configure(st.secrets) #TODO: how to ensure this happens no matter which p
 import tba
 from models import PitScoutingRecord, DriveEnum, CanClimbEnum, StartLocEnum, PickupEnum, ShotLocEnum
 from gsheet_backend import write_pit_scouting_row
-
+from datetime import datetime
 ALL_TEAMS = tba.get_all_pch_team_numbers()
 
 
@@ -32,6 +32,7 @@ def toggle_form_key():
 
 
 record = PitScoutingRecord()
+record.tstamp =  datetime.now().isoformat()
 SECRETS = st.secrets["gsheets"]
 st.title("Pit Scouting 2024 DCMP")
 
