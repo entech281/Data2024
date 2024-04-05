@@ -21,7 +21,7 @@ if FORM_VERSION_KEY not in st.session_state:
 
 def notify_saved():
     st.toast(":white_check_mark: Response Saved!")
-    print("-->Waiting")
+    #print("-->Waiting")
     time.sleep(2)
 
 
@@ -32,7 +32,7 @@ def increment_form_version():
     old_version = st.session_state[FORM_VERSION_KEY]
     new_version = old_version + 1
     st.session_state[FORM_VERSION_KEY] = new_version
-    print("-->Form Version" + str(old_version) + "->" + str(new_version))
+    #print("-->Form Version" + str(old_version) + "->" + str(new_version))
 
 
 def get_refreshed_form_key(root_name):
