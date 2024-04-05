@@ -21,6 +21,7 @@ if FORM_VERSION_KEY not in st.session_state:
 
 def notify_saved():
     st.toast(":white_check_mark: Response Saved!")
+    print("-->Waiting")
     time.sleep(2)
 
 
@@ -31,6 +32,7 @@ def increment_form_version():
     old_version = st.session_state[FORM_VERSION_KEY]
     new_version = old_version + 1
     st.session_state[FORM_VERSION_KEY] = new_version
+    print("-->Form Version" + str(old_version) + "->" + str(new_version))
 
 
 def get_refreshed_form_key(root_name):
@@ -53,8 +55,8 @@ if "actual_scouter_name" not in st.session_state:
 with match_form:
     col1, col2, empty1, empty2 = st.columns(4)
     with col1:
-        record.team_number = st.selectbox(label="Team", key="team_number", options=ALL_TEAMS)
-        record.match_number = st.selectbox(label="Match", options=Matches.make_matches())
+        record.team_number = st.selectbox(label="Team", key="team_number", options=ALL_TEAMS,index=None)
+        record.match_number = st.selectbox(label="Match", options=Matches.make_matches(),index=None)
 
     with col2:
         record.scouter_name = st.text_input("Your Initials (2 chars)", value=st.session_state['actual_scouter_name'],
@@ -135,11 +137,11 @@ with match_form:
 
     # note: very important: in streamlit callbacks execute before the rest of the scirpt
     # we need that here to avoid the boundary condition after first form load
-    submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False,
-                                      on_click=notify_saved)
+    submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
     if submitted:
+        #print("-->submitted")
         write_match_scouting_row( record)
 
         increment_form_version()
-
+        time.sleep(0.5)
         st.rerun()

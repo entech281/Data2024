@@ -125,7 +125,7 @@ class ScoutingRecord(BaseModel):
 
     def as_tuple(self):
         m = self.model_dump()
-        print("model before export",m)
+        #print("model before export",m)
         return list(m.values())
 
 

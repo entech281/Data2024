@@ -190,6 +190,7 @@ def write_match_scouting_row(rec: ScoutingRecord):
     rec.calc_fields()
     s = _connect_sheet( PCH_DCMP_MATCH_TAB)
     t = rec.as_tuple()
+    #print("--> Write Row",t)
     s.append_row(t)
 
 
