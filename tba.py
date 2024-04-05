@@ -92,6 +92,40 @@ def get_all_pch_rankings_df():
     })
     return df[['team_number','district_rank','point_total','team_key']]
 
+@cachetools.func.ttl_cache(maxsize=128, ttl=60*10)
+def get_tba_matches_for_event(event_name):
+    r = _get("/event/{event_key}/matches/simple".format(event_key=event_name))
+    df = pd.DataFrame(r)
+    """
+          {
+            "actual_time": 1712264466,
+            "alliances": {
+              "blue": {
+                "dq_team_keys": [],
+                "score": 87,
+                "surrogate_team_keys": [],
+                "team_keys": [
+                  "frc1414",
+                  "frc342",
+                  "frc4509"
+                ]
+              },    
+    """
+
+    def break_out_teams(row):
+        blue_teams = row["alliances"]["blue"]["team_keys"]
+        red_teams = row["alliances"]["red"]["team_keys"]
+        row["red1"] = team_number_from_key(red_teams[0])
+        row["red2"] = team_number_from_key(red_teams[1])
+        row["red3"] = team_number_from_key(red_teams[2])
+        row["blue1"] = team_number_from_key(blue_teams[0])
+        row["blue2"] = team_number_from_key(blue_teams[1])
+        row["blue3"] = team_number_from_key(blue_teams[2])
+        row["teams"] = [row["red1"],row["red2"],row["red3"],row["blue1"],row["blue2"],row["blue3"] ]
+        return row
+    df = df.apply(break_out_teams,axis=1)
+    r = df [['match_number','red1','red2','red3','blue1','blue2','blue3','teams']]
+    return r
 
 # not documented, but it is in seconds
 @cachetools.func.ttl_cache(maxsize=128, ttl=30)

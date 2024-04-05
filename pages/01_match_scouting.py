@@ -19,6 +19,11 @@ if FORM_VERSION_KEY not in st.session_state:
     st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
 
 
+def reset_match_number():
+    if "selected_match_number" in st.session_state:
+        st.session_state['selected_match_number'] = None
+
+
 def notify_saved():
     st.toast(":white_check_mark: Response Saved!")
     #print("-->Waiting")
@@ -35,6 +40,7 @@ def increment_form_version():
     #print("-->Form Version" + str(old_version) + "->" + str(new_version))
 
 
+
 def get_refreshed_form_key(root_name):
     if FORM_VERSION_KEY not in st.session_state:
         st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
@@ -44,26 +50,37 @@ def get_refreshed_form_key(root_name):
 
 
 record = ScoutingRecord()
+df = tba.get_tba_matches_for_event("2024gacmp")
+all_match_numbers = sorted(list(df['match_number']))
+#print( df)
+
 record.tstamp =  datetime.now().isoformat()
 st.title("Match Scouting 2024 DCMP")
+
+selected_match_number = st.number_input(label="Match Number",key="selected_match_number",min_value=1,max_value=100,step=1)
 
 match_form = st.form(key="match_row", clear_on_submit=True, border=True)
 
 if "actual_scouter_name" not in st.session_state:
     st.session_state['actual_scouter_name'] = ""
 
+
 with match_form:
-    col1, col2, empty1, empty2 = st.columns(4)
-    with col1:
-        record.team_number = st.text_input(label="Team")
-        record.match_number = st.text_input(label="Match",value="Q")
+    if selected_match_number is None:
+        st.subheader("Choose a match")
+    else:
+        team_list = df[df['match_number'] == selected_match_number]['teams'].to_list()[0]
 
-    with col2:
-        record.scouter_name = st.text_input("Your Initials (2 chars)", value=st.session_state['actual_scouter_name'],
-                                            max_chars=2)
-        st.session_state['actual_scouter_name'] = record.scouter_name
+        #print ("presenting team choices",team_list)
+        record.team_number = st.radio(label="Choose Team",
+                                      options=team_list, horizontal=True
+                                      )
 
-        record.team_present = st.checkbox(label="Team Present", key="present",value=True)
+    record.scouter_name = st.text_input("Your Initials (2 chars)", value=st.session_state['actual_scouter_name'],
+                                        max_chars=2)
+    st.session_state['actual_scouter_name'] = record.scouter_name
+
+    record.team_present = st.checkbox(label="Team Present", key="present",value=True)
 
     st.header("Auto Scoring")
 
@@ -88,14 +105,10 @@ with match_form:
         record.robot_disabled_time = st.number_input('Seconds Disabled', key='robot_disabled_time', min_value=0, step=1)
 
     st.header("Robot Basics")
-    col1, col2, empty = st.columns(3)
-    with col1:
-        record.robot_pickup = st.radio("Pickup", key="pickup", options=PickupEnum.options(), index=0)
-    with col2:
-        record.robot_speed = st.slider("Seconds to Cross Whole Field", min_value=3, max_value=10, value=5, step=1,
-                                       key="seconds_to_cross")
-    with empty:
-        pass
+
+    record.robot_speed = st.slider("Seconds to Cross Whole Field", min_value=3, max_value=10, value=5, step=1,
+                                   key="seconds_to_cross")
+
 
     st.header("Teleop Scoring")
 
@@ -140,8 +153,10 @@ with match_form:
     submitted = st.form_submit_button("Submit", type="secondary", disabled=False, use_container_width=False)
     if submitted:
         #print("-->submitted")
+        record.match_number = "Q"+ str(selected_match_number)
         write_match_scouting_row( record)
 
         increment_form_version()
         time.sleep(0.2)
+        #reset_match_number()
         st.rerun()
