@@ -19,11 +19,6 @@ if FORM_VERSION_KEY not in st.session_state:
     st.session_state[FORM_VERSION_KEY] = INITIAL_FORM_VERSION
 
 
-def reset_match_number():
-    if "selected_match_number" in st.session_state:
-        st.session_state['selected_match_number'] = None
-
-
 def notify_saved():
     st.toast(":white_check_mark: Response Saved!")
     #print("-->Waiting")
