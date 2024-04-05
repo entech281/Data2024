@@ -143,5 +143,5 @@ with match_form:
         write_match_scouting_row( record)
 
         increment_form_version()
-        time.sleep(0.5)
+        time.sleep(0.2q)
         st.rerun()
