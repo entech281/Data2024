@@ -119,7 +119,7 @@ def get_tba_teams_for_event(event_name):
     return df
 
 def get_tba_team_stats_for_team(event_name, team_number):
-    df = get_tba_team_stats("2024sccha")
+    df = get_tba_team_stats("2024gacmp")
     r = df[df['team_number'] == team_number].to_dict(orient='records')
     if len(r) > 0:
         d = r[0]

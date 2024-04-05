@@ -9,7 +9,7 @@ import plotly.express as px
 
 st.title("Team Detail")
 tag_manager = gsheet_backend.get_tag_manager()
-(analyzed, summary) = controller.load_match_data()
+(analyzed, summary) = controller.get_all_joined_team_data()
 teamlist = tba.get_all_pch_team_numbers()
 
 
