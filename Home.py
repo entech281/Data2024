@@ -3,7 +3,7 @@ import config
 
 config.configure(st.secrets)
 st.set_page_config(layout="wide")
-st.title("281 2024 DCMP Scouting v1.2")
+st.title("281 2024 DCMP Scouting v1.3")
 
 st.image("./281_logo.png", width=400)
 

@@ -188,6 +188,10 @@ def get_pits_data():
 
 def write_match_scouting_row(rec: ScoutingRecord):
     rec.calc_fields()
+    try:
+        rec.team_number = int(rec.team_number)
+    except:
+        print("Value Error parsing as int, ")
     s = _connect_sheet( PCH_DCMP_MATCH_TAB)
     t = rec.as_tuple()
     #print("--> Write Row",t)

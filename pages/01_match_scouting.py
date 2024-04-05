@@ -55,8 +55,8 @@ if "actual_scouter_name" not in st.session_state:
 with match_form:
     col1, col2, empty1, empty2 = st.columns(4)
     with col1:
-        record.team_number = st.selectbox(label="Team", key="team_number", options=ALL_TEAMS,index=None)
-        record.match_number = st.selectbox(label="Match", options=Matches.make_matches(),index=None)
+        record.team_number = st.text_input(label="Team")
+        record.match_number = st.text_input(label="Match",value="Q")
 
     with col2:
         record.scouter_name = st.text_input("Your Initials (2 chars)", value=st.session_state['actual_scouter_name'],
@@ -143,5 +143,5 @@ with match_form:
         write_match_scouting_row( record)
 
         increment_form_version()
-        time.sleep(0.2q)
+        time.sleep(0.2)
         st.rerun()
