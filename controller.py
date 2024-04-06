@@ -52,7 +52,7 @@ def pit_data_for_team(team_num):
     else:
         return {}
 
-@cachetools.func.ttl_cache(maxsize=128, ttl=CACHE_SECONDS)
+@cachetools.func.ttl_cache(maxsize=128, ttl=CACHE_SECONDS*5)
 def get_all_joined_team_data():
     all_pch_teams = tba.get_all_pch_team_df()
     all_pch_team_rankings = tba.get_all_pch_rankings_df()
